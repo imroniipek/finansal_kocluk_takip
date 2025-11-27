@@ -1,10 +1,14 @@
+import 'package:finansal_kocluk_takip/home_page/view/home_page.dart';
 import 'package:finansal_kocluk_takip/income_expense_page/view/income_expanse_page.dart';
+import 'package:finansal_kocluk_takip/locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'income_expense_page/bloc/general_bloc.dart';
 
 void main() {
+
+  setupLocator();
 
   runApp(
     BlocProvider(
@@ -22,7 +26,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
      debugShowCheckedModeBanner: false,
-      home:IncomeExpansePage(isitIncomepage: false)
+      home:HomePage()
     );
   }
 }

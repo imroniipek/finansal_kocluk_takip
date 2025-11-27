@@ -1,4 +1,5 @@
 
+import 'package:finansal_kocluk_takip/data/model/period_type.dart';
 import 'package:flutter/material.dart';
 
 class Sabitler{
@@ -6,7 +7,42 @@ class Sabitler{
 
   static Color incomeColor=Colors.teal;
 
-  static Color expensesColor=Colors.deepPurple;
+  static Color expensesColor=Colors.red.shade600;
+
+  static Color generalPrimaryColor=Colors.teal;
+
+
+  static PeriodType findTheType(int value)
+  {
+    switch(value)
+    {
+      case(1):
+        return PeriodType.daily;
+      case(2):
+        return PeriodType.monthly;
+      case(3):
+        return PeriodType.yearly;
+      default:
+        return PeriodType.daily;
+
+
+    }
+  }
+  static int conevertPeriodTypetoInetegerValue(PeriodType type)
+  {
+    switch(type)
+    {
+      case(PeriodType.daily):
+        return 1;
+      case(PeriodType.monthly):
+        return 2;
+      case(PeriodType.yearly):
+         return 3;
+      default:
+        return -1;
+
+    }
+  }
 
   static Map<String,String> days={
 
@@ -34,43 +70,43 @@ class Sabitler{
     12: "Aralık",
   };
 
-  static Map<Icon,String> incomeSelections={
+  static Map<IconData,String> incomeSelections={
 
-    Icon(Icons.attach_money):"Maaş",
+    Icons.attach_money:"Maaş",
 
-    Icon(Icons.follow_the_signs_outlined):"Mevduatlar",
+    Icons.follow_the_signs_outlined:"Mevduatlar",
 
-    Icon(Icons.money_outlined):"Tasarruf",
+    Icons.money_outlined:"Tasarruf",
 
-    Icon(Icons.add):"Ekle"
+    Icons.add:"Ekle"
 
   };
 
-  static Map<Icon,String> expensesSelections={
+  static Map<IconData,String> expensesSelections={
 
-    Icon(Icons.car_rental):"Araba",
+    Icons.car_rental:"Araba",
 
-    Icon(Icons.home_filled):"Ev",
+    Icons.home_filled:"Ev",
 
-    Icon(Icons.local_pizza_outlined):"Gıda",
+    Icons.local_pizza_outlined:"Gıda",
 
-    Icon(Icons.celebration):"Eğlence",
+    Icons.celebration:"Eğlence",
 
-    Icon(Icons.receipt):"Faturalar",
+    Icons.receipt:"Faturalar",
 
-    Icon(Icons.checkroom):"Giyim",
+    Icons.checkroom:"Giyim",
 
-    Icon(Icons.phone):"Haberleşme",
+    Icons.phone:"Haberleşme",
 
-    Icon(Icons.bus_alert_sharp):"Ulaşım",
+    Icons.bus_alert_sharp:"Ulaşım",
 
-    Icon(Icons.medication):"Sağlık",
+    Icons.medication:"Sağlık",
 
-    Icon(Icons.pets_sharp):"Evcil Hayvan",
+    Icons.pets_sharp:"Evcil Hayvan",
 
-    Icon(Icons.sports_basketball):"Spor",
+    Icons.sports_basketball:"Spor",
 
-    Icon(Icons.add):"Ekle"
+    Icons.add:"Ekle"
 
   };
 

@@ -44,6 +44,24 @@ class ClearTheDigit extends IncomeExpenseEvent
 
 }
 
+class SaveTheValues extends IncomeExpenseEvent
+{
+  final bool isitIncome;
+  final Map<String,dynamic> map;
+
+  SaveTheValues({required this.isitIncome,required this.map});
+}
+
+
+class ShowIncomeandExpensesList extends IncomeExpenseEvent
+{
+
+  final bool islistOpened;
+
+  ShowIncomeandExpensesList(this.islistOpened);
+
+}
+
 
 
 

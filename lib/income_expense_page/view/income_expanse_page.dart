@@ -1,3 +1,5 @@
+import 'package:finansal_kocluk_takip/data/model/period_type.dart';
+import 'package:finansal_kocluk_takip/home_page/view/home_page.dart';
 import 'package:finansal_kocluk_takip/income_expense_page/bloc/general_bloc.dart';
 import 'package:finansal_kocluk_takip/income_expense_page/bloc/income_expense_page_states/status.dart';
 import 'package:finansal_kocluk_takip/income_expense_page/widgets/income_expanse_page_widgets.dart';
@@ -15,8 +17,10 @@ class IncomeExpansePage extends StatefulWidget {
 
   final Color primaryColor;
 
+  final PeriodType type;
 
-   IncomeExpansePage({super.key,required this.isitIncomepage}):primaryColor = (isitIncomepage) ? Sabitler.incomeColor : Sabitler.expensesColor;
+
+   IncomeExpansePage({super.key,required this.isitIncomepage,required this.type}):primaryColor = (isitIncomepage) ? Sabitler.incomeColor : Sabitler.expensesColor;
 
   @override
   State<IncomeExpansePage> createState() => _IncomeExpansePageState();
@@ -40,7 +44,13 @@ class _IncomeExpansePageState extends State<IncomeExpansePage> {
 
 
         leading:
-            IconButton(onPressed:(){}, icon: Icon(Icons.arrow_back,size:35,color:Colors.white)),
+            IconButton(onPressed:(){
+
+              Navigator.pop(context);
+
+
+
+            }, icon: Icon(Icons.arrow_back,size:35,color:Colors.white)),
 
         title:Text(context.read<IncomeExpenseBloc>().state.title,style:GoogleFonts.poppins(fontSize:25,color:Colors.white)),
 
@@ -51,71 +61,82 @@ class _IncomeExpansePageState extends State<IncomeExpansePage> {
 
       body:
 
-
-        SingleChildScrollView(
-
-          child:
-            Column(
-              children: [
-
-                SizedBox(height: 20,),
-
-                theDateValue(context),
-
-                SizedBox(height: 20,),
-
-                valueContainer(context),
-
-                SizedBox(height: 10,),
-
-                NoteTextfield(
-                  onTap:(value)
-                    {
-
-                      context.read<IncomeExpenseBloc>().add(AddNote(value));
-                    } ,
-                  textfieldColor: widget.primaryColor,
-                ),
-
-                SizedBox(height: 20,),
-
-                (isitButtonsSection)?AllButtons(): GridView.count(
-
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    crossAxisCount: 3,
-                    children:categoryContainers(context)),
+      BlocConsumer<IncomeExpenseBloc, IncomeExpenseStatus>(
 
 
+       listener: (context, state) {
 
-                (isitButtonsSection)?selectionCategory(context):Container()
+      if (state.status == PageStatus.success)
+      {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text("İşlem başarıyla gerçekleşti"),
+            backgroundColor: Colors.green,
+          ),
+        );
 
-
-
-
-
-              ],
-
-
-
-
-
-
-
-
-            )
-
-
-
+        Future.delayed(Duration(milliseconds: 400), ()
+        {
+          Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => HomePage()),
+                (Route<dynamic> route) => false,
+          );
+        });
 
 
+      }
 
+      else if (state.status == PageStatus.error) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text("Hata oluştu"),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    },
 
+        //Normalde ise duzgun bir sekilde UI lerimi ekranda yazdırmak istiyorum bu sekilde kullanacam
 
+    builder: (context, state) {
 
+      if (state.status == PageStatus.loading)
+      {
+        return Center(child: CircularProgressIndicator());
+      }
 
-        )
+      return SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(height: 20),
+            theDateValue(context),
+            SizedBox(height: 20),
+            valueContainer(context),
+            SizedBox(height: 10),
 
+            NoteTextfield(
+              onTap: (value)
+              {
+                context.read<IncomeExpenseBloc>().add(AddNote(value));
+              },
+              textfieldColor: widget.primaryColor,
+            ),
+
+            SizedBox(height: 20),
+
+            (isitButtonsSection) ? AllButtons() : GridView.count(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              crossAxisCount: 3,
+              children: categoryContainers(context),
+            ),
+
+            (isitButtonsSection) ? selectionCategory(context) : Container(),
+          ],
+        ),
+      );
+    },
+    )
     );
 
   }
@@ -333,21 +354,51 @@ class _IncomeExpansePageState extends State<IncomeExpansePage> {
        containers.add(
          Padding(
            padding: const EdgeInsets.all(8.0),
-           child: Container(
-             width: (MediaQuery.of(context).size.width/5),
+           child: InkWell(
 
-             height: 50,
-             decoration: BoxDecoration(
-               border: Border.all(color:widget.primaryColor,width:3,),
-               borderRadius: BorderRadius.circular(10),
+             onTap: ()
+             {
+               final status=context.read<IncomeExpenseBloc>().state;
 
-             ),
-             child: Column(
-               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-               children: [
-                 Expanded(child: CircleAvatar(child: entry.key,radius: 30,backgroundColor: widget.primaryColor,foregroundColor: Colors.white,)),
-                 Text(entry.value, style:GoogleFonts.poppins(fontSize:18,color:Colors.black,fontWeight: FontWeight.w500)),
-               ],
+               int i=Sabitler.conevertPeriodTypetoInetegerValue(widget.type);
+
+               final map={
+
+                 "date":status.date,
+
+                 "amount":double.parse(status.tempValue!),
+
+                 "period_type":i,
+
+                 "category":entry.value
+
+               };
+
+               context.read<IncomeExpenseBloc>().add(SaveTheValues(isitIncome:widget.isitIncomepage, map:map));
+
+
+
+
+             },
+
+
+
+             child: Container(
+               width: (MediaQuery.of(context).size.width/5),
+             
+               height: 50,
+               decoration: BoxDecoration(
+                 border: Border.all(color:widget.primaryColor,width:3,),
+                 borderRadius: BorderRadius.circular(10),
+             
+               ),
+               child: Column(
+                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                 children: [
+                   Expanded(child: CircleAvatar(child: Icon(entry.key,size:30,color:Colors.white),radius: 30,backgroundColor: widget.primaryColor,foregroundColor: Colors.white,)),
+                   Text(entry.value, style:GoogleFonts.poppins(fontSize:18,color:Colors.black,fontWeight: FontWeight.w500)),
+                 ],
+               ),
              ),
            ),
          ),

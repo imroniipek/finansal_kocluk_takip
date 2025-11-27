@@ -1,9 +1,23 @@
+
+import 'package:finansal_kocluk_takip/data/model/expense.dart';
+import 'package:finansal_kocluk_takip/data/model/income.dart';
+import 'package:finansal_kocluk_takip/home_page/widgets/expenses_and_income_buttons.dart';
+
+enum PageStatus{ idle, loading, success, error }
+
+
+
 abstract class IncomeExpenseState {}
 
 class IncomeExpenseStatus extends IncomeExpenseState {
+
   final String title;
 
   final String date;
+
+  final List<IncomeModel> incomes;
+
+  final List<ExpenseModel> expenses;
 
   final List<String> numbers;
 
@@ -13,13 +27,31 @@ class IncomeExpenseStatus extends IncomeExpenseState {
 
   final String? tempValue;
 
+  final PageStatus status;
+
   final String? note;
 
-  IncomeExpenseStatus({required this.title, required this.date, required this.numbers, this.firstValue, this.operator, this.tempValue, this.note,});
 
-  IncomeExpenseStatus copyWith({String? title, String? date,bool setFirstOperator=false,bool setFirstValueToNull=false, List<String>? numbers, double? firstValue, String? operator, String? tempValue, String? note,}) {
+  IncomeExpenseStatus({required this.title, required this.date, required this.numbers, this.firstValue, this.operator, this.tempValue, this.note,required this.status,required this.incomes,required this.expenses});
+
+  IncomeExpenseStatus copyWith({String? title,
+    String? date,
+    bool setFirstOperator=false,
+    bool setFirstValueToNull=false,
+    List<String>? numbers,
+    double? firstValue,
+    String? operator,
+    String? tempValue,
+    String? note,
+    PageStatus ? status,
+    List<IncomeModel>? incomes,
+    List<ExpenseModel>?expenses
+
+
+    }) {
     return IncomeExpenseStatus(
-      title: title ?? this.title,
+
+      title: title ?? this.title, //Null olabilir null ise eski title degerini al diyoruz kısacası
 
       date: date ?? this.date,
 
@@ -32,6 +64,12 @@ class IncomeExpenseStatus extends IncomeExpenseState {
       firstValue: setFirstValueToNull ? null : (firstValue ?? this.firstValue),
 
       note: note ?? this.note,
+
+      status:status??this.status,
+
+      incomes: incomes?? this.incomes,
+
+      expenses: expenses ??this.expenses
     );
   }
 }

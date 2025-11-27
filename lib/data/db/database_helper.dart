@@ -8,6 +8,8 @@ class DatabaseHelper
 
   Future<Database> get database async
   {
+    //Burdaki Database degerini alarak bazı işlemleri halledecem//
+
     if(_database!=null)
       {
         return _database!;
