@@ -3,8 +3,8 @@
 Cüzdanım360, kişisel gelir & gider takibini kolaylaştırmak için geliştirilmiş modern bir Flutter uygulamasıdır.
 Uygulama; BLoC mimarisi, SQLite veritabanı, animasyonlu UI bileşenleri ve modüler yapısı ile profesyonel bir finans yönetim çözümü sunar.
 
- Özellikler
-## Gelir & Gider Ekleme
+##Özellikler
+### Gelir & Gider Ekleme
 
 Modern hesap makinesi tasarımı
 
@@ -14,7 +14,7 @@ Not ekleme alanı
 
 Günlük / Aylık / Yıllık periyot seçimi
 
-## SQLite ile Kalıcı Veri Saklama
+### SQLite ile Kalıcı Veri Saklama
 
 Gelirlerin/giderlerin local database’de tutulması
 
@@ -24,7 +24,7 @@ CRUD operasyonları
 
 Veritabanı üzerinden toplam bakiye hesaplama
 
-## Animasyonlu Kullanıcı Arayüzü
+### Animasyonlu Kullanıcı Arayüzü
 
 AnimatedContainer ile açılır “Gelir Listesi” animasyonu
 
@@ -34,7 +34,7 @@ Circle avatar ve ikon destekli kategori tasarımı
 
 Responsive UI
 
- ## BLoC Mimarisi
+ ### BLoC Mimarisi
 
 Tüm state yönetimi BLoC ile yapılandırılmıştır
 
@@ -42,9 +42,9 @@ Event–State yapısı
 
 Sayfa durumları (idle, loading, success, error)
 
-## Kullanılan Teknolojiler
+### Kullanılan Teknolojiler
 
-Flutter (3.x)
+Flutter 
 
 Dart
 
