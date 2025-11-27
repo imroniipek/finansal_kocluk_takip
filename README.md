@@ -4,7 +4,7 @@ Cüzdanım360, kişisel gelir & gider takibini kolaylaştırmak için geliştiri
 Uygulama; BLoC mimarisi, SQLite veritabanı, animasyonlu UI bileşenleri ve modüler yapısı ile profesyonel bir finans yönetim çözümü sunar.
 
 ## Özellikler
-### Gelir & Gider Ekleme
+- Gelir & Gider Ekleme
 
 Modern hesap makinesi tasarımı
 
@@ -14,7 +14,7 @@ Not ekleme alanı
 
 Günlük / Aylık / Yıllık periyot seçimi
 
-### SQLite ile Kalıcı Veri Saklama
+*  SQLite ile Kalıcı Veri Saklama
 
 Gelirlerin/giderlerin local database’de tutulması
 
@@ -24,7 +24,7 @@ CRUD operasyonları
 
 Veritabanı üzerinden toplam bakiye hesaplama
 
-### Animasyonlu Kullanıcı Arayüzü
+*  Animasyonlu Kullanıcı Arayüzü
 
 AnimatedContainer ile açılır “Gelir Listesi” animasyonu
 
