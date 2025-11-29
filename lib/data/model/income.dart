@@ -3,6 +3,8 @@ import 'package:finansal_kocluk_takip/data/model/period_type.dart';
 
 import '../../core/sabitler.dart';
 
+
+
 class IncomeModel{
 
   final int ? id;

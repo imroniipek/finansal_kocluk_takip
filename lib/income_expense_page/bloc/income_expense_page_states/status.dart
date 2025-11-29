@@ -5,8 +5,6 @@ import 'package:finansal_kocluk_takip/home_page/widgets/expenses_and_income_butt
 
 enum PageStatus{ idle, loading, success, error }
 
-
-
 abstract class IncomeExpenseState {}
 
 class IncomeExpenseStatus extends IncomeExpenseState {
@@ -15,9 +13,6 @@ class IncomeExpenseStatus extends IncomeExpenseState {
 
   final String date;
 
-  final List<IncomeModel> incomes;
-
-  final List<ExpenseModel> expenses;
 
   final List<String> numbers;
 
@@ -32,7 +27,17 @@ class IncomeExpenseStatus extends IncomeExpenseState {
   final String? note;
 
 
-  IncomeExpenseStatus({required this.title, required this.date, required this.numbers, this.firstValue, this.operator, this.tempValue, this.note,required this.status,required this.incomes,required this.expenses});
+  IncomeExpenseStatus({
+    required this.title,
+    required this.date,
+    required this.numbers,
+    this.firstValue,
+    this.operator,
+    this.tempValue,
+    this.note,
+    required this.status,
+
+  });
 
   IncomeExpenseStatus copyWith({String? title,
     String? date,
@@ -47,13 +52,13 @@ class IncomeExpenseStatus extends IncomeExpenseState {
     List<IncomeModel>? incomes,
     List<ExpenseModel>?expenses
 
-
     }) {
     return IncomeExpenseStatus(
 
       title: title ?? this.title, //Null olabilir null ise eski title degerini al diyoruz kısacası
 
       date: date ?? this.date,
+
 
       numbers: numbers ?? List<String>.from(this.numbers),
 
@@ -67,9 +72,6 @@ class IncomeExpenseStatus extends IncomeExpenseState {
 
       status:status??this.status,
 
-      incomes: incomes?? this.incomes,
-
-      expenses: expenses ??this.expenses
     );
   }
 }

@@ -13,12 +13,18 @@ class IncomeExpenseBloc extends Bloc<IncomeExpenseEvent, IncomeExpenseStatus> {
   IncomeExpenseBloc() : super(IncomeExpenseStatus(
 
       title: "Yeni Gelir",
-      date: converttoDate(DateTime.now()) ,
+      date: Sabitler.converttoDate(DateTime.now()) ,
       numbers: [],
       tempValue: "0",
       status:PageStatus.idle,
-      incomes: [],
-      expenses: []),)
+
+
+  ),
+
+
+
+
+  )
   {
     on<ChangeType>((event, emit)
     {
@@ -35,24 +41,6 @@ class IncomeExpenseBloc extends Bloc<IncomeExpenseEvent, IncomeExpenseStatus> {
       emit(state.copyWith(date: "$dayName, $day $month"));
     });
 
-    on<ShowIncomeandExpensesList>(
-        (event,emit)
-       async {
-         if (event.islistOpened) {
-           final incomesList = await locator<IncomeRepository>().getAllofIncomesList();
-
-           emit(state.copyWith(incomes: incomesList));
-
-           return;
-         }
-
-         else {
-           emit(state.copyWith(incomes: []));
-
-           return;
-         }
-       }
-    );
 
     on<AddDigit>((event, emit) {
 
@@ -170,21 +158,13 @@ class IncomeExpenseBloc extends Bloc<IncomeExpenseEvent, IncomeExpenseStatus> {
       }
     });
   }
-  String converttoString(List<String> number)
-  {
-    return number.map((e)=>e).join();
-  }
-
-  static String converttoDate(DateTime now)
-  {
-    final month=Sabitler.monthMap[now.month];
-
-    final day=Sabitler.days[DateFormat("EEEE").format(now)];
-
-    return "${day},${now.day} ${month}";
 
 
-  }
+
+
+  String converttoString(List<String> number) =>number.map((e)=>e).join();
+
+
 
   double _apply(double a, double b, String op) {
 
@@ -210,4 +190,9 @@ class IncomeExpenseBloc extends Bloc<IncomeExpenseEvent, IncomeExpenseStatus> {
        return a;
      }
   }
+
+
+
+
+
 }

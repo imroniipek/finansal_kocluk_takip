@@ -1,6 +1,6 @@
 import 'package:finansal_kocluk_takip/data/model/period_type.dart';
 import 'package:finansal_kocluk_takip/home_page/view/home_page.dart';
-import 'package:finansal_kocluk_takip/income_expense_page/bloc/general_bloc.dart';
+import 'package:finansal_kocluk_takip/income_expense_page/bloc/income_expense_page_bloc.dart';
 import 'package:finansal_kocluk_takip/income_expense_page/bloc/income_expense_page_states/status.dart';
 import 'package:finansal_kocluk_takip/income_expense_page/widgets/income_expanse_page_widgets.dart';
 import 'package:finansal_kocluk_takip/income_expense_page/widgets/note_textfield.dart';

@@ -1,6 +1,7 @@
 
 import 'package:finansal_kocluk_takip/data/model/period_type.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class Sabitler{
 
@@ -10,6 +11,9 @@ class Sabitler{
   static Color expensesColor=Colors.red.shade600;
 
   static Color generalPrimaryColor=Colors.teal;
+
+
+
 
 
   static PeriodType findTheType(int value)
@@ -69,6 +73,17 @@ class Sabitler{
     11: "Kasım",
     12: "Aralık",
   };
+
+  static String converttoDate(DateTime now)
+  {
+    final month=Sabitler.monthMap[now.month];
+
+    final day=Sabitler.days[DateFormat("EEEE").format(now)];
+
+    return "${day},${now.day} ${month}";
+
+
+  }
 
   static Map<IconData,String> incomeSelections={
 

@@ -53,14 +53,6 @@ class SaveTheValues extends IncomeExpenseEvent
 }
 
 
-class ShowIncomeandExpensesList extends IncomeExpenseEvent
-{
-
-  final bool islistOpened;
-
-  ShowIncomeandExpensesList(this.islistOpened);
-
-}
 
 
 

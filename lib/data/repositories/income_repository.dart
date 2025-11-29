@@ -50,41 +50,44 @@ class IncomeRepository{
 
   }
 
-  Future<List<IncomeModel>> getAllofIncomesList()
+  Future<List<IncomeModel>> getAllofIncomesList(String date)
   async{
 
    final db= await dbHelper.database;
 
-    final List<Map<String,dynamic>>result=await db.query("incomes");
+   final A=await db.query("incomes");
 
+   print(A);
+
+    final List<Map<String,dynamic>>result=await db.query("incomes",where:"date=?",whereArgs:[date]);
+
+    print(result[0]);
     return result.map((e)=>IncomeModel.fromMap(e)).toList();
   }
 
 
-
-  Future<double> calculateTotalAmount(String date,PeriodType type)
+  Future<double> calculateCurrentAmount(String date)
   async {
 
     double totalAmount=0.0;
 
     final db=await dbHelper.database;
 
-    int i=Sabitler.conevertPeriodTypetoInetegerValue(type);
 
-    List<Map<String,dynamic>>values=await db.query("incomes",where:"date=? AND period_type=?",whereArgs: [date,i]);
+    List<Map<String,dynamic>>values=await db.query("incomes",where:"date=? ",whereArgs: [date]);
 
-   List<IncomeModel>models= values.map((e)=>IncomeModel.fromMap(e)).toList();
+    final list=values.map((e)=>IncomeModel.fromMap(e)).toList();
 
-   for(var model in models)
-     {
-       totalAmount=totalAmount+model.amount;
-     }
+    for(var value in list)
+      {
+        totalAmount=totalAmount+value.amount;
+      }
 
-
-   return totalAmount;
-
+    return totalAmount;
 
   }
+
+
 
 
 
