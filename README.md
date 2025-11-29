@@ -1,16 +1,43 @@
-# finansal_kocluk_takip
+#  Cüzdanım360 – Kişisel Finans Yönetim Uygulaması
 
-A new Flutter project.
+Cüzdanım360, kişisel gelir & gider takibini kolaylaştırmak için geliştirilmiş modern bir **Flutter** uygulamasıdır.  
+Uygulama; **BLoC mimarisi**, **SQLite veritabanı**, **animasyonlu UI bileşenleri** ve **modüler yapısı** ile profesyonel bir finans yönetim çözümü sunar.
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+##  Özellikler
 
-A few resources to get you started if this is your first Flutter project:
+###  Gelir & Gider Ekleme
+- Modern hesap makinesi tasarımı  
+- Kategori seçimi (Gıda, Maaş, Sağlık, Araç vs.)  
+- Not ekleme alanı  
+- Günlük / Aylık / Yıllık periyot seçimi  
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+###  SQLite ile Kalıcı Veri Saklama
+- Gelirlerin/giderlerin local database’de tutulması  
+- Autoincrement ID  
+- CRUD operasyonları  
+- Veritabanı üzerinden toplam bakiye hesaplama  
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+###  Animasyonlu Kullanıcı Arayüzü
+- `AnimatedContainer` ile açılır “Gelir Listesi” animasyonu  
+- `ExpansionTile` ile modern gelir kartları  
+- Circle avatar ve ikon destekli kategori tasarımı  
+- Responsive UI  
+
+###  BLoC Mimarisi
+- Tüm state yönetimi **BLoC** ile yapılandırılmıştır  
+- Event–State yapısı  
+- Sayfa durumları: `idle`, `loading`, `success`, `error`  
+
+---
+
+##  Kullanılan Teknolojiler
+
+- Flutter   
+- Dart  
+- BLoC (`flutter_bloc`)  
+- SQLite (`sqflite`)  
+- `AnimatedContainer` & `ExpansionTile`  
+- Google Fonts  
+- Clean Architecture yaklaşımı  
