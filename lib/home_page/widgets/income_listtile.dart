@@ -4,14 +4,16 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../core/sabitler.dart';
 
 class IncomeListtile extends StatelessWidget {
+
   final Map<String, List<IncomeModel>> model;
 
   const IncomeListtile({super.key, required this.model});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      
+    return
+      (model.isEmpty)? Center(child:Text("Belirtilen Gün içimn Kayıt Bulunamamaktadır")):
+      Column(
       children: ListWidget(model),
     );
   }

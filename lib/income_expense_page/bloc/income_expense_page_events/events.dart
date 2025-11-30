@@ -30,7 +30,7 @@ class AddOperator extends IncomeExpenseEvent
 
 class CalculateResult extends IncomeExpenseEvent {}
 
-class ClearAll extends IncomeExpenseEvent {}
+class ResetTheCalculater extends IncomeExpenseEvent {}
 
 class AddNote extends IncomeExpenseEvent{
 

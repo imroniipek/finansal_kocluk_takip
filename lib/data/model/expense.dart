@@ -29,7 +29,7 @@ class ExpenseModel{
 
         "category":category,
 
-        "period":Sabitler.conevertPeriodTypetoInetegerValue(periodType),
+        "period_type":Sabitler.conevertPeriodTypetoInetegerValue(periodType),
 
         "amount":amount,
 
@@ -40,7 +40,7 @@ class ExpenseModel{
 
 
 
-  factory ExpenseModel.fromDb(Map<String,dynamic> map)
+  factory ExpenseModel.fromMap(Map<String,dynamic> map)
   {
     final value= Sabitler.findTheType(map["period_type"]);
 
@@ -53,7 +53,7 @@ class ExpenseModel{
 
         category:map["category"],
 
-        amount:map["amount"],
+        amount: (map["amount"] as num).toDouble(),
 
         periodType: value,
 

@@ -1,7 +1,9 @@
+import 'package:finansal_kocluk_takip/data/repositories/expenses_repository.dart';
 import 'package:finansal_kocluk_takip/data/repositories/income_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import '../../core/sabitler.dart';
+import '../../data/model/expense.dart' show ExpenseModel;
 import '../../data/model/income.dart';
 import '../../locator.dart';
 import 'income_expense_page_events/events.dart';
@@ -20,9 +22,6 @@ class IncomeExpenseBloc extends Bloc<IncomeExpenseEvent, IncomeExpenseStatus> {
 
 
   ),
-
-
-
 
   )
   {
@@ -50,11 +49,12 @@ class IncomeExpenseBloc extends Bloc<IncomeExpenseEvent, IncomeExpenseStatus> {
       emit(state.copyWith(numbers: newList, tempValue: A));
     });
 
-    on<AddOperator>((event, emit) {
-      final value = (state.numbers.isEmpty) ? 0.0 : double.parse(
-          state.numbers.join());
+    on<AddOperator>((event, emit)
+    {
+      final value = (state.numbers.isEmpty) ? 0.0 : double.parse(state.numbers.join());
 
-      if (state.firstValue == null) {
+      if (state.firstValue == null)
+      {
         emit(state.copyWith(firstValue: value,
             operator: event.operator,
             numbers: [],
@@ -98,7 +98,7 @@ class IncomeExpenseBloc extends Bloc<IncomeExpenseEvent, IncomeExpenseStatus> {
     on<ClearTheDigit>((event, emit) {
       final value = state.tempValue ?? "";
 
-      if (value.isEmpty) return;
+      if (value=="") return;
 
       if (value.length == 1) {
         emit(state.copyWith(
@@ -108,7 +108,8 @@ class IncomeExpenseBloc extends Bloc<IncomeExpenseEvent, IncomeExpenseStatus> {
 
       var newList = value.split("").sublist(0, value.length - 1);
 
-      if (newList.isNotEmpty && newList.last == ".") {
+      if (newList.isNotEmpty && newList.last == ".")
+      {
         newList = newList.sublist(0, newList.length - 1);
       }
 
@@ -126,27 +127,46 @@ class IncomeExpenseBloc extends Bloc<IncomeExpenseEvent, IncomeExpenseStatus> {
       try{
 
         if(event.isitIncome==true)
-          {
-            final model=IncomeModel.fromMap(event.map);
+        {
+          final model = IncomeModel.fromMap(event.map);
 
-            final id= await locator<IncomeRepository>().addIncome(model);
+          final id = await locator<IncomeRepository>().addIncome(model);
 
-            if (id != null && id > 0)
-            {
-
-              await locator<IncomeRepository>().printIncomesTable();
+          if (id != null && id > 0) {
+            await locator<IncomeRepository>().printIncomesTable();
 
 
-              emit(state.copyWith(status: PageStatus.success,));
+            emit(state.copyWith(status: PageStatus.success,));
 
-              emit(state.copyWith(status: PageStatus.idle));
-            }
-            else
+            emit(state.copyWith(status: PageStatus.idle));
+          }
+
+          else
             {
               emit(state.copyWith(status:PageStatus.error));
             }
+        }
+        else
 
-          }
+        {
+          final model =ExpenseModel.fromMap(event.map);
+
+          final id=await locator<ExpensesRepository>().addExpense(model);
+
+              if (id != null && id > 0)
+              {
+                await locator<IncomeRepository>().printIncomesTable();
+
+                emit(state.copyWith(status: PageStatus.success,));
+
+                emit(state.copyWith(status: PageStatus.idle));
+              }
+              else
+                {
+                  emit(state.copyWith(status:PageStatus.error));
+                }
+
+        }
 
       }
       catch(e)
@@ -157,6 +177,31 @@ class IncomeExpenseBloc extends Bloc<IncomeExpenseEvent, IncomeExpenseStatus> {
 
       }
     });
+
+
+    on<ResetTheCalculater>((event,emit)
+    {
+
+      emit(state.copyWith(
+
+        setFirstValueToNull: true,
+
+        setFirstOperator: true,
+
+        numbers:[],
+
+        tempValue: "0"
+
+
+
+      ));
+
+
+    }
+
+    );
+
+
   }
 
 

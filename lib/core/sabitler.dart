@@ -1,4 +1,6 @@
 
+import 'dart:math';
+
 import 'package:finansal_kocluk_takip/data/model/period_type.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -85,6 +87,25 @@ class Sabitler{
 
   }
 
+  static List<Color> get colorsForExpensesButtons => [
+    Colors.indigoAccent,
+    Colors.greenAccent,
+    Colors.deepPurpleAccent,
+    Colors.green,
+    Colors.deepOrangeAccent,
+    Colors.lightBlueAccent,
+    Colors.amber,
+    Colors.pink,
+    Colors.brown,
+    Colors.teal,
+    Colors.greenAccent,
+    Colors.blueGrey,
+  ];
+
+
+
+
+
   static Map<IconData,String> incomeSelections={
 
     Icons.attach_money:"Maaş",
@@ -99,7 +120,7 @@ class Sabitler{
 
   static Map<IconData,String> expensesSelections={
 
-    Icons.car_rental:"Araba",
+    Icons.car_repair_sharp:"Araba",
 
     Icons.home_filled:"Ev",
 
@@ -124,6 +145,8 @@ class Sabitler{
     Icons.add:"Ekle"
 
   };
+
+
 
 
 

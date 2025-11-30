@@ -2,11 +2,14 @@ import 'package:finansal_kocluk_takip/data/model/income.dart';
 import 'package:finansal_kocluk_takip/home_page/bloc/home_page_bloc.dart';
 import 'package:finansal_kocluk_takip/home_page/bloc/home_page_status/home_page_status.dart';
 import 'package:finansal_kocluk_takip/home_page/widgets/current_balance.dart';
+import 'package:finansal_kocluk_takip/home_page/widgets/expenses_donut_chart.dart';
 import 'package:finansal_kocluk_takip/home_page/widgets/income_listtile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../core/sabitler.dart';
+import '../../data/model/period_type.dart';
+import '../../income_expense_page/view/income_expanse_page.dart';
 import '../bloc/home_page_event/home_page_event.dart';
 import '../widgets/expenses_and_income_buttons.dart';
 
@@ -18,10 +21,18 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
   bool isOpen = false;
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
+
+    final expensesList=widgetList(context);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Sabitler.generalPrimaryColor,
@@ -53,7 +64,7 @@ class _HomePageState extends State<HomePage> {
                   BlocBuilder<HomePageBloc,HomePageState>(
                       builder: (context,state)
                       {
-                        return Text(state.date, style: GoogleFonts.poppins(fontSize: 25, color: Colors.black,),);
+                        return Text(state.date, style: GoogleFonts.poppins(fontSize: 20, color: Colors.black,),);
                       }
                   )
 
@@ -63,6 +74,61 @@ class _HomePageState extends State<HomePage> {
 
               const SizedBox(height: 20),
 
+
+              BlocBuilder<HomePageBloc,HomePageState>(
+
+
+                  buildWhen:(previous,current)
+                  {
+                    return previous.expenses!=current.expenses;
+                  },
+                  builder:(context,state)
+                  {
+                    return Container(
+
+
+                      height:500,
+
+
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: expensesList.sublist(0, 4),
+                          ),
+
+                          Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                              children: [
+                                expensesList[5],
+
+                                ExpensesDonutChart(expenses:context.read<HomePageBloc>().state.expenses),
+
+                                expensesList[6],
+
+                              ],
+
+
+
+                            ),
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: expensesList.sublist(0, 4),
+                          ),
+
+                        ],
+                      ),
+                    );
+
+
+
+
+                  }
+              ),
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -90,23 +156,33 @@ class _HomePageState extends State<HomePage> {
 
               const SizedBox(height: 10),
 
-               AnimatedContainer(
+               BlocBuilder<HomePageBloc,HomePageState>(
+
+                 buildWhen:(previous,current)
+                   {
+                     return previous.date != current.date || previous.incomes != current.incomes;
+                   },
+
+
+                 builder:(context,state)
+                   {
+                     return AnimatedContainer(
                     duration: const Duration(milliseconds: 200),
                     curve: Curves.easeInOut,
-                    height: isOpen ? (context.read<HomePageBloc>().state.incomes.length * 100) : 0.0,
-                    child: isOpen ? IncomeListtile(model: theMapSelectedByCategory(context.read<HomePageBloc>().state.incomes) ): Container(),
+                    height: isOpen ? (context.read<HomePageBloc>().state.incomes.length*55 ) : 0.0,
+                    child: isOpen ? SingleChildScrollView(
+                    child: IncomeListtile(model: theMapSelectedByCategory(context.read<HomePageBloc>().state.incomes) )): Container(),
+                      );
+                   }
+               ),
 
-
-              ),
-
-              const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    ExpensesandIncomeButtons(icon: const Icon(Icons.add, size: 45), color: Sabitler.incomeColor, isitIncome: true,),
-                    ExpensesandIncomeButtons(icon: const Icon(Icons.remove, size: 45), color: Sabitler.expensesColor, isitIncome: false,),
+                    ExpensesandIncomeButtons(icon: Icon(Icons.add, size: 40,color:Sabitler.incomeColor), color: Sabitler.incomeColor, isitIncome: true,),
+                    ExpensesandIncomeButtons(icon: Icon(Icons.remove, size: 40,color:Sabitler.expensesColor), color: Sabitler.expensesColor, isitIncome: false,),
                   ],
                 ),
               ),
@@ -128,9 +204,49 @@ class _HomePageState extends State<HomePage> {
       }
       else
       {
-        map[value.category]!.add(value); // Düzeltildi
+        map[value.category]!.add(value);
       }
     }
     return map;
   }
+
+
+
+
+
+
+  List<Widget>widgetList(BuildContext context)
+  {
+
+    return Sabitler.expensesSelections.entries.map((entry)
+    {
+      return IconButton(
+
+        icon:Icon(entry.key,size:45,color:Colors.black87),
+
+        onPressed: ()
+        {
+          Navigator.push(context,MaterialPageRoute(builder: (context)=>IncomeExpansePage(isitIncomepage: false,type:PeriodType.daily,expensesType: entry.value,)));
+        },
+
+
+
+
+      );
+
+
+    }
+
+
+
+
+    ).toList();
+
+
+
+  }
+
+
+
+
 }

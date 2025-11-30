@@ -19,8 +19,10 @@ class IncomeExpansePage extends StatefulWidget {
 
   final PeriodType type;
 
+  String ? expensesType;
 
-   IncomeExpansePage({super.key,required this.isitIncomepage,required this.type}):primaryColor = (isitIncomepage) ? Sabitler.incomeColor : Sabitler.expensesColor;
+
+   IncomeExpansePage({super.key,required this.isitIncomepage,required this.type,this.expensesType}):primaryColor = (isitIncomepage) ? Sabitler.incomeColor : Sabitler.expensesColor;
 
   @override
   State<IncomeExpansePage> createState() => _IncomeExpansePageState();
@@ -34,7 +36,6 @@ class _IncomeExpansePageState extends State<IncomeExpansePage> {
 
   @override
   Widget build(BuildContext context) {
-
 
     context.read<IncomeExpenseBloc>().add(ChangeType(widget.isitIncomepage));
 
@@ -82,7 +83,6 @@ class _IncomeExpansePageState extends State<IncomeExpansePage> {
                 (Route<dynamic> route) => false,
           );
         });
-
 
       }
 
@@ -301,12 +301,22 @@ class _IncomeExpansePageState extends State<IncomeExpansePage> {
 
       onTap: ()
       {
-        setState(() {
-          if((controloftheValue(context)==true))
+        if(widget.expensesType==null)
+        {
+          setState(() {
+            if((controloftheValue(context)==true))
             {
               isitButtonsSection=false;
             }
-        });
+          });
+        }
+        else
+          {
+
+
+
+
+          }
       },
 
 
@@ -331,7 +341,10 @@ class _IncomeExpansePageState extends State<IncomeExpansePage> {
 
           ),
 
-        child: Center(child: Text("Kategori Seçiniz",style:GoogleFonts.poppins(fontSize:30,color:Colors.grey.shade900,fontWeight: FontWeight.w400))),
+        child: Center(child: (widget.expensesType==null)?Text("Kategori Seçiniz",style:GoogleFonts.poppins(fontSize:30,color:Colors.grey.shade900,fontWeight: FontWeight.w400)):
+
+          Text("${widget.expensesType} Ekle",style:GoogleFonts.poppins(fontSize:30,color:Colors.grey.shade900,fontWeight: FontWeight.w400)))
+
 
 
 
@@ -340,7 +353,11 @@ class _IncomeExpansePageState extends State<IncomeExpansePage> {
     );
 
 
-        }
+
+
+
+
+  }
 
 
  List<Widget> categoryContainers(BuildContext context)
@@ -376,7 +393,7 @@ class _IncomeExpansePageState extends State<IncomeExpansePage> {
 
                context.read<IncomeExpenseBloc>().add(SaveTheValues(isitIncome:widget.isitIncomepage, map:map));
 
-
+               context.read<IncomeExpenseBloc>().add(ResetTheCalculater());
 
 
              },

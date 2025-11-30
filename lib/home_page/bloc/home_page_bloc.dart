@@ -1,3 +1,4 @@
+import 'package:finansal_kocluk_takip/data/repositories/expenses_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../core/sabitler.dart';
@@ -12,6 +13,7 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
       date: Sabitler.converttoDate(DateTime.now()),
       currentBalance: 0.0,
       incomes: [],
+      expenses: []
     ),
   ) {
 
@@ -22,20 +24,43 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
         print("Mevcut guncel bakiye: ${currentAmount.toString()}");
 
         emit(state.copyWith(currentBalance: currentAmount));
-      } catch (e) {
+      }
+      catch (e)
+      {
         print(e.toString());
       }
     });
 
-    on<ShowIncomeList>((event, emit) async {
+    on<getExpensesList>((event,emit)
+    async {
+      try
+      {
+
+        final expensesList=await locator<ExpensesRepository>().expensesList(event.date);
+
+        emit(state.copyWith(expenses: expensesList));
+
+        return ;
+      }
+      catch(e)
+      {
+        print("Hata" +e.toString());
+      }
+
+    }
+    );
+
+
+
+    on<ShowIncomeList>((event, emit)
+    async
+    {
       if (event.isOpenned == true) {
         try{
-          print(state.date);
           final incomes = await locator<IncomeRepository>().getAllofIncomesList(state.date);
 
-          print(incomes[0]);
           emit(state.copyWith(incomes: incomes));
-          print("İşlem bAşarılı");
+
           return ;
         }
         catch(e)
@@ -51,11 +76,19 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
       emit(state.copyWith(date: newDate));
 
       add(CalculateCurrentBalance(date: newDate));
+
+      add(getExpensesList(newDate));
+
     });
 
 
     add(CalculateCurrentBalance(
       date: Sabitler.converttoDate(DateTime.now()),
+    ));
+
+
+    add(getExpensesList(
+        Sabitler.converttoDate(DateTime.now())
     ));
 
   }

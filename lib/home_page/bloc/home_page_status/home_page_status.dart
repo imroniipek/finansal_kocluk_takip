@@ -1,6 +1,8 @@
 
 import 'package:finansal_kocluk_takip/data/model/income.dart';
 
+import '../../../data/model/expense.dart';
+
 
 
 
@@ -13,16 +15,19 @@ class HomePageState
 
   final List<IncomeModel> incomes;
 
-  HomePageState({required this.date,required this.currentBalance,required this.incomes});
+  final List<ExpenseModel> expenses;
+
+  HomePageState({required this.date,required this.currentBalance,required this.incomes,required this.expenses});
 
 
-  HomePageState copyWith({String ?date,double ? currentBalance,List<IncomeModel>? incomes})
+  HomePageState copyWith({String ?date,double ? currentBalance,List<IncomeModel>? incomes,List<ExpenseModel> ? expenses})
   {
 
     return HomePageState(
         date: date?? this.date,
         currentBalance: currentBalance?? this.currentBalance,
-        incomes: incomes ??this.incomes
+        incomes: incomes ??this.incomes,
+        expenses:expenses??this.expenses
     );
 
 

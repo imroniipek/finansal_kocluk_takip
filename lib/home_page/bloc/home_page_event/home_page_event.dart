@@ -27,3 +27,14 @@ class ShowIncomeList extends HomePageEvent
   ShowIncomeList(this.isOpenned);
 
 }
+
+class getExpensesList extends HomePageEvent
+{
+  final String date;
+
+  getExpensesList(this.date);
+
+
+
+}
+

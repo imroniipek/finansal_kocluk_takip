@@ -27,9 +27,9 @@ class ExpensesandIncomeButtons extends StatelessWidget {
 
         child: Container(
 
-          height: 120,
+          height: 100,
 
-          width: 120,
+          width: 100,
 
           decoration: BoxDecoration(
 

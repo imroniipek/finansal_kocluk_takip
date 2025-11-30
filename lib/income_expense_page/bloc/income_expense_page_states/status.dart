@@ -49,9 +49,6 @@ class IncomeExpenseStatus extends IncomeExpenseState {
     String? tempValue,
     String? note,
     PageStatus ? status,
-    List<IncomeModel>? incomes,
-    List<ExpenseModel>?expenses
-
     }) {
     return IncomeExpenseStatus(
 

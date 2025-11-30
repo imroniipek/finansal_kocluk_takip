@@ -23,7 +23,9 @@ class CalculatorButton extends StatelessWidget {
             if (value == "=") {context.read<IncomeExpenseBloc>().add(CalculateResult());}
             else if (isOperator(value)) {context.read<IncomeExpenseBloc>().add(AddOperator(value));}
            else {context.read<IncomeExpenseBloc>().add(AddDigit(value));}
-    },
+
+
+           },
 
 
 
