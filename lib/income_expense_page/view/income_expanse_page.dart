@@ -7,8 +7,10 @@ import 'package:finansal_kocluk_takip/income_expense_page/widgets/note_textfield
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import '../../core/sabitler.dart';
+import '../../data/model/expense.dart';
+import '../../home_page/bloc/home_page_bloc.dart';
+import '../../home_page/bloc/home_page_event/home_page_event.dart';
 import '../bloc/income_expense_page_events/events.dart';
 
 class IncomeExpansePage extends StatefulWidget {
@@ -19,10 +21,12 @@ class IncomeExpansePage extends StatefulWidget {
 
   final PeriodType type;
 
-  String ? expensesType;
+  String ? buttonName;
+
+  ExpenseModel? beChangedModel;
 
 
-   IncomeExpansePage({super.key,required this.isitIncomepage,required this.type,this.expensesType}):primaryColor = (isitIncomepage) ? Sabitler.incomeColor : Sabitler.expensesColor;
+   IncomeExpansePage({super.key,required this.isitIncomepage,required this.type,this.buttonName, this.beChangedModel}):primaryColor = (isitIncomepage) ? Sabitler.incomeColor : Sabitler.expensesColor;
 
   @override
   State<IncomeExpansePage> createState() => _IncomeExpansePageState();
@@ -32,24 +36,25 @@ class IncomeExpansePage extends StatefulWidget {
 
 class _IncomeExpansePageState extends State<IncomeExpansePage> {
 
+
+
+  @override
+  void initState() {
+
+    context.read<IncomeExpenseBloc>().add(ChangeType(widget.isitIncomepage));
+    super.initState();
+  }
   bool isitButtonsSection=true;
 
   @override
   Widget build(BuildContext context) {
 
-    context.read<IncomeExpenseBloc>().add(ChangeType(widget.isitIncomepage));
-
     return Scaffold(
 
-      appBar: AppBar(
-
-
-        leading:
-            IconButton(onPressed:(){
+      appBar:(widget.beChangedModel== null)?AppBar(
+        leading: IconButton(onPressed:(){
 
               Navigator.pop(context);
-
-
 
             }, icon: Icon(Icons.arrow_back,size:35,color:Colors.white)),
 
@@ -58,6 +63,32 @@ class _IncomeExpansePageState extends State<IncomeExpansePage> {
         backgroundColor: widget.primaryColor,
 
         centerTitle: true,
+      ):AppBar(
+
+        leading:IconButton(onPressed:(){
+
+          Navigator.pop(context);
+
+
+
+        }, icon: Icon(Icons.arrow_back,size:35,color:Colors.white)),
+
+        title:Text("Düzenle",style:GoogleFonts.poppins(fontSize:25,color:Colors.white)),
+        actions: [
+
+          IconButton(
+
+            icon: Icon(Icons.delete,size:35,color:Colors.white),
+
+            onPressed: ()
+            {
+              context.read<IncomeExpenseBloc>().add(DeleteTheExpenseModel(model: widget.beChangedModel!));
+            },
+
+          )
+
+        ],
+
       ),
 
       body:
@@ -67,24 +98,24 @@ class _IncomeExpansePageState extends State<IncomeExpansePage> {
 
        listener: (context, state) {
 
-      if (state.status == PageStatus.success)
-      {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text("İşlem başarıyla gerçekleşti"),
-            backgroundColor: Colors.green,
-          ),
-        );
+         if (state.status == PageStatus.success)
+         {
+           context.read<HomePageBloc>().add(getExpensesList(
+               Sabitler.converttoDate(DateTime.now())
+           ));
 
-        Future.delayed(Duration(milliseconds: 400), ()
-        {
-          Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => HomePage()),
-                (Route<dynamic> route) => false,
-          );
-        });
+           context.read<HomePageBloc>().add(CalculateCurrentBalance(
+               date: Sabitler.converttoDate(DateTime.now())
+           ));
 
-      }
+           Navigator.of(context).pushAndRemoveUntil(
+             MaterialPageRoute(builder: (context) => HomePage()),
+                 (Route<dynamic> route) => false,
+           );
+
+
+
+         }
 
       else if (state.status == PageStatus.error) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -265,7 +296,9 @@ class _IncomeExpansePageState extends State<IncomeExpansePage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(state.tempValue!.split(".")[0],style: GoogleFonts.poppins(fontSize: 40, color: Colors.white),),
+
                         Text(".", style: GoogleFonts.poppins(fontSize: 30, color: Colors.white),),
+
                         Text(state.tempValue!.split(".")[1], style: GoogleFonts.poppins(fontSize: 30, color: Colors.white)),
                       ],
                     ):Text(state.tempValue!,style: GoogleFonts.poppins(fontSize: 35, color: Colors.white),);
@@ -295,13 +328,92 @@ class _IncomeExpansePageState extends State<IncomeExpansePage> {
 
   }
 
+
+  List<Widget> categoryContainers(BuildContext context)
+  {
+    final values=(context.read<IncomeExpenseBloc>().state.title=="Yeni Gelir")?Sabitler.incomeSelections:Sabitler.expensesSelections;
+
+    List<Widget>containers=[];
+
+    for(var entry in values.entries)
+    {
+      containers.add(
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: InkWell(
+
+            onTap: ()
+            {
+              final status=context.read<IncomeExpenseBloc>().state;
+
+              int i=Sabitler.conevertPeriodTypetoInetegerValue(widget.type);
+
+              final map={
+
+                "date":status.date,
+
+                "amount":double.parse(status.tempValue!),
+
+                "period_type":i,
+
+                "category":entry.value
+
+              };
+
+              context.read<IncomeExpenseBloc>().add(SaveTheValues(isitIncome:widget.isitIncomepage, map:map));
+
+              context.read<IncomeExpenseBloc>().add(ResetTheCalculater());
+
+
+            },
+
+
+
+            child: Container(
+              width: (MediaQuery.of(context).size.width/5),
+
+              height: 50,
+              decoration: BoxDecoration(
+                border: Border.all(color:widget.primaryColor,width:3,),
+                borderRadius: BorderRadius.circular(10),
+
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Expanded(child: CircleAvatar(child: Icon(entry.key,size:30,color:Colors.white),radius: 30,backgroundColor: widget.primaryColor,foregroundColor: Colors.white,)),
+                  Text(entry.value, style:GoogleFonts.poppins(fontSize:18,color:Colors.black,fontWeight: FontWeight.w500)),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
+
+    return containers;
+
+  }
+
+
+
+  bool  controloftheValue(BuildContext context)
+  {
+    final value=double.parse(context.read<IncomeExpenseBloc>().state.tempValue!);
+
+    return (value<=0)? false:true;
+  }
+
+
+
   Widget selectionCategory(BuildContext context)
   {
     return InkWell(
 
       onTap: ()
       {
-        if(widget.expensesType==null)
+        if(widget.buttonName==null)
         {
           setState(() {
             if((controloftheValue(context)==true))
@@ -310,8 +422,16 @@ class _IncomeExpansePageState extends State<IncomeExpansePage> {
             }
           });
         }
-        else
+        else if(widget.buttonName=="Kategoriyi Değiştir")
           {
+
+            setState(() {
+              if((controloftheValue(context)==true))
+              {
+                isitButtonsSection=false;
+              }
+            });
+
 
 
 
@@ -341,9 +461,9 @@ class _IncomeExpansePageState extends State<IncomeExpansePage> {
 
           ),
 
-        child: Center(child: (widget.expensesType==null)?Text("Kategori Seçiniz",style:GoogleFonts.poppins(fontSize:30,color:Colors.grey.shade900,fontWeight: FontWeight.w400)):
+        child: Center(child: (widget.buttonName==null)?Text("Kategori Seçiniz",style:GoogleFonts.poppins(fontSize:30,color:Colors.grey.shade900,fontWeight: FontWeight.w400)):
 
-          Text("${widget.expensesType} Ekle",style:GoogleFonts.poppins(fontSize:30,color:Colors.grey.shade900,fontWeight: FontWeight.w400)))
+          Text("${widget.buttonName} Ekle",style:GoogleFonts.poppins(fontSize:30,color:Colors.grey.shade900,fontWeight: FontWeight.w400)))
 
 
 
@@ -358,83 +478,6 @@ class _IncomeExpansePageState extends State<IncomeExpansePage> {
 
 
   }
-
-
- List<Widget> categoryContainers(BuildContext context)
- {
-   final values=(context.read<IncomeExpenseBloc>().state.title=="Yeni Gelir")?Sabitler.incomeSelections:Sabitler.expensesSelections;
-
-   List<Widget>containers=[];
-
-   for(var entry in values.entries)
-     {
-       containers.add(
-         Padding(
-           padding: const EdgeInsets.all(8.0),
-           child: InkWell(
-
-             onTap: ()
-             {
-               final status=context.read<IncomeExpenseBloc>().state;
-
-               int i=Sabitler.conevertPeriodTypetoInetegerValue(widget.type);
-
-               final map={
-
-                 "date":status.date,
-
-                 "amount":double.parse(status.tempValue!),
-
-                 "period_type":i,
-
-                 "category":entry.value
-
-               };
-
-               context.read<IncomeExpenseBloc>().add(SaveTheValues(isitIncome:widget.isitIncomepage, map:map));
-
-               context.read<IncomeExpenseBloc>().add(ResetTheCalculater());
-
-
-             },
-
-
-
-             child: Container(
-               width: (MediaQuery.of(context).size.width/5),
-             
-               height: 50,
-               decoration: BoxDecoration(
-                 border: Border.all(color:widget.primaryColor,width:3,),
-                 borderRadius: BorderRadius.circular(10),
-             
-               ),
-               child: Column(
-                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                 children: [
-                   Expanded(child: CircleAvatar(child: Icon(entry.key,size:30,color:Colors.white),radius: 30,backgroundColor: widget.primaryColor,foregroundColor: Colors.white,)),
-                   Text(entry.value, style:GoogleFonts.poppins(fontSize:18,color:Colors.black,fontWeight: FontWeight.w500)),
-                 ],
-               ),
-             ),
-           ),
-         ),
-       );
-     }
-
-
-   return containers;
-
- }
-
-
-
-   bool  controloftheValue(BuildContext context)
-   {
-     final value=double.parse(context.read<IncomeExpenseBloc>().state.tempValue!);
-
-     return (value<=0)? false:true;
-   }
 
 
 

@@ -1,3 +1,5 @@
+import '../../../data/model/expense.dart';
+
 abstract class IncomeExpenseEvent {}
 
 class ChangeType extends IncomeExpenseEvent
@@ -50,6 +52,21 @@ class SaveTheValues extends IncomeExpenseEvent
   final Map<String,dynamic> map;
 
   SaveTheValues({required this.isitIncome,required this.map});
+}
+
+class DeleteTheExpenseModel extends IncomeExpenseEvent
+{
+  final ExpenseModel model;
+
+  DeleteTheExpenseModel({required this.model});
+}
+
+class fromHomePage extends IncomeExpenseEvent
+{
+  final dynamic model;
+
+  fromHomePage({required this.model});
+
 }
 
 

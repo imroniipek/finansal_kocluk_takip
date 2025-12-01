@@ -19,9 +19,12 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
 
     on<CalculateCurrentBalance>((event, emit) async {
       try {
-        final currentAmount = await locator<IncomeRepository>().calculateCurrentAmount(event.date);
 
-        print("Mevcut guncel bakiye: ${currentAmount.toString()}");
+        final currentIncomeAmount= await locator<IncomeRepository>().calculateCurrentAmount(event.date);
+
+        final currentExpensesAmount=await locator<ExpensesRepository>().calculateTheAmountofExpenses(event.date);
+
+        final currentAmount=currentIncomeAmount-currentExpensesAmount;
 
         emit(state.copyWith(currentBalance: currentAmount));
       }

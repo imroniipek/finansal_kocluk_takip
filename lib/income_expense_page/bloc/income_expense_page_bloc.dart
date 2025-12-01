@@ -27,7 +27,7 @@ class IncomeExpenseBloc extends Bloc<IncomeExpenseEvent, IncomeExpenseStatus> {
   {
     on<ChangeType>((event, emit)
     {
-      emit(state.copyWith(title: event.isIncome ? "Yeni Gelir" : "Yeni Gider",));
+      emit(state.copyWith(title: (event.isIncome==true) ? "Yeni Gelir" : "Yeni Gider",));
     });
 
     on<SelectDate>((event, emit)
@@ -155,7 +155,7 @@ class IncomeExpenseBloc extends Bloc<IncomeExpenseEvent, IncomeExpenseStatus> {
 
               if (id != null && id > 0)
               {
-                await locator<IncomeRepository>().printIncomesTable();
+                await locator<ExpensesRepository>().printExpensesTable();
 
                 emit(state.copyWith(status: PageStatus.success,));
 
@@ -184,6 +184,8 @@ class IncomeExpenseBloc extends Bloc<IncomeExpenseEvent, IncomeExpenseStatus> {
 
       emit(state.copyWith(
 
+        date:Sabitler.converttoDate(DateTime.now()),
+        title:"",
         setFirstValueToNull: true,
 
         setFirstOperator: true,
@@ -201,18 +203,46 @@ class IncomeExpenseBloc extends Bloc<IncomeExpenseEvent, IncomeExpenseStatus> {
 
     );
 
+    on<DeleteTheExpenseModel>(
+        (event,emit)
+        async {
+          final id=await locator<ExpensesRepository>().deleteExpense(event.model);
+
+          try
+          {
+            if (id != null && id > 0)
+              {
+
+                emit(state.copyWith(status:PageStatus.success));
+                return;
+              }
+            emit(state.copyWith(status:PageStatus.error));
+          }
+          catch(e)
+          {
+            print(e.toString());
+            emit(state.copyWith(status:PageStatus.error));
+          };
+        }
+    );
+
+    on<fromHomePage>((event,emit)
+    {
+      if(event.model is IncomeModel||event.model is ExpenseModel)
+        {
+
+          emit(state.copyWith(date:event.model.date,tempValue:event.model.amount.toString(),setFirstValueToNull:true,setFirstOperator:true,numbers:event.model.amount.toString().split("") ));
+
+        }
+    });
+
+
 
   }
 
 
-
-
   String converttoString(List<String> number) =>number.map((e)=>e).join();
-
-
-
   double _apply(double a, double b, String op) {
-
 
    if(op=="+")
      {

@@ -55,6 +55,23 @@ class ExpensesRepository{
     print(thequeryResult);
 
   }
+  Future<double>calculateTheAmountofExpenses(String date)
+  async {
+
+    double totalAmount=0.0;
+
+    final db=await dbHelper.database;
+
+    List<Map<String,dynamic>> listofExpenses=await db.query("expenses",where:"date=?",whereArgs: [date]);
+
+
+    for(var value in listofExpenses)
+      {
+        totalAmount=totalAmount+value["amount"];
+      }
+
+    return totalAmount;
+  }
 
 
 

@@ -1,18 +1,22 @@
 
 import 'dart:math';
 
+import 'package:finansal_kocluk_takip/data/model/income.dart';
 import 'package:finansal_kocluk_takip/data/model/period_type.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../data/model/expense.dart';
+
 class Sabitler{
 
 
-  static Color incomeColor=Colors.teal;
+  static Color incomeColor =Color(0xFF7686C2);
 
-  static Color expensesColor=Colors.red.shade600;
+  static Color expensesColor=Color(0xFFE57373);
 
-  static Color generalPrimaryColor=Colors.teal;
+  static Color generalPrimaryColor=Colors.deepPurple;
+
 
 
 
@@ -88,21 +92,19 @@ class Sabitler{
   }
 
   static List<Color> get colorsForExpensesButtons => [
-    Colors.indigoAccent,
-    Colors.greenAccent,
-    Colors.deepPurpleAccent,
-    Colors.green,
-    Colors.deepOrangeAccent,
-    Colors.lightBlueAccent,
-    Colors.amber,
-    Colors.pink,
-    Colors.brown,
-    Colors.teal,
-    Colors.greenAccent,
-    Colors.blueGrey,
+    Color(0xFF527483),
+    Color(0xFF7686C2),
+    Colors.lime.shade400,
+    Color(0xFF66D1C4),
+    Color(0xFFE6AE67),
+    Color(0xFFCF7F94),
+    Color(0xFFA67C6E),
+    Color(0xFF9B8CED),
+    Color(0xFF7DA1D5),
+    Color(0xFF81C784),
+    Color(0xFFEAA96A),
+    Color(0xFFC4BBBB),
   ];
-
-
 
 
 
@@ -118,33 +120,50 @@ class Sabitler{
 
   };
 
-  static Map<IconData,String> expensesSelections={
-
-    Icons.car_repair_sharp:"Araba",
-
-    Icons.home_filled:"Ev",
-
-    Icons.local_pizza_outlined:"Gıda",
-
-    Icons.celebration:"Eğlence",
-
-    Icons.receipt:"Faturalar",
-
-    Icons.checkroom:"Giyim",
-
-    Icons.phone:"Haberleşme",
-
-    Icons.bus_alert_sharp:"Ulaşım",
-
-    Icons.medication:"Sağlık",
-
-    Icons.pets_sharp:"Evcil Hayvan",
-
-    Icons.sports_basketball:"Spor",
-
-    Icons.add:"Ekle"
-
+  static Map<IconData, String> expensesSelections = {
+    Icons.directions_car_filled_outlined: "Araba",
+    Icons.house_rounded: "Ev",
+    Icons.local_grocery_store_rounded: "Gıda",
+    Icons.celebration_rounded: "Eğlence",
+    Icons.receipt_long_rounded: "Faturalar",
+    Icons.checkroom_outlined: "Giyim",
+    Icons.phone_iphone_rounded: "Haberleşme",
+    Icons.directions_bus_filled_rounded: "Ulaşım",
+    Icons.medical_services_rounded: "Sağlık",
+    Icons.pets_rounded: "Evcil Hayvan",
+    Icons.add_circle_rounded: "Ekle",
   };
+
+
+
+  static Map<String,double>calculateAmountPriceByCategory(List<ExpenseModel>expenses)
+  {
+
+    Map<String,double> theMap={};
+
+
+
+    for(var expense in expenses)
+      {
+        if(theMap[expense.category]==null)
+          {
+            theMap[expense.category]=expense.amount;
+          }
+        else
+          {
+            theMap[expense.category]=theMap[expense.category]!+expense.amount;
+          }
+
+
+
+      }
+    return theMap;
+
+  }
+
+
+
+
 
 
 
