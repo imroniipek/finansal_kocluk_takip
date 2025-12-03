@@ -42,6 +42,8 @@ class ExpensesRepository{
 
     final thequeryResult=await db.query("expenses",where:"date=?",whereArgs: [date]);
 
+    print(thequeryResult);
+
     return thequeryResult.map((e)=>ExpenseModel.fromMap(e)).toList();
 
 

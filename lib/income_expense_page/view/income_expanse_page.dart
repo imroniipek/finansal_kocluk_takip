@@ -14,19 +14,18 @@ import '../../home_page/bloc/home_page_event/home_page_event.dart';
 import '../bloc/income_expense_page_events/events.dart';
 
 class IncomeExpansePage extends StatefulWidget {
-
   final bool isitIncomepage;
-
   final Color primaryColor;
-
   final PeriodType type;
+  final String? buttonName;
+  final ExpenseModel? beChangedModel;
 
-  String ? buttonName;
+  IncomeExpansePage({super.key, required this.isitIncomepage, required this.type, this.buttonName, this.beChangedModel, Color? primaryColor,}) : primaryColor = primaryColor ??
+  (isitIncomepage ? Sabitler.incomeColor : Sabitler.expensesColor);
 
-  ExpenseModel? beChangedModel;
 
 
-   IncomeExpansePage({super.key,required this.isitIncomepage,required this.type,this.buttonName, this.beChangedModel}):primaryColor = (isitIncomepage) ? Sabitler.incomeColor : Sabitler.expensesColor;
+
 
   @override
   State<IncomeExpansePage> createState() => _IncomeExpansePageState();
@@ -53,17 +52,19 @@ class _IncomeExpansePageState extends State<IncomeExpansePage> {
 
       appBar:(widget.beChangedModel== null)?AppBar(
         leading: IconButton(onPressed:(){
+              context.read<IncomeExpenseBloc>().add(ResetTheCalculater());
 
               Navigator.pop(context);
-
             }, icon: Icon(Icons.arrow_back,size:35,color:Colors.white)),
 
-        title:Text(context.read<IncomeExpenseBloc>().state.title,style:GoogleFonts.poppins(fontSize:25,color:Colors.white)),
+        title:(widget.isitIncomepage==true)?Text("Yeni Gelir",style:GoogleFonts.poppins(fontSize:25,color:Colors.white)):Text("Yeni Gider",style:GoogleFonts.poppins(fontSize:25,color:Colors.white)),
 
         backgroundColor: widget.primaryColor,
 
         centerTitle: true,
-      ):AppBar(
+      ):
+
+      AppBar(
 
         leading:IconButton(onPressed:(){
 
@@ -96,26 +97,40 @@ class _IncomeExpansePageState extends State<IncomeExpansePage> {
       BlocConsumer<IncomeExpenseBloc, IncomeExpenseStatus>(
 
 
-       listener: (context, state) {
+       listener: (context, state) async{
 
          if (state.status == PageStatus.success)
          {
-           context.read<HomePageBloc>().add(getExpensesList(
-               Sabitler.converttoDate(DateTime.now())
-           ));
 
+           // 1. Yeni Tarihi Alın (Opsiyonel: Eğer bu sayfada tarih değiştiyse)
+           final newDate = context.read<IncomeExpenseBloc>().state.date;
+
+           print("yeni tarih degerim ${newDate}");
+
+           // 2. Ana Sayfa Bloc'una Verileri Yeniden Çekmesi için Event Gönderin ve *Bekleyin*
+           // HomePageBloc'taki event'leriniz de await/async kullanmalı.
+           context.read<HomePageBloc>().add(getExpensesList(newDate));
+
+           // 3. Güncel Bakiyeyi Hesaplayın ve *Bekleyin*
            context.read<HomePageBloc>().add(CalculateCurrentBalance(
-               date: Sabitler.converttoDate(DateTime.now())
+               date: newDate
            ));
 
-           Navigator.of(context).pushAndRemoveUntil(
-             MaterialPageRoute(builder: (context) => HomePage()),
-                 (Route<dynamic> route) => false,
-           );
+           // 4. State Güncelleme Event'i Gönderin (Eğer HomePageBloc'taki state'i değiştirecekseniz)
+           // state.copyWith() yerine event kullanın.
+           // context.read<HomePageBloc>().add(UpdateDate(newDate)); // Eğer böyle bir event varsa
 
+           // 5. Başarı Mesajını Gösterin
+           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+             content: Text("İşleminiz Başarılı Bir şekilde Gerçekleşti",style:TextStyle(color:Colors.white)),
+             backgroundColor: Colors.green.shade900,
+           ));
 
-
+           // 6. Sayfayı Kapatın (Tüm işlemler tamamlandıktan sonra)
+           Navigator.pop(context);
          }
+
+
 
       else if (state.status == PageStatus.error) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -229,7 +244,9 @@ class _IncomeExpansePageState extends State<IncomeExpansePage> {
         IconButton(
             onPressed: () async {
              final date =await showDatePicker(context: context, firstDate: DateTime(2024), lastDate: DateTime(2030),initialDate: DateTime.now());
+             print("secilen tarih  ${date}");
              context.read<IncomeExpenseBloc>().add(SelectDate(date!));
+             print("Su anki tarih: ${ context.read<IncomeExpenseBloc>().state.date}");
           },icon: Icon(Icons.calendar_month,size:27,color:Colors.black)
         ),
 
@@ -360,9 +377,22 @@ class _IncomeExpansePageState extends State<IncomeExpansePage> {
 
               };
 
+              print("--------------DB kaydedilen Değerler-------------------");
+
+              print("tarih: ${status.date}");
+
+              print("amount: ${status.tempValue}");
+
+              print("period_type: ${i}");
+
+              print("category ${entry.value}");
+
+              print("---------------------------------");
+
               context.read<IncomeExpenseBloc>().add(SaveTheValues(isitIncome:widget.isitIncomepage, map:map));
 
               context.read<IncomeExpenseBloc>().add(ResetTheCalculater());
+
 
 
             },

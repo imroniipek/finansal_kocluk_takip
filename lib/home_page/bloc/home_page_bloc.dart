@@ -27,6 +27,8 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
         final currentAmount=currentIncomeAmount-currentExpensesAmount;
 
         emit(state.copyWith(currentBalance: currentAmount));
+
+        print("toplam miktar: ${currentAmount}");
       }
       catch (e)
       {
@@ -39,7 +41,12 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
       try
       {
 
+        print(" listeyi getirdeki tarih: mevcut tarih ${state.date}");
+
         final expensesList=await locator<ExpensesRepository>().expensesList(event.date);
+
+
+        print(expensesList.length);
 
         emit(state.copyWith(expenses: expensesList));
 
@@ -86,13 +93,13 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
 
 
     add(CalculateCurrentBalance(
-      date: Sabitler.converttoDate(DateTime.now()),
-    ));
+      date: state.date),
+    );
 
 
     add(getExpensesList(
-        Sabitler.converttoDate(DateTime.now())
-    ));
+        state.date)
+    );
 
   }
 }

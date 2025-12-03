@@ -1,7 +1,4 @@
 
-import 'dart:math';
-
-import 'package:finansal_kocluk_takip/data/model/income.dart';
 import 'package:finansal_kocluk_takip/data/model/period_type.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -16,9 +13,6 @@ class Sabitler{
   static Color expensesColor=Color(0xFFE57373);
 
   static Color generalPrimaryColor=Colors.deepPurple;
-
-
-
 
 
 
@@ -134,14 +128,23 @@ class Sabitler{
     Icons.add_circle_rounded: "Ekle",
   };
 
+  static const Map<String, Color> expenseColorsMap = {
+    "Araba":Color(0xFF527483),
+    "Ev":  Color(0xFF7686C2),
+    "Gıda":Color(0xFFCDDC39),
+    "Eğlence":  Color(0xFF66D1C4),
+    "Faturalar":  Color(0xFFE6AE67),
+    "Giyim":  Color(0xFFCF7F94),
+    "Haberleşme":  Color(0xFFA67C6E),
+    "Ulaşım": Color(0xFF9B8CED),
+    "Sağlık": Color(0xFF7DA1D5),
+    "Evcil Hayvan": Color(0xFF81C784),
+  };
 
 
   static Map<String,double>calculateAmountPriceByCategory(List<ExpenseModel>expenses)
   {
-
     Map<String,double> theMap={};
-
-
 
     for(var expense in expenses)
       {
@@ -153,9 +156,6 @@ class Sabitler{
           {
             theMap[expense.category]=theMap[expense.category]!+expense.amount;
           }
-
-
-
       }
     return theMap;
 

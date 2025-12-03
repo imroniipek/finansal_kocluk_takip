@@ -38,6 +38,8 @@ class IncomeExpenseBloc extends Bloc<IncomeExpenseEvent, IncomeExpenseStatus> {
       final day = event.date.day;
 
       emit(state.copyWith(date: "$dayName, $day $month"));
+
+      print(state.date);
     });
 
 
@@ -133,6 +135,8 @@ class IncomeExpenseBloc extends Bloc<IncomeExpenseEvent, IncomeExpenseStatus> {
           final id = await locator<IncomeRepository>().addIncome(model);
 
           if (id != null && id > 0) {
+
+            print("Gelirler---------------");
             await locator<IncomeRepository>().printIncomesTable();
 
 
@@ -155,11 +159,14 @@ class IncomeExpenseBloc extends Bloc<IncomeExpenseEvent, IncomeExpenseStatus> {
 
               if (id != null && id > 0)
               {
+                print("Giderler---------------");
                 await locator<ExpensesRepository>().printExpensesTable();
 
                 emit(state.copyWith(status: PageStatus.success,));
 
                 emit(state.copyWith(status: PageStatus.idle));
+
+
               }
               else
                 {
@@ -183,9 +190,6 @@ class IncomeExpenseBloc extends Bloc<IncomeExpenseEvent, IncomeExpenseStatus> {
     {
 
       emit(state.copyWith(
-
-        date:Sabitler.converttoDate(DateTime.now()),
-        title:"",
         setFirstValueToNull: true,
 
         setFirstOperator: true,
@@ -193,9 +197,6 @@ class IncomeExpenseBloc extends Bloc<IncomeExpenseEvent, IncomeExpenseStatus> {
         numbers:[],
 
         tempValue: "0"
-
-
-
       ));
 
 

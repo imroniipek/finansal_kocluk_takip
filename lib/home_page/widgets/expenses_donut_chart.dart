@@ -1,21 +1,36 @@
+import 'package:finansal_kocluk_takip/data/repositories/expenses_repository.dart';
+import 'package:finansal_kocluk_takip/data/repositories/income_repository.dart';
+import 'package:finansal_kocluk_takip/locator.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../core/sabitler.dart';
 import '../../data/model/expense.dart';
 
+
 class ExpensesDonutChart extends StatefulWidget {
 
   final List<ExpenseModel> expenses;
-
-  const ExpensesDonutChart({super.key, required this.expenses});
+  final String date;
+  const ExpensesDonutChart({super.key, required this.expenses,required this.date});
 
   @override
   State<ExpensesDonutChart> createState() => _ExpensesDonutChartState();
 }
 
 class _ExpensesDonutChartState extends State<ExpensesDonutChart> {
-  List<Color> chartColors = Sabitler.colorsForExpensesButtons;
+
+  double ? totalIncomeAmount;
+
+  double ? totalExpensesAmount;
+
+  @override
+  initState() {
+    loadAmounts();
+    super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -26,47 +41,67 @@ class _ExpensesDonutChartState extends State<ExpensesDonutChart> {
       );
     }
 
+    final map = Sabitler.calculateAmountPriceByCategory(widget.expenses);
+    final total = map.values.fold(0.0, (a, b) => a + b);
 
-    final total =  Sabitler.calculateAmountPriceByCategory(widget.expenses).entries.fold(0.0, (a, b) => a + b.value);
+    return Stack(
+        children: [
 
-    int colorIndex = -1;
+          SizedBox(
+            height: 250,
+            child: PieChart(
+              PieChartData(
+                sectionsSpace: 0,
+                centerSpaceRadius: 75,
+                startDegreeOffset: -90,
 
-    return SizedBox(
-      height: 300,
-      child: PieChart(
-        PieChartData(
-            sectionsSpace: 0,
-            centerSpaceRadius: 75,
-            startDegreeOffset: -90,
-            borderData: FlBorderData(
-              show: true,
-              border: Border.all(
-                color: Colors.red,
-                width: 3,
+                sections: map.entries.map((entry) {
+                  final percent = (entry.value / total) * 100;
+
+                  return PieChartSectionData(
+                    value: entry.value,
+
+                    color: Sabitler.expenseColorsMap[entry.key],
+
+                    title: "${percent.toStringAsFixed(0)}%",
+                    titleStyle: const TextStyle(fontSize: 17,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,),
+                    radius: 60,
+                  );
+                }).toList(),
               ),
             ),
+          ),
 
+          Positioned(
+            top:100,
+            left:60,
+            child: Column(
 
-            sections:
-            Sabitler.calculateAmountPriceByCategory(widget.expenses).entries.map((entry)
-            {
-              colorIndex++;
-              return PieChartSectionData(
+              children: [
 
-                  value:(entry.value/total)*100,
+              Text("+ ${totalIncomeAmount}₺",style:GoogleFonts.poppins(color:Colors.green,fontSize: 17,fontWeight: FontWeight.w500)),
 
-                  color:Sabitler.colorsForExpensesButtons[colorIndex%Sabitler.colorsForExpensesButtons.length],
+              const SizedBox(height: 10),
 
-                  title:entry.key,
-
-                  radius:60
-
-
-              );
-
-            }).toList()
-        ),
-      ),
+              Text("- ${totalExpensesAmount}₺",style:GoogleFonts.poppins(color:Colors.red.shade900,fontSize: 17,fontWeight: FontWeight.w500)),
+            ],),
+          ),
+        ]
     );
+  }
+
+  Future<void> loadAmounts() async {
+    final income = await locator<IncomeRepository>().calculateCurrentAmount(
+        widget.date);
+
+    final expenses = await locator<ExpensesRepository>()
+        .calculateTheAmountofExpenses(widget.date);
+
+    setState(() {
+      totalIncomeAmount = income;
+      totalExpensesAmount = expenses;
+    });
   }
 }
