@@ -18,43 +18,7 @@ class SelectDate extends IncomeExpenseEvent
   SelectDate(this.date);
 }
 
-class AddDigit extends IncomeExpenseEvent
-{
-  final String digit;
 
-  AddDigit(this.digit);
-}
-
-class AddOperator extends IncomeExpenseEvent
-{
-  final String operator;
-
-  AddOperator(this.operator);
-}
-
-class CalculateResult extends IncomeExpenseEvent {}
-
-class ResetTheCalculater extends IncomeExpenseEvent {}
-
-class AddNote extends IncomeExpenseEvent{
-
-  final String note;
-
-  AddNote(this.note);
-
-}
-class ClearTheDigit extends IncomeExpenseEvent
-{
-
-}
-
-class SaveTheValues extends IncomeExpenseEvent
-{
-  final bool isitIncome;
-  final Map<String,dynamic> map;
-
-  SaveTheValues({required this.isitIncome,required this.map});
-}
 
 class DeleteTheExpenseModel extends IncomeExpenseEvent
 {

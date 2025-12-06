@@ -1,9 +1,12 @@
 
+import 'package:finansal_kocluk_takip/income_expense_page/bloc/amount_calculator_bloc.dart';
 import 'package:finansal_kocluk_takip/income_expense_page/bloc/income_expense_page_bloc.dart';
 import 'package:finansal_kocluk_takip/income_expense_page/bloc/income_expense_page_events/events.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../bloc/income_expense_page_events/amount_calculator_event.dart';
 
 class CalculatorButton extends StatelessWidget {
 
@@ -20,9 +23,9 @@ class CalculatorButton extends StatelessWidget {
         InkWell(
 
             onTap: () {
-            if (value == "=") {context.read<IncomeExpenseBloc>().add(CalculateResult());}
-            else if (isOperator(value)) {context.read<IncomeExpenseBloc>().add(AddOperator(value));}
-           else {context.read<IncomeExpenseBloc>().add(AddDigit(value));}
+            if (value == "=") {context.read<AmountCalculatorBloc>().add(CalculateResult());}
+            else if (isOperator(value)) {context.read<AmountCalculatorBloc>().add(AddOperator(value));}
+           else {context.read<AmountCalculatorBloc>().add(AddDigit(value));}
 
 
            },

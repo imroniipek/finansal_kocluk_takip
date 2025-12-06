@@ -83,6 +83,7 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     on<ChangeTheDate>((event, emit) {
       final newDate = Sabitler.converttoDate(event.time);
 
+      print("Değiştirilen Tarih: ${newDate}");
       emit(state.copyWith(date: newDate));
 
       add(CalculateCurrentBalance(date: newDate));

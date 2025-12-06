@@ -105,7 +105,7 @@ class _HomePageState extends State<HomePage> {
                               children: [
                                 expensesList[4],
           
-                                ExpensesDonutChart(expenses:context.read<HomePageBloc>().state.expenses,date:context.read<HomePageBloc>().state.date),
+                                ExpensesDonutChart(expenses:context.watch<HomePageBloc>().state.expenses,date:context.watch<HomePageBloc>().state.date),
                                 expensesList[5],
                               ],
           
@@ -166,7 +166,7 @@ class _HomePageState extends State<HomePage> {
           
                   buildWhen:(previous,current)
                   {
-                    return previous.date != current.date || previous.incomes != current.incomes;
+                    return previous.incomes != current.incomes;
                   },
           
           
@@ -175,7 +175,7 @@ class _HomePageState extends State<HomePage> {
                     return AnimatedContainer(
                       duration: const Duration(milliseconds: 200),
                       curve: Curves.easeInOut,
-                      height: isOpen ? (context.read<HomePageBloc>().state.incomes.length)+(context.read<HomePageBloc>().state.expenses.length)*80 : 0.0,
+                      height: isOpen ? ((context.read<HomePageBloc>().state.incomes.length)+(context.read<HomePageBloc>().state.expenses.length))*150 : 0.0,
                       child: isOpen ? SingleChildScrollView(
                           child: IncomeExpensesListtile(model: theMapSelectedByCategory(context.read<HomePageBloc>().state.incomes,context.read<HomePageBloc>().state.expenses))): Container(),
                     );
@@ -211,7 +211,7 @@ class _HomePageState extends State<HomePage> {
       final i = indexedEntry.key;
       final entry = indexedEntry.value;
 
-     final theValue=calculatethePercentbyExpenses(context.read<HomePageBloc>().state.expenses, entry.value);
+     final theValue=calculatethePercentbyExpenses(context.watch<HomePageBloc>().state.expenses, entry.value);
 
 
       return Column(

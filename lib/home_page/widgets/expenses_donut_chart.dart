@@ -81,11 +81,11 @@ class _ExpensesDonutChartState extends State<ExpensesDonutChart> {
 
               children: [
 
-              Text("+ ${totalIncomeAmount}₺",style:GoogleFonts.poppins(color:Colors.green,fontSize: 17,fontWeight: FontWeight.w500)),
+              Text("+ ${totalIncomeAmount}₺",style:GoogleFonts.poppins(color:Colors.green,fontSize: 20,fontWeight: FontWeight.w500)),
 
               const SizedBox(height: 10),
 
-              Text("- ${totalExpensesAmount}₺",style:GoogleFonts.poppins(color:Colors.red.shade900,fontSize: 17,fontWeight: FontWeight.w500)),
+              Text("- ${totalExpensesAmount}₺",style:GoogleFonts.poppins(color:Colors.red.shade900,fontSize: 20,fontWeight: FontWeight.w500)),
             ],),
           ),
         ]

@@ -1,0 +1,73 @@
+import 'package:finansal_kocluk_takip/income_expense_page/bloc/income_expense_page_events/db_events.dart';
+import 'package:finansal_kocluk_takip/income_expense_page/bloc/income_expense_page_states/db_status.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../data/model/expense.dart';
+import '../../data/model/income.dart';
+import '../../data/repositories/expenses_repository.dart';
+import '../../data/repositories/income_repository.dart';
+import '../../locator.dart';
+
+class DbBloc extends Bloc<DbEvent,DbStatus>
+{
+  DbBloc():super(DbStatus(status: PageStatus.idle))
+  {
+
+      on<SavetoDb>((event, emit) async {
+
+        emit(state.copyWith(PageStatus.loading));
+
+        try {
+          if (event.isitIncome == true) {
+
+            final model = IncomeModel.fromMap(event.theMap);
+
+            final id = await locator<IncomeRepository>().addIncome(model);
+
+            if (id != null && id > 0) {
+
+
+              emit(state.copyWith(PageStatus.success));
+
+              emit(state.copyWith(PageStatus.idle));
+            }
+
+            else {
+              emit(state.copyWith(PageStatus.error));
+            }
+          }
+          else {
+            final model = ExpenseModel.fromMap(event.theMap);
+
+            final id = await locator<ExpensesRepository>().addExpense(model);
+
+            if (id != null && id > 0) {
+
+              emit(state.copyWith( PageStatus.success));
+
+              emit(state.copyWith(PageStatus.idle));
+            }
+            else {
+              emit(state.copyWith(PageStatus.error));
+            }
+          }
+        }
+        catch (e) {
+          print(e.toString());
+          emit(state.copyWith(PageStatus.error));
+        }
+      });
+
+
+
+
+
+
+
+
+
+  }
+
+
+
+}

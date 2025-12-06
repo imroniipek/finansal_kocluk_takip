@@ -122,7 +122,14 @@ List<Widget> explationOfValues(List<dynamic> theMapValue,BuildContext context) {
 
           child: ListTile(
             leading: Container(height: 10, width: 10, decoration:BoxDecoration(color: (entry is IncomeModel) ? Colors.green.shade300 : Colors.red.shade400,borderRadius: BorderRadius.circular(100))),
-            title: Text("${entry.amount} ₺", style: GoogleFonts.poppins(color:(entry is IncomeModel)?Sabitler.incomeColor:Sabitler.expensesColor, fontSize: 20,fontWeight: FontWeight.w400),),
+            title: Row(
+              children: [
+                Text("${entry.amount} ₺", style: GoogleFonts.poppins(color:(entry is IncomeModel)?Sabitler.incomeColor:Sabitler.expensesColor, fontSize: 20,fontWeight: FontWeight.w400),),
+
+               const SizedBox(height:10),
+               (entry.note==null)?Text(""):Text(entry.note,style: GoogleFonts.poppins(color:Colors.black87, fontSize: 20,fontWeight: FontWeight.w400)),
+            ]),
+            subtitle: (entry.note==null)?Text(""):Text(entry.note,style: GoogleFonts.poppins(color:Colors.black87, fontSize: 20,fontWeight: FontWeight.w400)),
             trailing: Text(entry.date.split(",")[1], style: GoogleFonts.poppins(color: Colors.grey.shade600, fontSize: 20,),),
           ),
         ),

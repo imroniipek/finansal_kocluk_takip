@@ -80,7 +80,7 @@ class Sabitler{
 
     final day=Sabitler.days[DateFormat("EEEE").format(now)];
 
-    return "${day},${now.day} ${month}";
+    return "${day}, ${now.day} ${month}";
 
 
   }
@@ -110,7 +110,6 @@ class Sabitler{
 
     Icons.money_outlined:"Tasarruf",
 
-    Icons.add:"Ekle"
 
   };
 
@@ -125,7 +124,6 @@ class Sabitler{
     Icons.directions_bus_filled_rounded: "Ulaşım",
     Icons.medical_services_rounded: "Sağlık",
     Icons.pets_rounded: "Evcil Hayvan",
-    Icons.add_circle_rounded: "Ekle",
   };
 
   static const Map<String, Color> expenseColorsMap = {
