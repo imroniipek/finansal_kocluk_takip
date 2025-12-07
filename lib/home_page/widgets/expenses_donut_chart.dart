@@ -52,7 +52,7 @@ class _ExpensesDonutChartState extends State<ExpensesDonutChart> {
             child: PieChart(
               PieChartData(
                 sectionsSpace: 0,
-                centerSpaceRadius: 75,
+                centerSpaceRadius: 60,
                 startDegreeOffset: -90,
 
                 sections: map.entries.map((entry) {
@@ -81,11 +81,11 @@ class _ExpensesDonutChartState extends State<ExpensesDonutChart> {
 
               children: [
 
-              Text("+ ${totalIncomeAmount}₺",style:GoogleFonts.poppins(color:Colors.green,fontSize: 20,fontWeight: FontWeight.w500)),
+              Text("+ ${totalIncomeAmount}₺",style:GoogleFonts.poppins(color:Colors.green,fontSize: 18,fontWeight: FontWeight.w500)),
 
               const SizedBox(height: 10),
 
-              Text("- ${totalExpensesAmount}₺",style:GoogleFonts.poppins(color:Colors.red.shade900,fontSize: 20,fontWeight: FontWeight.w500)),
+              Text("- ${totalExpensesAmount}₺",style:GoogleFonts.poppins(color:Colors.red.shade900,fontSize: 18,fontWeight: FontWeight.w500)),
             ],),
           ),
         ]

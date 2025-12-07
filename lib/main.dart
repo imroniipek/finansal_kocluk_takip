@@ -1,5 +1,7 @@
 import 'package:finansal_kocluk_takip/home_page/bloc/home_page_bloc.dart';
 import 'package:finansal_kocluk_takip/home_page/view/home_page.dart';
+import 'package:finansal_kocluk_takip/income_expense_page/bloc/amount_calculator_bloc.dart';
+import 'package:finansal_kocluk_takip/income_expense_page/bloc/db_bloc.dart';
 import 'package:finansal_kocluk_takip/income_expense_page/view/income_expanse_page.dart';
 import 'package:finansal_kocluk_takip/locator.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +19,10 @@ void main() {
       BlocProvider(create: (_) => IncomeExpenseBloc(),),
 
       BlocProvider(create: (_)=>HomePageBloc()),
+      
+      BlocProvider(create: (_)=>DbBloc()),
+      
+      BlocProvider(create: (_)=>AmountCalculatorBloc())
    ],
    child:MyApp()
   ));

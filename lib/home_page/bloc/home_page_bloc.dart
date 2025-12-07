@@ -41,16 +41,10 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
       try
       {
 
-        print(" listeyi getirdeki tarih: mevcut tarih ${state.date}");
-
         final expensesList=await locator<ExpensesRepository>().expensesList(event.date);
-
-
-        print(expensesList.length);
 
         emit(state.copyWith(expenses: expensesList));
 
-        return ;
       }
       catch(e)
       {
@@ -60,47 +54,44 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     }
     );
 
+    on<getIncomeList>((event,emit)
+    async{
 
-
-    on<ShowIncomeList>((event, emit)
-    async
-    {
-      if (event.isOpenned == true) {
-        try{
-          final incomes = await locator<IncomeRepository>().getAllofIncomesList(state.date);
-
-          emit(state.copyWith(incomes: incomes));
-
-          return ;
-        }
-        catch(e)
+      try
       {
-        print(e.toString());
-      }
-      }
-    });
+        print(" listeyi getirdeki tarih: mevcut tarih ${state.date}");
+        final incomeList=await locator<IncomeRepository>().getAllofIncomesList(event.date);
+        print("Listenin uzunlugu : ${incomeList.length}");
+        emit(state.copyWith(incomes: incomeList));
 
+      }
+      catch(e)
+      {
+        print("Hata" +e.toString());
+      }
+    }
+    );
     on<ChangeTheDate>((event, emit) {
       final newDate = Sabitler.converttoDate(event.time);
 
       print("Değiştirilen Tarih: ${newDate}");
+
       emit(state.copyWith(date: newDate));
 
       add(CalculateCurrentBalance(date: newDate));
 
       add(getExpensesList(newDate));
 
+      add(getIncomeList(newDate));
+
     });
 
 
-    add(CalculateCurrentBalance(
-      date: state.date),
-    );
 
 
-    add(getExpensesList(
-        state.date)
-    );
+    add(CalculateCurrentBalance(date: state.date),);
+    add(getExpensesList(state.date));
+    add(getIncomeList(state.date));
 
   }
 }

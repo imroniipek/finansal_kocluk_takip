@@ -26,12 +26,7 @@ class CalculatorButton extends StatelessWidget {
             if (value == "=") {context.read<AmountCalculatorBloc>().add(CalculateResult());}
             else if (isOperator(value)) {context.read<AmountCalculatorBloc>().add(AddOperator(value));}
            else {context.read<AmountCalculatorBloc>().add(AddDigit(value));}
-
-
            },
-
-
-
     child: Container(
               margin: EdgeInsets.all(10),
               width: (MediaQuery.of(context).size.width)/5,
@@ -42,11 +37,7 @@ class CalculatorButton extends StatelessWidget {
                   border: Border.all(color:buttonColor,width: 3),
 
               ),
-
-
             child: Center(child: Text(value,style:GoogleFonts.poppins(fontSize:40,color:Colors.black))),
-
-
           ),
         );
   }

@@ -1,6 +1,8 @@
 import 'package:finansal_kocluk_takip/data/model/income.dart';
 import 'package:finansal_kocluk_takip/data/model/period_type.dart';
+import 'package:finansal_kocluk_takip/income_expense_page/bloc/amount_calculator_bloc.dart';
 import 'package:finansal_kocluk_takip/income_expense_page/bloc/income_expense_page_bloc.dart';
+import 'package:finansal_kocluk_takip/income_expense_page/bloc/income_expense_page_events/amount_calculator_event.dart';
 import 'package:finansal_kocluk_takip/income_expense_page/view/income_expanse_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -113,23 +115,34 @@ List<Widget> explationOfValues(List<dynamic> theMapValue,BuildContext context) {
           onTap: ()
           {
 
-            context.read<IncomeExpenseBloc>().add( fromHomePage(model:entry));
+            context.read<AmountCalculatorBloc>().add(UpdateTheModel(Model:entry));
 
-            Navigator.push(context,MaterialPageRoute(builder: (context)=>IncomeExpansePage(isitIncomepage:(entry.value.first is IncomeModel)?true:false, type:PeriodType.daily,beChangedModel: entry,buttonName:"Kategoriyi Değiştir")));
+            context.read<IncomeExpenseBloc>().add(SelectDate(entry.date));
+
+            Navigator.push(context,MaterialPageRoute(builder: (context)=>IncomeExpansePage(isitIncomepage:(entry is IncomeModel)?true:false, type:PeriodType.daily,buttonName:"Kategoriyi Değiştir")));
 
           },
 
 
           child: ListTile(
             leading: Container(height: 10, width: 10, decoration:BoxDecoration(color: (entry is IncomeModel) ? Colors.green.shade300 : Colors.red.shade400,borderRadius: BorderRadius.circular(100))),
-            title: Row(
-              children: [
-                Text("${entry.amount} ₺", style: GoogleFonts.poppins(color:(entry is IncomeModel)?Sabitler.incomeColor:Sabitler.expensesColor, fontSize: 20,fontWeight: FontWeight.w400),),
+            title: (entry.note==null)? Text("${entry.amount} ₺", style: GoogleFonts.poppins(color:(entry is IncomeModel)?Sabitler.incomeColor:Sabitler.expensesColor, fontSize: 20,fontWeight: FontWeight.w400),):
 
-               const SizedBox(height:10),
-               (entry.note==null)?Text(""):Text(entry.note,style: GoogleFonts.poppins(color:Colors.black87, fontSize: 20,fontWeight: FontWeight.w400)),
-            ]),
-            subtitle: (entry.note==null)?Text(""):Text(entry.note,style: GoogleFonts.poppins(color:Colors.black87, fontSize: 20,fontWeight: FontWeight.w400)),
+                Row(
+
+                  children: [
+
+                    Text("${entry.amount} ₺", style: GoogleFonts.poppins(color:(entry is IncomeModel)?Sabitler.incomeColor:Sabitler.expensesColor, fontSize: 20,fontWeight: FontWeight.w400),),
+
+                    const SizedBox(width:10),
+
+                    Expanded(child: Text(entry.text))
+
+                  ],
+
+
+                ),
+
             trailing: Text(entry.date.split(",")[1], style: GoogleFonts.poppins(color: Colors.grey.shade600, fontSize: 20,),),
           ),
         ),

@@ -30,8 +30,6 @@ class IncomeExpenseBloc extends Bloc<IncomeExpenseEvent, IncomeExpenseStatus> {
       print(state.date);
     });
 
-
-
   }
 
 }

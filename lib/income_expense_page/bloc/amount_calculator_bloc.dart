@@ -1,3 +1,5 @@
+import 'package:finansal_kocluk_takip/data/model/expense.dart';
+import 'package:finansal_kocluk_takip/data/model/income.dart';
 import 'package:finansal_kocluk_takip/income_expense_page/bloc/income_expense_page_events/amount_calculator_event.dart';
 import 'package:finansal_kocluk_takip/income_expense_page/bloc/income_expense_page_states/amount_calculator_status.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -113,15 +115,22 @@ class AmountCalculatorBloc extends Bloc<AmountCalculatorEvent,AmountCalculatorSt
         (controlOfTempValue(state.tempValue!)==true)?
         emit(state.copyWith(isButtonSection:false)):  emit(state.copyWith(isButtonSection:true));
       }
-      else
-      {
-
-      }
     });
 
+    on<UpdateTheModel>((event,emit)
+    {
+      if(event.Model is ExpenseModel||event.Model is IncomeModel)
+        {
+          final theModel=event.Model;
 
+          List<String>theList=theModel.amount.toString().split("");
 
+          emit(state.copyWith(isButtonSection: true,note:(theModel.note!=null)?theModel.note:null,tempValue: theModel.amount.toString(),numbers:theList));
 
+          return;
+        }
+    }
+    );
 
   }
 

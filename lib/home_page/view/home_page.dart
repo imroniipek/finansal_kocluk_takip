@@ -34,13 +34,14 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: Sabitler.generalPrimaryColor,
           title: Text("Cüzdanım360", style: GoogleFonts.pacifico(fontSize: 25, color: Colors.white),),
           centerTitle: true,
+
         ),
         body:
         SingleChildScrollView(
 
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-          
+
             children: [
               const SizedBox(height: 10),
 
@@ -49,7 +50,7 @@ class _HomePageState extends State<HomePage> {
                   IconButton(
                     onPressed: () async {
                       final selectedDate = await showDatePicker(context: context, firstDate: DateTime(2024), lastDate: DateTime(2030), initialDate: DateTime.now(),);
-          
+
                       if (selectedDate != null)
                       {
                         context.read<HomePageBloc>().add(ChangeTheDate(selectedDate));
@@ -57,24 +58,24 @@ class _HomePageState extends State<HomePage> {
                     },
                     icon: Icon(Icons.calendar_month, size: 30, color: Sabitler.generalPrimaryColor,),
                   ),
-          
-          
+
+
                   BlocBuilder<HomePageBloc,HomePageState>(
                       builder: (context,state)
                       {
                         return Text(state.date, style: GoogleFonts.poppins(fontSize: 20, color: Colors.black,),);
                       }
                   )
-          
-          
+
+
                 ],
               ),
-          
+
               const SizedBox(height: 20),
-          
+
               (isOpen) ?Container(): BlocBuilder<HomePageBloc,HomePageState>(
-          
-          
+
+
                   buildWhen:(previous,current)
                   {
                     return (previous.expenses!=current.expenses)||(previous.date!=current.date);
@@ -84,11 +85,11 @@ class _HomePageState extends State<HomePage> {
                     final expensesList=expensesButtonList(context);
 
                     return Container(
-          
-          
+
+
                       height:500,
-          
-          
+
+
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -97,18 +98,18 @@ class _HomePageState extends State<HomePage> {
                             children: expensesList.sublist(0, 4),
                           ),
                           const SizedBox(width:10),
-          
+
                           Expanded(
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          
+
                               children: [
                                 expensesList[4],
-          
+
                                 ExpensesDonutChart(expenses:context.watch<HomePageBloc>().state.expenses,date:context.watch<HomePageBloc>().state.date),
                                 expensesList[5],
                               ],
-          
+
                             ),
                           ),
                           const SizedBox(width:10),
@@ -116,13 +117,13 @@ class _HomePageState extends State<HomePage> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: expensesList.sublist(6, 10),
                           ),
-          
+
                         ],
                       ),
                     );
                   }
               ),
-          
+              const SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -132,67 +133,61 @@ class _HomePageState extends State<HomePage> {
                       setState(()
                       {
                         isOpen = !isOpen;
-                        context.read<HomePageBloc>().add(ShowIncomeList(isOpen),);
                       });
-          
-          
+
+
                     },
                     icon: Icon(Icons.menu, size: 45, color: Sabitler.generalPrimaryColor,),
                   ),
-          
-          
+
+
                    CurrentBalance(),
 
-                  Expanded(
-                    child: IconButton(
-                      onPressed: ()
+                  IconButton(
+                    onPressed: ()
+                    {
+                      setState(()
                       {
-                        setState(()
-                        {
-                          isOpen = !isOpen;
-                          context.read<HomePageBloc>().add(ShowIncomeList(isOpen),);
-                        });
+                        isOpen = !isOpen;
+                      });
 
 
-                      },
-                      icon: Icon(Icons.menu, size: 45, color: Sabitler.generalPrimaryColor,)),
-                  ),
+                    },
+                    icon: Icon(Icons.menu, size: 45, color: Sabitler.generalPrimaryColor,)),
                 ],
               ),
-          
-              const SizedBox(height: 10),
-          
+
+              const SizedBox(height: 5),
+
               BlocBuilder<HomePageBloc,HomePageState>(
-          
+
                   buildWhen:(previous,current)
                   {
-                    return previous.incomes != current.incomes;
+                    return (previous.incomes != current.incomes)||(previous.expenses!=previous.expenses);
                   },
-          
-          
+
+
                   builder:(context,state)
                   {
                     return AnimatedContainer(
                       duration: const Duration(milliseconds: 200),
                       curve: Curves.easeInOut,
-                      height: isOpen ? ((context.read<HomePageBloc>().state.incomes.length)+(context.read<HomePageBloc>().state.expenses.length))*150 : 0.0,
+                      height: isOpen ? ((context.read<HomePageBloc>().state.incomes.length)+(context.read<HomePageBloc>().state.expenses.length))*120 : 0.0,
                       child: isOpen ? SingleChildScrollView(
                           child: IncomeExpensesListtile(model: theMapSelectedByCategory(context.read<HomePageBloc>().state.incomes,context.read<HomePageBloc>().state.expenses))): Container(),
                     );
                   }
               ),
-          
-              const SizedBox(height:20),
-          
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    ExpensesandIncomeButtons(icon: Icon(Icons.add, size: 40,color:Sabitler.incomeColor), color: Sabitler.incomeColor, isitIncome: true,),
-                    ExpensesandIncomeButtons(icon: Icon(Icons.remove, size: 40,color:Sabitler.expensesColor), color: Sabitler.expensesColor, isitIncome: false,),
-                  ],
-                ),
+
+              const SizedBox(height:5),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ExpensesandIncomeButtons(icon: Icon(Icons.add, size: 40,color:Sabitler.incomeColor), color: Sabitler.incomeColor, isitIncome: true,),
+                  const SizedBox(width:100),
+                  ExpensesandIncomeButtons(icon: Icon(Icons.remove, size: 40,color:Sabitler.expensesColor), color: Sabitler.expensesColor, isitIncome: false,),
+                ],
               ),
             ],
           ),

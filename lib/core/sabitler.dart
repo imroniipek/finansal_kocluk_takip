@@ -159,6 +159,7 @@ class Sabitler{
 
   }
 
+  static Map<String,dynamic> convertToMap({required String date,required double amount,int? i,required String category})=>{"date":date, "amount":amount, "period_type":i, "category":category};
 
 
 

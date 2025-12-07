@@ -57,11 +57,10 @@ class IncomeRepository{
 
    final A=await db.query("incomes");
 
-   print(A);
+
 
     final List<Map<String,dynamic>>result=await db.query("incomes",where:"date=?",whereArgs:[date]);
 
-    print(result[0]);
     return result.map((e)=>IncomeModel.fromMap(e)).toList();
   }
 

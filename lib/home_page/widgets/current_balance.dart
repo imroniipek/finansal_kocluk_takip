@@ -16,7 +16,7 @@ class CurrentBalance extends StatelessWidget {
       buildWhen: (previous, current) => previous.currentBalance != current.currentBalance,
       builder: (context, state) {
         return Container(
-          width: MediaQuery.of(context).size.width / 1.4,
+          width: MediaQuery.of(context).size.width / 1.6,
           height: 45,
           decoration: BoxDecoration(
             color: Sabitler.generalPrimaryColor,

@@ -19,14 +19,6 @@ class ChangeTheDate extends HomePageEvent
   ChangeTheDate(this.time);
 }
 
-class ShowIncomeList extends HomePageEvent
-{
-
-  final bool isOpenned;
-
-  ShowIncomeList(this.isOpenned);
-
-}
 
 class getExpensesList extends HomePageEvent
 {
@@ -34,7 +26,12 @@ class getExpensesList extends HomePageEvent
 
   getExpensesList(this.date);
 
+}
 
+class getIncomeList extends HomePageEvent
+{
+  final String date;
 
+  getIncomeList(this.date);
 }
 

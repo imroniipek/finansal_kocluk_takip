@@ -20,21 +20,6 @@ class SelectDate extends IncomeExpenseEvent
 
 
 
-class DeleteTheExpenseModel extends IncomeExpenseEvent
-{
-  final ExpenseModel model;
-
-  DeleteTheExpenseModel({required this.model});
-}
-
-class fromHomePage extends IncomeExpenseEvent
-{
-  final dynamic model;
-
-  fromHomePage({required this.model});
-
-}
-
 
 
 

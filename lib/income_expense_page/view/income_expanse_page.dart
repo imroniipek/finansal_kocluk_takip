@@ -32,14 +32,9 @@ class IncomeExpansePage extends StatefulWidget {
 
   final String? buttonName;
 
-  final ExpenseModel? beChangedModel;
 
-  IncomeExpansePage({super.key, required this.isitIncomepage, required this.type, this.buttonName, this.beChangedModel, Color? primaryColor,}) : primaryColor = primaryColor ??
+  IncomeExpansePage({super.key, required this.isitIncomepage, required this.type, this.buttonName, Color? primaryColor,}) : primaryColor = primaryColor ??
   (isitIncomepage ? Sabitler.incomeColor : Sabitler.expensesColor);
-
-
-
-
 
   @override
   State<IncomeExpansePage> createState() => _IncomeExpansePageState();
@@ -49,23 +44,18 @@ class IncomeExpansePage extends StatefulWidget {
 
 class _IncomeExpansePageState extends State<IncomeExpansePage> {
 
-
-
   @override
   void initState() {
 
     context.read<IncomeExpenseBloc>().add(ChangeType(widget.isitIncomepage));
     super.initState();
   }
-
-
-
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
 
-      appBar:(widget.beChangedModel== null)?AppBar(
+      appBar:AppBar(
         leading: IconButton(onPressed:()
         {
               context.read<AmountCalculatorBloc>().add(ResetTheCalculator());
@@ -78,34 +68,6 @@ class _IncomeExpansePageState extends State<IncomeExpansePage> {
         backgroundColor: widget.primaryColor,
 
         centerTitle: true,
-      ):
-
-      AppBar(
-
-        leading:IconButton(onPressed:(){
-
-          Navigator.pop(context);
-
-
-
-        }, icon: Icon(Icons.arrow_back,size:35,color:Colors.white)),
-
-        title:Text("Düzenle",style:GoogleFonts.poppins(fontSize:25,color:Colors.white)),
-        actions: [
-
-          IconButton(
-
-            icon: Icon(Icons.delete,size:35,color:Colors.white),
-
-            onPressed: ()
-            {
-              context.read<IncomeExpenseBloc>().add(DeleteTheExpenseModel(model: widget.beChangedModel!));
-            },
-
-          )
-
-        ],
-
       ),
 
       body:
@@ -121,7 +83,11 @@ class _IncomeExpansePageState extends State<IncomeExpansePage> {
 
            context.read<HomePageBloc>().add(getExpensesList(newDate));
 
+           context.read<HomePageBloc>().add(getIncomeList(newDate));
+
            context.read<HomePageBloc>().add(CalculateCurrentBalance(date: newDate));
+
+           context.read<AmountCalculatorBloc>().add(ResetTheCalculator());
 
            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
              content: Text("İşleminiz Başarılı Bir şekilde Gerçekleşti",style:TextStyle(color:Colors.white)),
@@ -167,7 +133,7 @@ class _IncomeExpansePageState extends State<IncomeExpansePage> {
               textfieldColor: widget.primaryColor,
             ),
 
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             BlocBuilder<AmountCalculatorBloc, AmountCalculatorStatus>(
               buildWhen: (previous, current) =>
@@ -184,6 +150,7 @@ class _IncomeExpansePageState extends State<IncomeExpansePage> {
               },
             ),
 
+            CategorySelectorButton(state:context.watch<AmountCalculatorBloc>().state, primaryColor: widget.primaryColor,buttonName: widget.buttonName,isitIncome: widget.isitIncomepage,),
           ],
         ),
       );

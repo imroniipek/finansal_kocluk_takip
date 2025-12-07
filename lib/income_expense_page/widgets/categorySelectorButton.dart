@@ -1,24 +1,27 @@
 import 'package:finansal_kocluk_takip/income_expense_page/bloc/amount_calculator_bloc.dart';
+import 'package:finansal_kocluk_takip/income_expense_page/bloc/db_bloc.dart';
 import 'package:finansal_kocluk_takip/income_expense_page/bloc/income_expense_page_bloc.dart';
-import 'package:finansal_kocluk_takip/income_expense_page/bloc/income_expense_page_events/events.dart';
+import 'package:finansal_kocluk_takip/income_expense_page/bloc/income_expense_page_events/db_events.dart';
 import 'package:finansal_kocluk_takip/income_expense_page/bloc/income_expense_page_states/amount_calculator_status.dart';
-import 'package:finansal_kocluk_takip/income_expense_page/bloc/income_expense_page_states/status.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../core/sabitler.dart';
 import '../bloc/income_expense_page_events/amount_calculator_event.dart';
 
-class categorySelectorButton extends StatelessWidget {
+class CategorySelectorButton extends StatelessWidget {
 
 
   final AmountCalculatorStatus state;
 
   final Color primaryColor;
 
+  final bool isitIncome;
+
   String ? buttonName;
 
- categorySelectorButton({super.key,required this.state,required this.primaryColor,this.buttonName});
+ CategorySelectorButton({super.key,required this.state,required this.primaryColor,required this.isitIncome,this.buttonName});
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +33,16 @@ class categorySelectorButton extends StatelessWidget {
 
         onTap: ()
         {
-          context.read<AmountCalculatorBloc>().add(clickTheButton(buttonName: buttonName));
+          if(buttonName==null)
+          {
+            context.read<AmountCalculatorBloc>().add(clickTheButton(buttonName: buttonName));
+          }
 
+          else
+            {
+              Map<String,dynamic> theMap= Sabitler.convertToMap(date:context.read<IncomeExpenseBloc>().state.date,amount:double.parse(state.tempValue!),i:1,category: buttonName!);
+              context.read<DbBloc>().add(SavetoDb(theMap: theMap, isitIncome: isitIncome));
+            }
         },
 
         child: Container(
@@ -52,6 +63,5 @@ class categorySelectorButton extends StatelessWidget {
         ),
       );
     }
-
-  }
+}
 

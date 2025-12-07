@@ -1,4 +1,6 @@
 
+import 'package:finansal_kocluk_takip/income_expense_page/bloc/income_expense_page_events/db_events.dart';
+
 abstract class AmountCalculatorEvent{}
 
 class AddDigit extends AmountCalculatorEvent
@@ -34,5 +36,16 @@ class clickTheButton extends AmountCalculatorEvent
 {
   final String ? buttonName;
 
-  clickTheButton({this.buttonName});
+  final DbEvent ? dbEvent;
+
+  clickTheButton({this.buttonName,this.dbEvent});
+}
+
+class UpdateTheModel extends AmountCalculatorEvent
+{
+
+  final dynamic Model;
+
+  UpdateTheModel({required this.Model});
+
 }

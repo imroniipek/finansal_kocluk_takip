@@ -1,16 +1,14 @@
 import 'package:finansal_kocluk_takip/data/model/period_type.dart';
 import 'package:finansal_kocluk_takip/income_expense_page/bloc/amount_calculator_bloc.dart';
 import 'package:finansal_kocluk_takip/income_expense_page/bloc/db_bloc.dart';
-import 'package:finansal_kocluk_takip/income_expense_page/bloc/income_expense_page_states/amount_calculator_status.dart';
 import 'package:finansal_kocluk_takip/income_expense_page/bloc/income_expense_page_states/status.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../core/sabitler.dart';
-import '../bloc/income_expense_page_bloc.dart';
 import '../bloc/income_expense_page_events/amount_calculator_event.dart';
 import '../bloc/income_expense_page_events/db_events.dart';
-import '../bloc/income_expense_page_events/events.dart';
+
 
 class ContainerOfCategory extends StatelessWidget {
 
@@ -42,25 +40,12 @@ class ContainerOfCategory extends StatelessWidget {
 
             int i=Sabitler.conevertPeriodTypetoInetegerValue(type);
 
-            print("--------------DB kaydedilen Değerler-------------------");
 
-            print("tarih: ${state.date}");
-
-            print("amount: ${status.tempValue}");
-
-            print("period_type: ${i}");
-
-            print("category ${value}");
-
-            print("---------------------------------");
-
-            final map=convertToMap(state.date, double.parse(status.tempValue!), i, value);
+            final map=Sabitler.convertToMap(date:state.date, amount:double.parse(status.tempValue!), i:i, category:value);
 
             context.read<DbBloc>().add(SavetoDb(isitIncome:isitIncomepage,theMap:map));
 
             context.read<AmountCalculatorBloc>().add(ResetTheCalculator());
-
-
 
           },
 
@@ -78,7 +63,7 @@ class ContainerOfCategory extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Expanded(child: CircleAvatar(child: Icon(icondata,size:30,color:Colors.white),radius: 30,backgroundColor:primaryColor,foregroundColor: Colors.white,)),
+                Expanded(child: CircleAvatar(radius: 30,backgroundColor:primaryColor,foregroundColor: Colors.white,child: Icon(icondata,size:30,color:Colors.white),)),
                 Text(value, style:GoogleFonts.poppins(fontSize:18,color:Colors.black,fontWeight: FontWeight.w500)),
               ],
             ),
@@ -88,4 +73,3 @@ class ContainerOfCategory extends StatelessWidget {
   }
 }
 
-convertToMap(String date,double amount,int i,String value)=>{"date":date, "amount":amount, "period_type":i, "category":value};
