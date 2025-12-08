@@ -13,3 +13,12 @@ class SavetoDb extends DbEvent
   SavetoDb({required Map<String, dynamic> theMap,required this.isitIncome}):super(theMap: theMap);
 
 }
+class UpdatetoDb extends DbEvent
+{
+  final bool isitIncome;
+
+  final String modelId;
+
+  UpdatetoDb({required Map<String,dynamic> theMapForUpdated,required this.isitIncome,required this.modelId}):super(theMap:theMapForUpdated);
+
+}

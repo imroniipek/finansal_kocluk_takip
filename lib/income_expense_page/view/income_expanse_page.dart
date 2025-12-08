@@ -32,8 +32,11 @@ class IncomeExpansePage extends StatefulWidget {
 
   final String? buttonName;
 
+  final dynamic Model;
 
-  IncomeExpansePage({super.key, required this.isitIncomepage, required this.type, this.buttonName, Color? primaryColor,}) : primaryColor = primaryColor ??
+
+
+  IncomeExpansePage({super.key, required this.isitIncomepage, required this.type, this.buttonName, Color? primaryColor,this.Model}) : primaryColor = primaryColor ??
   (isitIncomepage ? Sabitler.incomeColor : Sabitler.expensesColor);
 
   @override
@@ -44,10 +47,15 @@ class IncomeExpansePage extends StatefulWidget {
 
 class _IncomeExpansePageState extends State<IncomeExpansePage> {
 
+  late bool isthispagedesignedforupdate;
+
   @override
   void initState() {
 
     context.read<IncomeExpenseBloc>().add(ChangeType(widget.isitIncomepage));
+
+    (widget.Model==null)?isthispagedesignedforupdate=false:true;
+
     super.initState();
   }
   @override
@@ -150,7 +158,19 @@ class _IncomeExpansePageState extends State<IncomeExpansePage> {
               },
             ),
 
-            CategorySelectorButton(state:context.watch<AmountCalculatorBloc>().state, primaryColor: widget.primaryColor,buttonName: widget.buttonName,isitIncome: widget.isitIncomepage,),
+            CategorySelectorButton(state:context.watch<AmountCalculatorBloc>().state,
+              primaryColor: widget.primaryColor,
+              buttonName: widget.buttonName,
+              isitIncome: widget.isitIncomepage,
+
+              modelId: ()
+              {
+
+
+
+              },
+
+            ),
           ],
         ),
       );

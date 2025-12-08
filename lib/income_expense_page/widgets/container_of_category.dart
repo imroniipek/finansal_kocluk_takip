@@ -24,8 +24,12 @@ class ContainerOfCategory extends StatelessWidget {
 
   final IncomeExpenseStatus state;
 
+  final bool isthisdesignedforupdate;
 
-  const ContainerOfCategory({super.key,required this.icondata,required this.value,required this.primaryColor,required this.isitIncomepage,required this.type,required this.state});
+  String ? modelId;
+
+
+  ContainerOfCategory({super.key,required this.icondata,required this.value,required this.primaryColor,required this.isitIncomepage,required this.type,required this.state,required this.isthisdesignedforupdate,this.modelId});
 
   @override
   Widget build(BuildContext context) {
@@ -36,16 +40,28 @@ class ContainerOfCategory extends StatelessWidget {
 
           onTap: ()
           {
-            final status=context.read<AmountCalculatorBloc>().state;
+            if(isthisdesignedforupdate==false)
+              {
+                final status=context.read<AmountCalculatorBloc>().state;
 
-            int i=Sabitler.conevertPeriodTypetoInetegerValue(type);
+                int i=Sabitler.conevertPeriodTypetoInetegerValue(type);
 
 
-            final map=Sabitler.convertToMap(date:state.date, amount:double.parse(status.tempValue!), i:i, category:value);
+                final map=Sabitler.convertToMap(date:state.date, amount:double.parse(status.tempValue!), i:i, category:value);
 
-            context.read<DbBloc>().add(SavetoDb(isitIncome:isitIncomepage,theMap:map));
+                context.read<DbBloc>().add(SavetoDb(isitIncome:isitIncomepage,theMap:map));
 
-            context.read<AmountCalculatorBloc>().add(ResetTheCalculator());
+                context.read<AmountCalculatorBloc>().add(ResetTheCalculator());
+              }
+            else
+              {
+                final status=context.read<AmountCalculatorBloc>().state;
+                int i=Sabitler.conevertPeriodTypetoInetegerValue(type);
+                final map=Sabitler.convertToMap(date:state.date, amount:double.parse(status.tempValue!), i:i, category:value);
+
+                map["id"]=modelId;
+                context.read<DbBloc>().add(UpdatetoDb(theMapForUpdated: map, isitIncome:isitIncomepage, modelId:modelId!));
+              }
 
           },
 

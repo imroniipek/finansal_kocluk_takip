@@ -7,15 +7,12 @@ import 'package:finansal_kocluk_takip/income_expense_page/view/income_expanse_pa
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import '../../core/sabitler.dart';
 import '../../income_expense_page/bloc/income_expense_page_events/events.dart';
 
 class IncomeExpensesListtile extends StatelessWidget {
 
   final Map<String,List<dynamic>> model;
-
-
 
   const IncomeExpensesListtile({super.key,required this.model});
 
@@ -52,35 +49,19 @@ List<Widget> theCardofValues(Map<String,List<dynamic>> theMap,BuildContext conte
                 const SizedBox(width:10),
 
                 Container(
-
                     height: 30,
                     width:30,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(100),
                       color:(entry.value.first is IncomeModel) ? Colors.green.shade500:Colors.red.shade400
-
                     ),
-
                     child: Center(child:Text(entry.value.length.toString(),style:GoogleFonts.poppins(fontSize:20,fontWeight:FontWeight.bold,color:Colors.white)))),
-
                 const SizedBox(width:10),
-
                 Text(entry.value.fold(0.0,(first,value)=>first+value.amount).toString(),style:GoogleFonts.poppins(fontSize:20,color:Colors.black)),
-
               ],
-
-
-
             ),
-
-
           children: explationOfValues(entry.value,context),
-
-
         )
-
-
-
       ));
 
     }
@@ -114,9 +95,6 @@ List<Widget> explationOfValues(List<dynamic> theMapValue,BuildContext context) {
 
           onTap: ()
           {
-
-            context.read<AmountCalculatorBloc>().add(UpdateTheModel(Model:entry));
-
             context.read<IncomeExpenseBloc>().add(SelectDate(entry.date));
 
             Navigator.push(context,MaterialPageRoute(builder: (context)=>IncomeExpansePage(isitIncomepage:(entry is IncomeModel)?true:false, type:PeriodType.daily,buttonName:"Kategoriyi Değiştir")));

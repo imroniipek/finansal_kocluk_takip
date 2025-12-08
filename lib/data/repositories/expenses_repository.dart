@@ -24,7 +24,7 @@ class ExpensesRepository{
 
     return await db.delete("expenses",where:"id=?",whereArgs: [model.id]);
   }
-  Future<int>updateIncome(ExpenseModel model)
+  Future<int>updateExpense(ExpenseModel model)
   async
   {
     final db=await dbHelper.database;

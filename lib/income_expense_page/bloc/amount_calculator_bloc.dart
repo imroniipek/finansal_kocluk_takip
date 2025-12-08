@@ -108,13 +108,17 @@ class AmountCalculatorBloc extends Bloc<AmountCalculatorEvent,AmountCalculatorSt
 
     );
 
-    on<clickTheButton>((event, emit) {
+    on<ClickTheButton>((event, emit) {
 
       if(event.buttonName==null)
       {
         (controlOfTempValue(state.tempValue!)==true)?
         emit(state.copyWith(isButtonSection:false)):  emit(state.copyWith(isButtonSection:true));
       }
+
+
+
+
     });
 
     on<UpdateTheModel>((event,emit)

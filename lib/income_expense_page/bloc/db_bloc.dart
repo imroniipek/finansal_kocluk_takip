@@ -24,7 +24,7 @@ class DbBloc extends Bloc<DbEvent,DbStatus>
 
             final id = await locator<IncomeRepository>().addIncome(model);
 
-            if (id != null && id > 0) {
+            if (id > 0) {
 
 
               emit(state.copyWith(PageStatus.success));
@@ -41,7 +41,7 @@ class DbBloc extends Bloc<DbEvent,DbStatus>
 
             final id = await locator<ExpensesRepository>().addExpense(model);
 
-            if (id != null && id > 0) {
+            if (id > 0) {
 
               emit(state.copyWith( PageStatus.success));
 
@@ -53,19 +53,41 @@ class DbBloc extends Bloc<DbEvent,DbStatus>
           }
         }
         catch (e) {
-          print(e.toString());
           emit(state.copyWith(PageStatus.error));
         }
       });
 
+      on<UpdatetoDb>(
+          (event,emit)
+          async{
+
+            try
+            {
+              if(event.isitIncome==true)
+                {
+                  final theUpdateModel=IncomeModel.fromMap(returnTheMap(event.theMap, event.modelId));
+                  (await locator<IncomeRepository>().updateIncome(theUpdateModel)>0)?emit(state.copyWith(PageStatus.success)):emit(state.copyWith(PageStatus.error));
+                }
+              else
+                {
+                  final theUpdateModel=ExpenseModel.fromMap(returnTheMap(event.theMap, event.modelId));
+                  (await locator<ExpensesRepository>().updateExpense(theUpdateModel)>0)?emit(state.copyWith(PageStatus.success)):emit(state.copyWith(PageStatus.error));
+                }
+
+            }
+            catch(e)
+            {
+              emit(state.copyWith(PageStatus.error));
+            }
+          }
+      );
+  }
 
 
-
-
-
-
-
-
+  Map<String,dynamic>returnTheMap(Map<String,dynamic>currentMap,String modelId)
+  {
+    currentMap["id"]=modelId;
+    return currentMap;
   }
 
 

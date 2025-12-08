@@ -223,6 +223,8 @@ class _HomePageState extends State<HomePage> {
       );
     }).toList();
   }
+
+
   double calculatethePercentbyExpenses(List<ExpenseModel> expensesList, String categoryofExpense) {
     double totalAmount = 0.0;
 

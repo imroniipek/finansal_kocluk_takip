@@ -32,18 +32,19 @@ class ClearTheDigit extends AmountCalculatorEvent
 {
 
 }
-class clickTheButton extends AmountCalculatorEvent
+class ClickTheButton extends AmountCalculatorEvent
 {
   final String ? buttonName;
 
-  final DbEvent ? dbEvent;
+  final String ?  model;
 
-  clickTheButton({this.buttonName,this.dbEvent});
+  ClickTheButton({this.buttonName,this.model});
 }
 
 class UpdateTheModel extends AmountCalculatorEvent
 {
 
+  //Bu HomePagedeki bir listtile basınca guncellemek silmek icin yapılan bir eventtir//
   final dynamic Model;
 
   UpdateTheModel({required this.Model});

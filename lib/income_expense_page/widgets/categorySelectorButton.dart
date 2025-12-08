@@ -21,7 +21,9 @@ class CategorySelectorButton extends StatelessWidget {
 
   String ? buttonName;
 
- CategorySelectorButton({super.key,required this.state,required this.primaryColor,required this.isitIncome,this.buttonName});
+  final dynamic modelId;
+
+ CategorySelectorButton({super.key,required this.state,required this.primaryColor,required this.isitIncome,this.buttonName,this.modelId});
 
   @override
   Widget build(BuildContext context) {
@@ -35,14 +37,22 @@ class CategorySelectorButton extends StatelessWidget {
         {
           if(buttonName==null)
           {
-            context.read<AmountCalculatorBloc>().add(clickTheButton(buttonName: buttonName));
+            context.read<AmountCalculatorBloc>().add(ClickTheButton(buttonName:null));
           }
+
+          else if(buttonName!=null&&modelId!=null)
+            {
+              context.read<AmountCalculatorBloc>().state.copyWith(isButtonSection: false);
+
+            }
 
           else
             {
               Map<String,dynamic> theMap= Sabitler.convertToMap(date:context.read<IncomeExpenseBloc>().state.date,amount:double.parse(state.tempValue!),i:1,category: buttonName!);
               context.read<DbBloc>().add(SavetoDb(theMap: theMap, isitIncome: isitIncome));
             }
+
+
         },
 
         child: Container(

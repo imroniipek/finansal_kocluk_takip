@@ -1,6 +1,4 @@
-import 'package:finansal_kocluk_takip/core/sabitler.dart';
 import 'package:finansal_kocluk_takip/data/db/database_helper.dart';
-import 'package:finansal_kocluk_takip/data/model/period_type.dart';
 import '../../locator.dart';
 import '../model/income.dart';
 
@@ -25,8 +23,6 @@ class IncomeRepository{
 
     final data = await db.query("incomes");
 
-    print("INCOMES TABLE:");
-
     print(data);
   }
 
@@ -38,7 +34,6 @@ class IncomeRepository{
     return await db.delete("incomes",where:"id=?",whereArgs: [i]);
 
   }
-
   Future<int>updateIncome(IncomeModel model)
   async
   {
@@ -55,15 +50,10 @@ class IncomeRepository{
 
    final db= await dbHelper.database;
 
-   final A=await db.query("incomes");
-
-
-
     final List<Map<String,dynamic>>result=await db.query("incomes",where:"date=?",whereArgs:[date]);
 
     return result.map((e)=>IncomeModel.fromMap(e)).toList();
   }
-
 
   Future<double> calculateCurrentAmount(String date)
   async {
@@ -85,15 +75,4 @@ class IncomeRepository{
     return totalAmount;
 
   }
-
-
-
-
-
-
-
-
-
-
-
 }
