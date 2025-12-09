@@ -1,6 +1,3 @@
-
-import 'package:finansal_kocluk_takip/income_expense_page/bloc/income_expense_page_events/db_events.dart';
-
 abstract class AmountCalculatorEvent{}
 
 class AddDigit extends AmountCalculatorEvent
@@ -32,21 +29,14 @@ class ClearTheDigit extends AmountCalculatorEvent
 {
 
 }
-class ClickTheButton extends AmountCalculatorEvent
-{
-  final String ? buttonName;
-
-  final String ?  model;
-
-  ClickTheButton({this.buttonName,this.model});
-}
+class ClickTheButton extends AmountCalculatorEvent{}
 
 class UpdateTheModel extends AmountCalculatorEvent
 {
 
   //Bu HomePagedeki bir listtile basınca guncellemek silmek icin yapılan bir eventtir//
-  final dynamic Model;
+  final dynamic model;
 
-  UpdateTheModel({required this.Model});
+  UpdateTheModel({required this.model});
 
 }

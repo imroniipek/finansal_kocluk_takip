@@ -14,6 +14,8 @@ class IncomeRepository{
 
     final db=await dbHelper.database;
 
+    await printIncomesTable();
+
     return await db.insert("incomes",model.toMap());
   }
 

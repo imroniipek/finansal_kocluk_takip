@@ -1,24 +1,29 @@
 
 abstract class DbEvent
 {
-  Map<String,dynamic>theMap;
+  final bool isitIncome;
 
-  DbEvent({required this.theMap});
+
+  DbEvent({required this.isitIncome});
 }
 
 class SavetoDb extends DbEvent
 {
-  final bool isitIncome;
+  final Map<String,dynamic> theMap;
 
-  SavetoDb({required Map<String, dynamic> theMap,required this.isitIncome}):super(theMap: theMap);
+  SavetoDb({required this.theMap,required super.isitIncome});
 
 }
 class UpdatetoDb extends DbEvent
 {
-  final bool isitIncome;
-
-  final String modelId;
-
-  UpdatetoDb({required Map<String,dynamic> theMapForUpdated,required this.isitIncome,required this.modelId}):super(theMap:theMapForUpdated);
-
+  final Map<String,dynamic> theMapForUpdated;
+  final int modelId;
+  UpdatetoDb({required this.theMapForUpdated,required super.isitIncome,required this.modelId});
 }
+
+class DeleteTheModelFromDb extends DbEvent
+{
+  final int modelId;
+  DeleteTheModelFromDb({required super.isitIncome,required this.modelId});
+}
+

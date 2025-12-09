@@ -9,17 +9,6 @@ class ChangeType extends IncomeExpenseEvent
   ChangeType(this.isIncome);
 }
 
-class SelectDate extends IncomeExpenseEvent
-{
-  final DateTime date;
-
-
-
-  SelectDate(this.date);
-}
-
-
-
 
 
 

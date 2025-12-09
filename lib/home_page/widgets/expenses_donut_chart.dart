@@ -4,13 +4,9 @@ import 'package:finansal_kocluk_takip/locator.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import '../../core/sabitler.dart';
 import '../../data/model/expense.dart';
-
-
 class ExpensesDonutChart extends StatefulWidget {
-
   final List<ExpenseModel> expenses;
   final String date;
   const ExpensesDonutChart({super.key, required this.expenses,required this.date});
@@ -30,8 +26,6 @@ class _ExpensesDonutChartState extends State<ExpensesDonutChart> {
     loadAmounts();
     super.initState();
   }
-
-
   @override
   Widget build(BuildContext context) {
     if (widget.expenses.isEmpty) {
@@ -64,9 +58,7 @@ class _ExpensesDonutChartState extends State<ExpensesDonutChart> {
                     color: Sabitler.expenseColorsMap[entry.key],
 
                     title: "${percent.toStringAsFixed(0)}%",
-                    titleStyle: const TextStyle(fontSize: 17,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,),
+                    titleStyle: const TextStyle(fontSize: 17, color: Colors.white, fontWeight: FontWeight.bold,),
                     radius: 60,
                   );
                 }).toList(),
@@ -76,16 +68,12 @@ class _ExpensesDonutChartState extends State<ExpensesDonutChart> {
 
           Positioned(
             top:100,
-            left:60,
+            left:80,
             child: Column(
-
               children: [
-
-              Text("+ ${totalIncomeAmount}₺",style:GoogleFonts.poppins(color:Colors.green,fontSize: 18,fontWeight: FontWeight.w500)),
-
+              Text("+ ${totalIncomeAmount?.toStringAsFixed(2)}₺",style:GoogleFonts.poppins(color:Colors.green,fontSize: 18,fontWeight: FontWeight.w500)),
               const SizedBox(height: 10),
-
-              Text("- ${totalExpensesAmount}₺",style:GoogleFonts.poppins(color:Colors.red.shade900,fontSize: 18,fontWeight: FontWeight.w500)),
+              Text("- ${totalExpensesAmount?.toStringAsFixed(2)}₺",style:GoogleFonts.poppins(color:Colors.red.shade900,fontSize: 18,fontWeight: FontWeight.w500)),
             ],),
           ),
         ]
@@ -93,11 +81,10 @@ class _ExpensesDonutChartState extends State<ExpensesDonutChart> {
   }
 
   Future<void> loadAmounts() async {
-    final income = await locator<IncomeRepository>().calculateCurrentAmount(
-        widget.date);
 
-    final expenses = await locator<ExpensesRepository>()
-        .calculateTheAmountofExpenses(widget.date);
+    final income = await locator<IncomeRepository>().calculateCurrentAmount(widget.date);
+
+    final expenses = await locator<ExpensesRepository>().calculateTheAmountofExpenses(widget.date);
 
     setState(() {
       totalIncomeAmount = income;

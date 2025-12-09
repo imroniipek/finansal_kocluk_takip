@@ -3,24 +3,11 @@ abstract class IncomeExpenseState {}
 class IncomeExpenseStatus extends IncomeExpenseState {
 
   final String title;
+  IncomeExpenseStatus({required this.title,});
 
-  final String date;
-
-
-  IncomeExpenseStatus({
-    required this.title,
-    required this.date,
-
-  });
-
-  IncomeExpenseStatus copyWith({String? title, String? date,
-    }) {
+  IncomeExpenseStatus copyWith({String? title}) {
     return IncomeExpenseStatus(
-
       title: title ?? this.title, //Null olabilir null ise eski title degerini al diyoruz kısacası
-
-      date: date ?? this.date,
-
     );
   }
 }

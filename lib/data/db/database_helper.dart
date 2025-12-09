@@ -1,7 +1,5 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-
-
 class DatabaseHelper
 {
   static Database? _database;
@@ -38,10 +36,7 @@ class DatabaseHelper
         version:1,
         onCreate: _createDB,
     );
-
-
   }
-
   Future<void> _createDB(Database db, int version) async {
     await db.execute('''
     
@@ -78,10 +73,4 @@ class DatabaseHelper
       );
     ''');
   }
-
-
-
-
-
-
 }

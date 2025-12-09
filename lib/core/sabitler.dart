@@ -74,14 +74,13 @@ class Sabitler{
     12: "Aralık",
   };
 
-  static String converttoDate(DateTime now)
+  static String converttoDate(DateTime time)
   {
-    final month=Sabitler.monthMap[now.month];
+    final month=Sabitler.monthMap[time.month];
 
-    final day=Sabitler.days[DateFormat("EEEE").format(now)];
+    final day=Sabitler.days[DateFormat("EEEE").format(time)];
 
-    return "${day}, ${now.day} ${month}";
-
+    return "${day}, ${time.day} ${month}";
 
   }
 

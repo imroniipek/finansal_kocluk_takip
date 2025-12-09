@@ -1,13 +1,10 @@
-import 'package:finansal_kocluk_takip/income_expense_page/bloc/amount_calculator_bloc.dart';
+import 'package:finansal_kocluk_takip/income_expense_page/bloc/income_expense_page_bloc/amount_calculator_bloc.dart';
 import 'package:finansal_kocluk_takip/income_expense_page/bloc/income_expense_page_states/amount_calculator_status.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import '../bloc/income_expense_page_bloc.dart';
 import '../bloc/income_expense_page_events/amount_calculator_event.dart';
-import '../bloc/income_expense_page_events/events.dart';
-import '../bloc/income_expense_page_states/status.dart';
+
 
 class AmountDisplay extends StatelessWidget {
 
@@ -66,9 +63,6 @@ class AmountDisplay extends StatelessWidget {
                       Text(state.tempValue!.split(".")[1], style: GoogleFonts.poppins(fontSize: 30, color: Colors.white)),
                     ],
                   ):Text(state.tempValue!,style: GoogleFonts.poppins(fontSize: 35, color: Colors.white),);
-
-
-
                 }
             ),
 
@@ -78,16 +72,6 @@ class AmountDisplay extends StatelessWidget {
 
           ],
         ),
-
-
-
-
-
-
       );
-
-
-
-
   }
 }

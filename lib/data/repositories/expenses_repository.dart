@@ -14,20 +14,23 @@ class ExpensesRepository{
 
     final db=await dbHelper.database;
 
+
     return await db.insert("expenses",model.toMap());
   }
 
-  Future<int>deleteExpense(ExpenseModel model)
+  Future<int>deleteExpense(int modelId)
   async{
 
     final db=await dbHelper.database;
 
-    return await db.delete("expenses",where:"id=?",whereArgs: [model.id]);
+
+    return await db.delete("expenses",where:"id=?",whereArgs: [modelId]);
   }
   Future<int>updateExpense(ExpenseModel model)
   async
   {
     final db=await dbHelper.database;
+
 
     final i=model.id;
 
@@ -42,7 +45,6 @@ class ExpensesRepository{
 
     final thequeryResult=await db.query("expenses",where:"date=?",whereArgs: [date]);
 
-    print(thequeryResult);
 
     return thequeryResult.map((e)=>ExpenseModel.fromMap(e)).toList();
 

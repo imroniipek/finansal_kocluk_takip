@@ -1,5 +1,5 @@
 import 'package:finansal_kocluk_takip/data/model/period_type.dart';
-import 'package:finansal_kocluk_takip/income_expense_page/bloc/income_expense_page_bloc.dart';
+import 'package:finansal_kocluk_takip/income_expense_page/bloc/income_expense_page_bloc/income_expense_page_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

@@ -1,21 +1,20 @@
 import 'package:finansal_kocluk_takip/data/model/period_type.dart';
-import 'package:finansal_kocluk_takip/income_expense_page/bloc/amount_calculator_bloc.dart';
-import 'package:finansal_kocluk_takip/income_expense_page/bloc/income_expense_page_bloc.dart';
-import 'package:finansal_kocluk_takip/income_expense_page/bloc/income_expense_page_states/status.dart';
+import 'package:finansal_kocluk_takip/income_expense_page/bloc/income_expense_page_bloc/amount_calculator_bloc.dart';
+import 'package:finansal_kocluk_takip/income_expense_page/bloc/income_expense_page_bloc/income_expense_page_bloc.dart';
+import 'package:finansal_kocluk_takip/income_expense_page/bloc/income_expense_page_events/db_events.dart';
 import 'package:finansal_kocluk_takip/income_expense_page/widgets/amount_display.dart';
 import 'package:finansal_kocluk_takip/income_expense_page/widgets/calculator_pad.dart';
 import 'package:finansal_kocluk_takip/income_expense_page/widgets/container_of_category.dart';
 import 'package:finansal_kocluk_takip/income_expense_page/widgets/date_selector.dart';
-import 'package:finansal_kocluk_takip/income_expense_page/widgets/calculator_button.dart';
 import 'package:finansal_kocluk_takip/income_expense_page/widgets/note_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../core/sabitler.dart';
-import '../../data/model/expense.dart';
-import '../../home_page/bloc/home_page_bloc.dart';
+import '../../date/date_bloc/date_bloc.dart';
+import '../../home_page/bloc/home_page_bloc/home_page_bloc.dart';
 import '../../home_page/bloc/home_page_event/home_page_event.dart';
-import '../bloc/db_bloc.dart';
+import '../bloc/income_expense_page_bloc/db_bloc.dart';
 import '../bloc/income_expense_page_events/amount_calculator_event.dart';
 import '../bloc/income_expense_page_events/events.dart';
 import '../bloc/income_expense_page_states/amount_calculator_status.dart';
@@ -32,11 +31,9 @@ class IncomeExpansePage extends StatefulWidget {
 
   final String? buttonName;
 
-  final dynamic Model;
+  final int ? modelId;
 
-
-
-  IncomeExpansePage({super.key, required this.isitIncomepage, required this.type, this.buttonName, Color? primaryColor,this.Model}) : primaryColor = primaryColor ??
+  IncomeExpansePage({super.key, required this.isitIncomepage, required this.type, this.buttonName, Color? primaryColor,this.modelId}) : primaryColor = primaryColor ??
   (isitIncomepage ? Sabitler.incomeColor : Sabitler.expensesColor);
 
   @override
@@ -47,15 +44,10 @@ class IncomeExpansePage extends StatefulWidget {
 
 class _IncomeExpansePageState extends State<IncomeExpansePage> {
 
-  late bool isthispagedesignedforupdate;
-
   @override
   void initState() {
 
     context.read<IncomeExpenseBloc>().add(ChangeType(widget.isitIncomepage));
-
-    (widget.Model==null)?isthispagedesignedforupdate=false:true;
-
     super.initState();
   }
   @override
@@ -63,7 +55,11 @@ class _IncomeExpansePageState extends State<IncomeExpansePage> {
 
     return Scaffold(
 
-      appBar:AppBar(
+      appBar:
+
+      (widget.modelId==null)?
+
+      AppBar(
         leading: IconButton(onPressed:()
         {
               context.read<AmountCalculatorBloc>().add(ResetTheCalculator());
@@ -72,28 +68,46 @@ class _IncomeExpansePageState extends State<IncomeExpansePage> {
             }, icon: Icon(Icons.arrow_back,size:35,color:Colors.white)),
 
         title:(widget.isitIncomepage==true)?Text("Yeni Gelir",style:GoogleFonts.poppins(fontSize:25,color:Colors.white)):Text("Yeni Gider",style:GoogleFonts.poppins(fontSize:25,color:Colors.white)),
-
         backgroundColor: widget.primaryColor,
-
         centerTitle: true,
-      ),
+      ):
 
+      AppBar(
+            leading: IconButton(onPressed:()
+            {
+              context.read<AmountCalculatorBloc>().add(ResetTheCalculator());
+              Navigator.pop(context);
+            }, icon: Icon(Icons.arrow_back,size:35,color:Colors.white)
+            ),
+
+            title:Text("Düzenle",style:GoogleFonts.poppins(fontSize:25,color:Colors.white)),
+            backgroundColor: widget.primaryColor,
+            centerTitle: true,
+
+            actions: [
+
+              IconButton(
+                icon: Icon(Icons.delete,size:35,color:Colors.white),
+
+                onPressed: ()
+                {
+                  context.read<DbBloc>().add(DeleteTheModelFromDb(isitIncome: widget.isitIncomepage, modelId: widget.modelId!));
+                },
+              )
+            ],
+          ),
       body:
-
       BlocConsumer<DbBloc, DbStatus>(
-
        listener: (context, state) async{
-
          if (state.status == PageStatus.success)
          {
+           final newDate = context.read<DateBloc>().state.date;
 
-           final newDate = context.read<IncomeExpenseBloc>().state.date;
+           context.read<HomePageBloc>().add(GetExpensesList());
 
-           context.read<HomePageBloc>().add(getExpensesList(newDate));
+           context.read<HomePageBloc>().add(GetIncomeList());
 
-           context.read<HomePageBloc>().add(getIncomeList(newDate));
-
-           context.read<HomePageBloc>().add(CalculateCurrentBalance(date: newDate));
+           context.read<HomePageBloc>().add(CalculateCurrentBalance());
 
            context.read<AmountCalculatorBloc>().add(ResetTheCalculator());
 
@@ -103,9 +117,6 @@ class _IncomeExpansePageState extends State<IncomeExpansePage> {
            ));
            Navigator.pop(context);
          }
-
-
-
       else if (state.status == PageStatus.error) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -117,8 +128,6 @@ class _IncomeExpansePageState extends State<IncomeExpansePage> {
     },
 
     builder: (context, state) {
-
-
       if (state.status == PageStatus.loading)
       {
         return Center(child: CircularProgressIndicator());
@@ -153,7 +162,8 @@ class _IncomeExpansePageState extends State<IncomeExpansePage> {
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                   crossAxisCount: 3,
-                  children: categoryContainers(context),
+                  children: (widget.modelId==null)?categoryContainers(context,null):
+                      categoryContainers(context, widget.modelId)
                 );
               },
             ),
@@ -162,14 +172,7 @@ class _IncomeExpansePageState extends State<IncomeExpansePage> {
               primaryColor: widget.primaryColor,
               buttonName: widget.buttonName,
               isitIncome: widget.isitIncomepage,
-
-              modelId: ()
-              {
-
-
-
-              },
-
+              modelId: widget.modelId,
             ),
           ],
         ),
@@ -177,9 +180,8 @@ class _IncomeExpansePageState extends State<IncomeExpansePage> {
     },
     )
     );
-
   }
-  List<Widget> categoryContainers(BuildContext context)
+  List<Widget> categoryContainers(BuildContext context,int ? modelId)
   {
     final values=(context.read<IncomeExpenseBloc>().state.title=="Yeni Gelir")?Sabitler.incomeSelections:Sabitler.expensesSelections;
 
@@ -188,13 +190,10 @@ class _IncomeExpansePageState extends State<IncomeExpansePage> {
     for(var entry in values.entries)
     {
       containers.add(
-        ContainerOfCategory(icondata: entry.key, value: entry.value, primaryColor: widget.primaryColor, isitIncomepage: widget.isitIncomepage, type: widget.type,state:context.read<IncomeExpenseBloc>().state)
+        ContainerOfCategory(icondata: entry.key, value: entry.value, primaryColor: widget.primaryColor, isitIncomepage: widget.isitIncomepage, type: widget.type,modelId:modelId)
       );
     }
-
     return containers;
 
   }
 }
-
-

@@ -1,9 +1,9 @@
+import 'package:finansal_kocluk_takip/date/date_bloc/date_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import '../bloc/income_expense_page_bloc.dart';
-import '../bloc/income_expense_page_events/events.dart';
+import '../../date/date_event/date_event.dart';
+import '../../date/date_status/date_status.dart';
 import '../bloc/income_expense_page_states/status.dart';
 
 class DateSelector extends StatelessWidget {
@@ -20,28 +20,18 @@ class DateSelector extends StatelessWidget {
         IconButton(
             onPressed: () async {
               final date =await showDatePicker(context: context, firstDate: DateTime(2024), lastDate: DateTime(2030),initialDate: DateTime.now());
-              context.read<IncomeExpenseBloc>().add(SelectDate(date!));
+
+              context.read<DateBloc>().add(DateEvent(date:date!));
             },icon: Icon(Icons.calendar_month,size:27,color:Colors.black)
         ),
 
-
-
-        BlocBuilder<IncomeExpenseBloc, IncomeExpenseStatus>(
+        BlocBuilder<DateBloc,DateState>(
           builder: (context, state) {
             return Text(state.date,style:GoogleFonts.poppins(fontSize:23,color:Colors.black));
           },
         ),
-
-
-
       ],
 
     );
-
-
-
-
-
-
   }
 }

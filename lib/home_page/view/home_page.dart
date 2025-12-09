@@ -1,5 +1,6 @@
-import 'package:finansal_kocluk_takip/data/model/income.dart';
-import 'package:finansal_kocluk_takip/home_page/bloc/home_page_bloc.dart';
+import 'package:finansal_kocluk_takip/core/helpers/home_page_helpers/home_page_helper.dart';
+import 'package:finansal_kocluk_takip/date/date_bloc/date_bloc.dart';
+import 'package:finansal_kocluk_takip/date/date_event/date_event.dart';
 import 'package:finansal_kocluk_takip/home_page/bloc/home_page_status/home_page_status.dart';
 import 'package:finansal_kocluk_takip/home_page/widgets/current_balance.dart';
 import 'package:finansal_kocluk_takip/home_page/widgets/expenses_donut_chart.dart';
@@ -8,11 +9,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../core/sabitler.dart';
-import '../../data/model/expense.dart';
 import '../../data/model/period_type.dart';
+import '../../date/date_status/date_status.dart';
 import '../../income_expense_page/view/income_expanse_page.dart';
-import '../../locator.dart';
-import '../bloc/home_page_event/home_page_event.dart';
+import '../bloc/home_page_bloc/home_page_bloc.dart';
 import '../widgets/expenses_and_income_buttons.dart';
 
 class HomePage extends StatefulWidget {
@@ -24,12 +24,18 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
+  @override
+  void initState() {
+    context.read<DateBloc>().add(DateEvent(date: DateTime.now()));
+    super.initState();
+  }
+
   bool isOpen = false;
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
+
         appBar: AppBar(
           backgroundColor: Sabitler.generalPrimaryColor,
           title: Text("Cüzdanım360", style: GoogleFonts.pacifico(fontSize: 25, color: Colors.white),),
@@ -53,14 +59,14 @@ class _HomePageState extends State<HomePage> {
 
                       if (selectedDate != null)
                       {
-                        context.read<HomePageBloc>().add(ChangeTheDate(selectedDate));
+                        context.read<DateBloc>().add(DateEvent(date:selectedDate));
                       }
                     },
                     icon: Icon(Icons.calendar_month, size: 30, color: Sabitler.generalPrimaryColor,),
                   ),
 
 
-                  BlocBuilder<HomePageBloc,HomePageState>(
+                  BlocBuilder<DateBloc,DateState>(
                       builder: (context,state)
                       {
                         return Text(state.date, style: GoogleFonts.poppins(fontSize: 20, color: Colors.black,),);
@@ -78,18 +84,13 @@ class _HomePageState extends State<HomePage> {
 
                   buildWhen:(previous,current)
                   {
-                    return (previous.expenses!=current.expenses)||(previous.date!=current.date);
+                    return (previous.expenses!=current.expenses);
                   },
                   builder:(context,state)
                   {
                     final expensesList=expensesButtonList(context);
-
                     return Container(
-
-
                       height:500,
-
-
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -106,7 +107,8 @@ class _HomePageState extends State<HomePage> {
                               children: [
                                 expensesList[4],
 
-                                ExpensesDonutChart(expenses:context.watch<HomePageBloc>().state.expenses,date:context.watch<HomePageBloc>().state.date),
+                                ExpensesDonutChart(expenses: state.expenses, date: context.read<DateBloc>().state.dbdate
+                                ),
                                 expensesList[5],
                               ],
 
@@ -151,7 +153,6 @@ class _HomePageState extends State<HomePage> {
                         isOpen = !isOpen;
                       });
 
-
                     },
                     icon: Icon(Icons.menu, size: 45, color: Sabitler.generalPrimaryColor,)),
                 ],
@@ -163,10 +164,8 @@ class _HomePageState extends State<HomePage> {
 
                   buildWhen:(previous,current)
                   {
-                    return (previous.incomes != current.incomes)||(previous.expenses!=previous.expenses);
+                    return (previous.incomes != current.incomes)||(previous.expenses!=current.expenses);
                   },
-
-
                   builder:(context,state)
                   {
                     return AnimatedContainer(
@@ -174,7 +173,7 @@ class _HomePageState extends State<HomePage> {
                       curve: Curves.easeInOut,
                       height: isOpen ? ((context.read<HomePageBloc>().state.incomes.length)+(context.read<HomePageBloc>().state.expenses.length))*120 : 0.0,
                       child: isOpen ? SingleChildScrollView(
-                          child: IncomeExpensesListtile(model: theMapSelectedByCategory(context.read<HomePageBloc>().state.incomes,context.read<HomePageBloc>().state.expenses))): Container(),
+                          child: IncomeExpensesListtile(model: HomePageHelper.theMapSelectedByCategory(context.read<HomePageBloc>().state.incomes,context.read<HomePageBloc>().state.expenses))): Container(),
                     );
                   }
               ),
@@ -197,8 +196,6 @@ class _HomePageState extends State<HomePage> {
 
   }
 
-
-
    List<Widget> expensesButtonList(BuildContext context) {
 
     return Sabitler.expensesSelections.entries.toList().asMap().entries.map((indexedEntry)
@@ -206,7 +203,7 @@ class _HomePageState extends State<HomePage> {
       final i = indexedEntry.key;
       final entry = indexedEntry.value;
 
-     final theValue=calculatethePercentbyExpenses(context.watch<HomePageBloc>().state.expenses, entry.value);
+     final theValue=HomePageHelper.calculatethePercentbyExpenses(context.watch<HomePageBloc>().state.expenses, entry.value);
 
 
       return Column(
@@ -222,55 +219,5 @@ class _HomePageState extends State<HomePage> {
         ],
       );
     }).toList();
-  }
-
-
-  double calculatethePercentbyExpenses(List<ExpenseModel> expensesList, String categoryofExpense) {
-    double totalAmount = 0.0;
-
-    double categoryAmount = 0.0;
-
-    for (var expense in expensesList) {
-      totalAmount += expense.amount;
-
-      if (expense.category == categoryofExpense) {
-        categoryAmount += expense.amount;
-      }
-    }
-
-    return (totalAmount == 0.0) ?0.0:(categoryAmount / totalAmount)*100;
-
-  }
-
-  Map<String, List<dynamic>> theMapSelectedByCategory(List<IncomeModel> incomelist,List<ExpenseModel>expenselist) {
-
-
-    Map<String,List<dynamic>> map={};
-    for(var value in incomelist)
-    {
-      if(map[value.category]==null)
-      {
-        map[value.category]=(map[value.category]??[])..add(value);
-      }
-      else
-      {
-        map[value.category]!.add(value);
-      }
-    }
-
-    for(var value in expenselist)
-      {
-        if(map[value.category]==null)
-          {
-            map[value.category]=[]..add(value);
-          }
-        else
-          {
-            map[value.category]!.add(value);
-          }
-      }
-
-
-    return map;
   }
 }

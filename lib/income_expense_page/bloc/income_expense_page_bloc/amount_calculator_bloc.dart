@@ -82,8 +82,6 @@ class AmountCalculatorBloc extends Bloc<AmountCalculatorEvent,AmountCalculatorSt
         newList = newList.sublist(0, newList.length - 1);
       }
 
-      double first_value = double.parse(newList.join());
-
       emit(state.copyWith(tempValue: newList.join(),
         numbers: newList,
         setFirstValueToNull: true,
@@ -107,25 +105,17 @@ class AmountCalculatorBloc extends Bloc<AmountCalculatorEvent,AmountCalculatorSt
     }
 
     );
-
-    on<ClickTheButton>((event, emit) {
-
-      if(event.buttonName==null)
-      {
-        (controlOfTempValue(state.tempValue!)==true)?
-        emit(state.copyWith(isButtonSection:false)):  emit(state.copyWith(isButtonSection:true));
-      }
-
-
-
-
+    on<ClickTheButton>((event, emit)
+    {
+      (controlOfTempValue(state.tempValue!)==true)?
+      emit(state.copyWith(isButtonSection:false)):  emit(state.copyWith(isButtonSection:true));
     });
 
     on<UpdateTheModel>((event,emit)
     {
-      if(event.Model is ExpenseModel||event.Model is IncomeModel)
+      if(event.model is ExpenseModel||event.model is IncomeModel)
         {
-          final theModel=event.Model;
+          final theModel=event.model;
 
           List<String>theList=theModel.amount.toString().split("");
 
