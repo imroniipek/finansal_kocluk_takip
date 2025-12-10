@@ -1,6 +1,9 @@
 import 'dart:async';
+import 'package:finansal_kocluk_takip/data/model/expense.dart';
 import 'package:finansal_kocluk_takip/data/repositories/expenses_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../core/helpers/home_page_helpers/drawer_helper.dart';
+import '../../../data/model/income.dart';
 import '../../../data/repositories/income_repository.dart';
 import '../../../date/date_bloc/date_bloc.dart';
 import '../../../locator.dart';
@@ -89,6 +92,27 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
         print("Hata" +e.toString());
       }
     }
+    );
+
+    on<CalculateTheValuesFor7Days>(
+        (event,emit)
+        {
+          List<IncomeModel>incomes=[];
+
+          List<ExpenseModel>expenses=[];
+
+          final firstDate=DateTime.parse(event.firstDay);
+
+          final lastDate=firstDate.add(Duration(days:7));
+
+
+
+
+
+        }
+
+
+
     );
 
   }

@@ -98,9 +98,6 @@ class Sabitler{
     Color(0xFFEAA96A),
     Color(0xFFC4BBBB),
   ];
-
-
-
   static Map<IconData,String> incomeSelections={
 
     Icons.attach_money:"Maaş",
@@ -162,19 +159,4 @@ class Sabitler{
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
-

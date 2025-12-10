@@ -3,6 +3,7 @@ import 'package:finansal_kocluk_takip/date/date_bloc/date_bloc.dart';
 import 'package:finansal_kocluk_takip/date/date_event/date_event.dart';
 import 'package:finansal_kocluk_takip/home_page/bloc/home_page_status/home_page_status.dart';
 import 'package:finansal_kocluk_takip/home_page/widgets/current_balance.dart';
+import 'package:finansal_kocluk_takip/home_page/widgets/drawer.dart';
 import 'package:finansal_kocluk_takip/home_page/widgets/expenses_donut_chart.dart';
 import 'package:finansal_kocluk_takip/home_page/widgets/income_expenses_listtile.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +37,12 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
 
+      drawer: MyDrawer(),
+
         appBar: AppBar(
+
+          iconTheme: IconThemeData(color: Colors.white, size: 30,),
+
           backgroundColor: Sabitler.generalPrimaryColor,
           title: Text("Cüzdanım360", style: GoogleFonts.pacifico(fontSize: 25, color: Colors.white),),
           centerTitle: true,
