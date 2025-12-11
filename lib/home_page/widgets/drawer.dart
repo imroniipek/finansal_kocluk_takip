@@ -25,7 +25,7 @@ class MyDrawer extends StatelessWidget {
 
               buildDrawerButton("Gün", Icons.calendar_today, () {}),
               buildDrawerButton("Hafta", Icons.date_range, ()=>CalculateForWeeks(context)),
-              buildDrawerButton("Ay", Icons.calendar_month, () {}),
+              buildDrawerButton("Ay", Icons.calendar_month, ()=>CalculateFortheMonth(context,"Aralık")),
               buildDrawerButton("Yıl", Icons.timeline, () {}),
 
             ],
@@ -59,6 +59,7 @@ class MyDrawer extends StatelessWidget {
       ),
     );
   }
+  CalculateFortheMonth(BuildContext context,String monthNumber)=>context.read<HomePageBloc>().add(CalculateTheValuesForTheMonth(monthName: monthNumber));
 
   CalculateForWeeks(BuildContext context)=> context.read<HomePageBloc>().add(CalculateTheValuesFor7Days());
 
