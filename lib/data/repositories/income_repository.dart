@@ -77,4 +77,25 @@ class IncomeRepository{
     return totalAmount;
 
   }
+
+  Future<List<IncomeModel>>getAllOfIncomeModelByMonthNumber(int monthNumber)
+  async {
+    List<IncomeModel>incomesList=[];
+
+    final db=await dbHelper.database;
+
+    List<Map<String,dynamic>> incomesfromDb=await db.query("incomes");
+
+    for(var value in incomesfromDb)
+      {
+        final theListOfDateValue=value["date"].split(".");
+
+        if(theListOfDateValue[2]==monthNumber)
+          {
+            incomesList.add(IncomeModel.fromMap(value));
+          }
+      }
+
+    return incomesList;
+  }
 }

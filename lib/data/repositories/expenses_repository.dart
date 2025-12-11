@@ -77,14 +77,23 @@ class ExpensesRepository{
     return totalAmount;
   }
 
+  Future<List<ExpenseModel>> getAllOfExpensesListByMonthNumber(int monthNumber)
+  async {
+    List<ExpenseModel>expenses=[];
+    final db=await dbHelper.database;
 
+    List<Map<String,dynamic>> thequeryResult=await db.query("expenses");
 
-
-
-
-
-
-
-
+    for(var entry in thequeryResult)
+      {
+        final parts = entry["date"].split(".").map((e) => e.trim()).toList();
+        if(parts[2]==monthNumber)
+          {
+            final theExpensesModel=ExpenseModel.fromMap(entry);
+            expenses.add(theExpensesModel);
+          }
+      }
+    return expenses;
+  }
 }
 

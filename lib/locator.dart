@@ -10,10 +10,6 @@ GetIt locator = GetIt.instance;
 void setupLocator()
 {
   locator.registerLazySingleton(()=>IncomeRepository());
-
   locator.registerLazySingleton(()=>ExpensesRepository());
-
   locator.registerLazySingleton(()=>DatabaseHelper());
-
-
 }

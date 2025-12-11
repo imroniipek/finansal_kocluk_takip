@@ -1,2 +1,1 @@
-
-enum PeriodType { monthly, daily, yearly }
+enum PeriodType { monthly, daily, yearly,weekly }

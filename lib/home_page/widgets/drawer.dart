@@ -1,4 +1,7 @@
+import 'package:finansal_kocluk_takip/home_page/bloc/home_page_bloc/home_page_bloc.dart';
+import 'package:finansal_kocluk_takip/home_page/bloc/home_page_event/home_page_event.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});
@@ -21,7 +24,7 @@ class MyDrawer extends StatelessWidget {
               const SizedBox(height: 20),
 
               buildDrawerButton("Gün", Icons.calendar_today, () {}),
-              buildDrawerButton("Hafta", Icons.date_range, () {}),
+              buildDrawerButton("Hafta", Icons.date_range, ()=>CalculateForWeeks(context)),
               buildDrawerButton("Ay", Icons.calendar_month, () {}),
               buildDrawerButton("Yıl", Icons.timeline, () {}),
 
@@ -56,4 +59,8 @@ class MyDrawer extends StatelessWidget {
       ),
     );
   }
+
+  CalculateForWeeks(BuildContext context)=> context.read<HomePageBloc>().add(CalculateTheValuesFor7Days());
+
+
 }

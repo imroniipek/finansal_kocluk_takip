@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
 
-      drawer: MyDrawer(),
+        drawer: MyDrawer(),
 
         appBar: AppBar(
 
@@ -72,13 +72,19 @@ class _HomePageState extends State<HomePage> {
                   ),
 
 
-                  BlocBuilder<DateBloc,DateState>(
-                      builder: (context,state)
-                      {
-                        return Text(state.date, style: GoogleFonts.poppins(fontSize: 20, color: Colors.black,),);
-                      }
-                  )
-
+                  BlocBuilder<DateBloc, DateState>(
+                    builder: (context, dateState) {
+                      return BlocBuilder<HomePageBloc, HomePageState>(
+                        buildWhen: (prev, curr) => prev.displayDate != curr.displayDate,
+                        builder: (context, homeState) {
+                          if (homeState.displayDate != null) {
+                            return Text(homeState.displayDate!, style: GoogleFonts.poppins(fontSize: 20),);
+                          }
+                          return Text(dateState.date, style: GoogleFonts.poppins(fontSize: 20),);
+                        },
+                      );
+                    },
+                  ),
 
                 ],
               ),
@@ -149,18 +155,18 @@ class _HomePageState extends State<HomePage> {
                   ),
 
 
-                   CurrentBalance(),
+                  CurrentBalance(),
 
                   IconButton(
-                    onPressed: ()
-                    {
-                      setState(()
+                      onPressed: ()
                       {
-                        isOpen = !isOpen;
-                      });
+                        setState(()
+                        {
+                          isOpen = !isOpen;
+                        });
 
-                    },
-                    icon: Icon(Icons.menu, size: 45, color: Sabitler.generalPrimaryColor,)),
+                      },
+                      icon: Icon(Icons.menu, size: 45, color: Sabitler.generalPrimaryColor,)),
                 ],
               ),
 
@@ -202,14 +208,14 @@ class _HomePageState extends State<HomePage> {
 
   }
 
-   List<Widget> expensesButtonList(BuildContext context) {
+  List<Widget> expensesButtonList(BuildContext context) {
 
     return Sabitler.expensesSelections.entries.toList().asMap().entries.map((indexedEntry)
     {
       final i = indexedEntry.key;
       final entry = indexedEntry.value;
 
-     final theValue=HomePageHelper.calculatethePercentbyExpenses(context.watch<HomePageBloc>().state.expenses, entry.value);
+      final theValue=HomePageHelper.calculatethePercentbyExpenses(context.watch<HomePageBloc>().state.expenses, entry.value);
 
 
       return Column(
