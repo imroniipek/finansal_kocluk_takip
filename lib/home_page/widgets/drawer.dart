@@ -3,6 +3,8 @@ import 'package:finansal_kocluk_takip/home_page/bloc/home_page_event/home_page_e
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../core/sabitler.dart';
+
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});
 
@@ -25,7 +27,7 @@ class MyDrawer extends StatelessWidget {
 
               buildDrawerButton("Gün", Icons.calendar_today, () {}),
               buildDrawerButton("Hafta", Icons.date_range, ()=>CalculateForWeeks(context)),
-              buildDrawerButton("Ay", Icons.calendar_month, ()=>CalculateFortheMonth(context,"Aralık")),
+              buildDrawerButton("Ay", Icons.calendar_month, ()=>openMonthSelector(context)),
               buildDrawerButton("Yıl", Icons.timeline, () {}),
 
             ],
@@ -36,7 +38,7 @@ class MyDrawer extends StatelessWidget {
   }
   Widget buildDrawerButton(String label, IconData icon, VoidCallback onTap) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.only(bottom: 12,top:10),
       child: Material(
         color: Colors.deepPurple.shade50,
         borderRadius: BorderRadius.circular(12),
@@ -59,7 +61,44 @@ class MyDrawer extends StatelessWidget {
       ),
     );
   }
-  CalculateFortheMonth(BuildContext context,String monthNumber)=>context.read<HomePageBloc>().add(CalculateTheValuesForTheMonth(monthName: monthNumber));
+  void openMonthSelector(BuildContext context) {
+
+    Navigator.pop(context);
+
+    showModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20)),),
+      builder: (context) {
+        return Container(
+          padding: EdgeInsets.all(16),
+          height: 350,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("Ay Seç", style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.deepPurple.shade700,),),
+              const SizedBox(height: 20),
+
+              Expanded(
+                child: ListView.builder(
+                  itemCount: Sabitler.months.length,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      title: Text(Sabitler.months[index], style: TextStyle(fontSize: 18),),
+                      onTap: () {
+                        context.read<HomePageBloc>().add(CalculateTheValuesForTheMonth(monthName: Sabitler.months[index]),);
+                        Navigator.pop(context);
+                      },
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
 
   CalculateForWeeks(BuildContext context)=> context.read<HomePageBloc>().add(CalculateTheValuesFor7Days());
 

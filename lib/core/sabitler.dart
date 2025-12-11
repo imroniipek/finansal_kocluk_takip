@@ -59,6 +59,21 @@ class Sabitler{
     "Sunday":"Pazar",
 
   };
+  static final List<String> months = [
+    "Ocak",
+    "Şubat",
+    "Mart",
+    "Nisan",
+    "Mayıs",
+    "Haziran",
+    "Temmuz",
+    "Ağustos",
+    "Eylül",
+    "Ekim",
+    "Kasım",
+    "Aralık"
+  ];
+
   static Map<int,String> monthMap = {
     01: "Ocak",
     02: "Şubat",
