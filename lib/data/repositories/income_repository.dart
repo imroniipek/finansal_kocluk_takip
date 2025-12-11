@@ -86,11 +86,15 @@ class IncomeRepository{
 
     List<Map<String,dynamic>> incomesfromDb=await db.query("incomes");
 
+    print(incomesfromDb.first);
+
     for(var value in incomesfromDb)
       {
         final theListOfDateValue=value["date"].split(".");
 
-        if(theListOfDateValue[2]==monthNumber)
+        print("Takvimin ikinci elemanı ${theListOfDateValue[1]}");
+
+        if(monthNumber==int.parse(theListOfDateValue[1]))
           {
             incomesList.add(IncomeModel.fromMap(value));
           }

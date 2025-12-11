@@ -79,6 +79,7 @@ class ExpensesRepository{
 
   Future<List<ExpenseModel>> getAllOfExpensesListByMonthNumber(int monthNumber)
   async {
+    print("monthNumber burda ${monthNumber}");
     List<ExpenseModel>expenses=[];
     final db=await dbHelper.database;
 
@@ -87,9 +88,14 @@ class ExpensesRepository{
     for(var entry in thequeryResult)
       {
         final parts = entry["date"].split(".").map((e) => e.trim()).toList();
-        if(parts[2]==monthNumber)
+
+        print("Expensestaki 2.eleman ${parts[1]}");
+
+        if(monthNumber==int.parse(parts[1]))
           {
             final theExpensesModel=ExpenseModel.fromMap(entry);
+
+            print("------->"+theExpensesModel.date);
             expenses.add(theExpensesModel);
           }
       }

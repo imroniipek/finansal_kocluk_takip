@@ -142,12 +142,16 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
                   monthNumber=entry.key;
                 }
             }
+          print(monthNumber);
           if(monthNumber!=null)
             {
               final incomeList=await locator<IncomeRepository>().getAllOfIncomeModelByMonthNumber(monthNumber);
 
               final expensesList=await locator<ExpensesRepository>().getAllOfExpensesListByMonthNumber(monthNumber);
 
+              print("incomeList bos mu: ${incomeList.isEmpty}");
+
+              print("ExpensesList bos mu: ${incomeList.isEmpty}");
               emit(state.copyWith(expenses: expensesList,incomes: incomeList));
             }
         }
