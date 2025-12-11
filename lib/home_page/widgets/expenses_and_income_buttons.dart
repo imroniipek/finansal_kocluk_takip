@@ -21,8 +21,8 @@ class ExpensesandIncomeButtons extends StatelessWidget {
           Navigator.push(context,MaterialPageRoute(builder: (context)=>IncomeExpansePage(isitIncomepage:isitIncome,type:PeriodType.daily)));
         },
         child: Container(
-          height: 80,
-          width: 80,
+          height: 100,
+          width: 100,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(100),
               color:Colors.white,

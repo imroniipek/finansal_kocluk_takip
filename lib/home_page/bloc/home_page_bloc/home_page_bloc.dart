@@ -134,6 +134,7 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
         (event,emit)
         async {
           int ? monthNumber;
+
           for(var entry in Sabitler.monthMap.entries)
             {
               if(entry.value==event.monthName)
@@ -143,12 +144,17 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
             }
           if(monthNumber!=null)
             {
-              final  expensesList=await locator<IncomeRepository>().getAllOfIncomeModelByMonthNumber(monthNumber);
-            
+              final incomeList=await locator<IncomeRepository>().getAllOfIncomeModelByMonthNumber(monthNumber);
+
+              final expensesList=await locator<ExpensesRepository>().getAllOfExpensesListByMonthNumber(monthNumber);
+
+              emit(state.copyWith(expenses: expensesList,incomes: incomeList));
             }
         }
     );
   }
+
+
   @override
   Future<void> close() {
     datesubriction.cancel();
