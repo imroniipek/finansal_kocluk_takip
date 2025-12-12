@@ -31,7 +31,7 @@ class _ExpensesDonutChartState extends State<ExpensesDonutChart> {
     if (widget.expenses.isEmpty) {
       return SizedBox(
         height: 250,
-        child: Center(child: Text("Henüz gider yok")),
+        child: Center(child: Text("Henüz herhangi bir veri yok")),
       );
     }
 

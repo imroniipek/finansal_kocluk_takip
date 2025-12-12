@@ -3,8 +3,7 @@ import 'package:intl/intl.dart';
 import '../../core/sabitler.dart';
 import '../date_event/date_event.dart';
 import '../date_status/date_status.dart';
-
-class DateBloc extends Bloc<EventsForDate, DateState> {
+class DateBloc extends Bloc<DateEvent, DateState> {
   DateBloc() : super(DateState(
       date: Sabitler.converttoDate(DateTime.now()),
       dbdate: DateFormat("dd.MM.yyyy").format(DateTime.now()),
@@ -16,12 +15,5 @@ class DateBloc extends Bloc<EventsForDate, DateState> {
         dbdate: DateFormat("dd.MM.yyyy").format(event.date),
       ));
     });
-
-    on<DateEventForDb>(
-        (event,emit)
-        {
-          emit(DateState(date: state.date, dbdate: event.dateeventfordb));
-        }
-    );
   }
 }

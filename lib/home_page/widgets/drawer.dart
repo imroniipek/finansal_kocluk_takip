@@ -1,12 +1,12 @@
+import 'package:finansal_kocluk_takip/date/date_event/date_event.dart';
 import 'package:finansal_kocluk_takip/home_page/bloc/home_page_bloc/home_page_bloc.dart';
 import 'package:finansal_kocluk_takip/home_page/bloc/home_page_event/home_page_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../core/sabitler.dart';
-
+import '../../date/date_bloc/date_bloc.dart';
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -17,18 +17,14 @@ class MyDrawer extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               Text("Cüzdanım360", style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.deepPurple.shade700,),),
-
               const SizedBox(height: 20),
               Divider(color: Colors.grey, thickness: 2),
               const SizedBox(height: 20),
-
-              buildDrawerButton("Gün", Icons.calendar_today, () {}),
-              buildDrawerButton("Hafta", Icons.date_range, ()=>CalculateForWeeks(context)),
+              buildDrawerButton("Gün", Icons.calendar_today, ()=>selectedDate(context)),
+              buildDrawerButton("Hafta", Icons.date_range, ()=>calculateForWeeks(context)),
               buildDrawerButton("Ay", Icons.calendar_month, ()=>openMonthSelector(context)),
-              buildDrawerButton("Yıl", Icons.timeline, () {}),
-
+              buildDrawerButton("Yıl", Icons.timeline, () =>calculateForTheYear(context)),
             ],
           ),
         ),
@@ -61,7 +57,6 @@ class MyDrawer extends StatelessWidget {
     );
   }
   void openMonthSelector(BuildContext context) {
-
     Navigator.pop(context);
 
     showModalBottomSheet(
@@ -97,5 +92,27 @@ class MyDrawer extends StatelessWidget {
       },
     );
   }
-  CalculateForWeeks(BuildContext context)=> context.read<HomePageBloc>().add(CalculateTheValuesFor7Days());
+  void calculateForWeeks(BuildContext context)
+  {
+    context.read<HomePageBloc>().add(CalculateTheValuesFor7Days());
+    Navigator.pop(context);
+  }
+  void calculateForTheYear(BuildContext context)
+  {
+    context.read<HomePageBloc>().add(CalculateTheValuesForTheYear());
+    Navigator.pop(context);
+  }
+
+  Future<void> selectedDate(BuildContext context)
+  async {
+    final dateBloc = context.read<DateBloc>();
+
+    final selectedDate = await showDatePicker(context: context, firstDate: DateTime(2024), lastDate: DateTime(2035),);
+
+    if (selectedDate == null) return;
+
+    dateBloc.add(DateEvent(date: selectedDate));
+
+    Navigator.pop(context);
+  }
 }

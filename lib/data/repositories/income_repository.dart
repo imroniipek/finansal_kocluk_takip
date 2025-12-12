@@ -80,4 +80,25 @@ class IncomeRepository{
       }
     return incomesList;
   }
+
+  Future<List<IncomeModel>>getAllOfIncomeModelByYear(String year)
+  async {
+    List<IncomeModel>incomesList=[];
+
+    final db=await dbHelper.database;
+
+    List<Map<String,dynamic>> incomesfromDb=await db.query("incomes");
+    for(var value in incomesfromDb)
+    {
+      final theListOfDateValue=value["date"].split(".");
+
+      print("Takvimin ikinci elemanı ${theListOfDateValue[2]}");
+
+      if(theListOfDateValue[1]==year)
+      {
+        incomesList.add(IncomeModel.fromMap(value));
+      }
+    }
+    return incomesList;
+  }
 }

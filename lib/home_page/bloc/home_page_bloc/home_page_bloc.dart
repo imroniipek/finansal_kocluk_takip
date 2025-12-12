@@ -150,6 +150,17 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
             }
         }
     );
+
+    on<CalculateTheValuesForTheYear>(
+        (event,emit)
+        async{
+          final incomeList= await locator<IncomeRepository>().getAllOfIncomeModelByYear(DateTime.now().year.toString());
+          final expensesList=await locator<ExpensesRepository>().getAllofExpensesListByYear(DateTime.now().year.toString());
+          emit(state.copyWith(expenses:expensesList,incomes: incomeList,displayDate: DateTime.now().year.toString()));
+        }
+    );
+
+
   }
   @override
   Future<void> close() {

@@ -79,7 +79,6 @@ class ExpensesRepository{
 
   Future<List<ExpenseModel>> getAllOfExpensesListByMonthNumber(int monthNumber)
   async {
-    print("monthNumber burda ${monthNumber}");
     List<ExpenseModel>expenses=[];
     final db=await dbHelper.database;
 
@@ -91,15 +90,33 @@ class ExpensesRepository{
 
         print("Expensestaki 2.eleman ${parts[1]}");
 
-        if(monthNumber==int.parse(parts[1]))
+        if(int.parse(parts[1])==monthNumber)
           {
             final theExpensesModel=ExpenseModel.fromMap(entry);
-
-            print("------->"+theExpensesModel.date);
             expenses.add(theExpensesModel);
           }
       }
     return expenses;
   }
-}
+  Future<List<ExpenseModel>> getAllofExpensesListByYear(String year)
+  async {
+    List<ExpenseModel>expenses=[];
+    final db=await dbHelper.database;
 
+    List<Map<String,dynamic>> thequeryResult=await db.query("expenses");
+
+    for(var entry in thequeryResult)
+    {
+      final parts = entry["date"].split(".").map((e) => e.trim()).toList();
+
+      print("Expensestaki 2.eleman ${parts[2]}");
+
+      if(parts[2]==year)
+      {
+        final theExpensesModel=ExpenseModel.fromMap(entry);
+        expenses.add(theExpensesModel);
+      }
+    }
+    return expenses;
+  }
+}

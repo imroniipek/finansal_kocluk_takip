@@ -15,3 +15,4 @@ class CalculateTheValuesForTheMonth extends HomePageEvent
   CalculateTheValuesForTheMonth({required this.monthName});
 
 }
+class CalculateTheValuesForTheYear extends HomePageEvent {}
