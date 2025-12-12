@@ -100,7 +100,7 @@ class _HomePageState extends State<HomePage> {
                   builder:(context,state)
                   {
                     final expensesList=expensesButtonList(context);
-                    return Container(
+                    return SizedBox(
                       height:500,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -118,7 +118,7 @@ class _HomePageState extends State<HomePage> {
                               children: [
                                 expensesList[4],
 
-                                ExpensesDonutChart(expenses: state.expenses, date: context.read<DateBloc>().state.dbdate),
+                                ExpensesDonutChart(expenses: state.expenses,incomes:state.incomes),
                                 expensesList[5],
                               ],
 
@@ -151,10 +151,7 @@ class _HomePageState extends State<HomePage> {
                     },
                     icon: Icon(Icons.menu, size: 45, color: Sabitler.generalPrimaryColor,),
                   ),
-
-
                   CurrentBalance(),
-
                   IconButton(
                       onPressed: ()
                       {
@@ -167,9 +164,7 @@ class _HomePageState extends State<HomePage> {
                       icon: Icon(Icons.menu, size: 45, color: Sabitler.generalPrimaryColor,)),
                 ],
               ),
-
               const SizedBox(height: 5),
-
               BlocBuilder<HomePageBloc,HomePageState>(
 
                   buildWhen:(previous,current)
@@ -181,7 +176,7 @@ class _HomePageState extends State<HomePage> {
                     return AnimatedContainer(
                       duration: const Duration(milliseconds: 200),
                       curve: Curves.easeInOut,
-                      height: isOpen ? ((context.read<HomePageBloc>().state.incomes.length)+(context.read<HomePageBloc>().state.expenses.length))*120 : 0.0,
+                      height: isOpen ? ((context.read<HomePageBloc>().state.incomes.length)+(context.read<HomePageBloc>().state.expenses.length))*103 : 0.0,
                       child: isOpen ? SingleChildScrollView(
                           child: IncomeExpensesListtile(model: HomePageHelper.theMapSelectedByCategory(context.read<HomePageBloc>().state.incomes,context.read<HomePageBloc>().state.expenses))): Container(),
                     );
