@@ -61,11 +61,8 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
       try
       {
         final theDate=dateBloc.state.dbdate;
-
         final expensesList=await locator<ExpensesRepository>().expensesList(theDate);
-
         emit(state.copyWith(expenses: expensesList,displayDate: null));
-
       }
       catch(e)
       {
@@ -90,42 +87,30 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
       }
     }
     );
-
     on<CalculateTheValuesFor7Days>(
         (event,emit)
        async {
-          List<IncomeModel>incomes=[];
+           final formatter = DateFormat("dd.MM.yyyy");
 
-          List<ExpenseModel>expenses=[];
+           final firstDate = formatter.parse(dateBloc.state.dbdate);
+           final lastDate = firstDate.subtract(const Duration(days: 7));
+           List<IncomeModel> incomes = [];
+           List<ExpenseModel> expenses = [];
+           for (DateTime day = lastDate; day.isBefore(firstDate) || day.isAtSameMomentAs(firstDate); day = day.add(const Duration(days: 1))) {
+             final theDay = formatter.format(day);
 
-          final firstDate=DateFormat("dd.MM.yyyy").parse(dateBloc.state.dbdate);
+             final incomeList = await locator<IncomeRepository>().getAllofIncomesList(theDay);
+             final expenseList = await locator<ExpensesRepository>().expensesList(theDay);
 
-          final lastDate=firstDate.subtract(Duration(days:7));
+             incomes.addAll(incomeList);
+             expenses.addAll(expenseList);
+           }
+           final incomeAmount = incomes.fold(0.0, (sum, item) => sum + item.amount);
+           final expenseAmount = expenses.fold(0.0, (sum, item) => sum + item.amount);
 
-          for(DateTime day=lastDate;day.isBefore(firstDate)||day.isAtSameMomentAs(firstDate);day=day.add(Duration(days:1)))
-            {
-              final theDay=DateFormat("dd.MM.yyyy").format(day);
-
-              final IncomeListFromDb=await  locator<IncomeRepository>().getAllofIncomesList(theDay);
-
-              final ExpensesListFromDb= await locator<ExpensesRepository>().expensesList(theDay);
-              for (var item in IncomeListFromDb)
-                {
-                  incomes.add(item);
-                }
-              for(var item in ExpensesListFromDb)
-                {
-                  expenses.add(item);
-                }
-
-            }
-          final formattedFirst = DateFormat("dd.MM.yyyy").format(firstDate);
-          final formattedLast = DateFormat("dd.MM.yyyy").format(lastDate);
-
-
-          emit(state.copyWith(expenses: expenses, incomes: incomes, displayDate: "$formattedLast - $formattedFirst",),);
+           emit(state.copyWith(incomes: incomes, expenses: expenses, displayDate: "${formatter.format(lastDate)} - ${formatter.format(firstDate)}", currentBalance: incomeAmount - expenseAmount,),
+           );
         }
-
     );
 
     on<CalculateTheValuesForTheMonth>(
@@ -146,7 +131,11 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
               final incomeList=await locator<IncomeRepository>().getAllOfIncomeModelByMonthNumber(monthNumber);
 
               final expensesList=await locator<ExpensesRepository>().getAllOfExpensesListByMonthNumber(monthNumber);
-              emit(state.copyWith(expenses: expensesList,incomes: incomeList,displayDate: "${event.monthName} Verileri"));
+
+              final incomeAmount=incomeList.fold(0.0,(first,item)=>first+item.amount);
+
+              final expenseAmount=expensesList.fold(0.0,(first,item)=>first+item.amount);
+              emit(state.copyWith(expenses: expensesList,incomes: incomeList,displayDate: "${event.monthName} Verileri",currentBalance: incomeAmount-expenseAmount));
             }
         }
     );
@@ -156,11 +145,11 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
         async{
           final incomeList= await locator<IncomeRepository>().getAllOfIncomeModelByYear(DateTime.now().year.toString());
           final expensesList=await locator<ExpensesRepository>().getAllofExpensesListByYear(DateTime.now().year.toString());
-          emit(state.copyWith(expenses:expensesList,incomes: incomeList,displayDate: DateTime.now().year.toString()));
+          final incomeAmount = incomeList.fold(0.0, (sum, item) => sum + item.amount);
+          final expenseAmount = expensesList.fold(0.0, (sum, item) => sum + item.amount);
+          emit(state.copyWith(expenses:expensesList,incomes: incomeList,displayDate: DateTime.now().year.toString(),currentBalance: incomeAmount-expenseAmount));
         }
     );
-
-
   }
   @override
   Future<void> close() {

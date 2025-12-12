@@ -31,8 +31,8 @@ class _ExpensesDonutChartState extends State<ExpensesDonutChart> {
     if (widget.expenses.isEmpty) {
       return SizedBox(
         height: 250,
-        child: Center(child: Text("Henüz herhangi bir veri yok")),
-      );
+        child: Center(child: Text("Henüz herhangi bir veri yok",style:GoogleFonts.poppins(color:Colors.black,fontSize: 18,fontWeight: FontWeight.w400))
+      ));
     }
 
     final map = Sabitler.calculateAmountPriceByCategory(widget.expenses);
