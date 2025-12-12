@@ -1,30 +1,21 @@
 import 'package:finansal_kocluk_takip/data/db/database_helper.dart';
 import '../../locator.dart';
 import '../model/income.dart';
-
 class IncomeRepository{
-
-
   final dbHelper=locator<DatabaseHelper>();
-
 
   Future<int> addIncome(IncomeModel model)
   async
   {
-
     final db=await dbHelper.database;
-
     await printIncomesTable();
-
     return await db.insert("incomes",model.toMap());
   }
 
   Future<void> printIncomesTable() async
   {
     final db = await dbHelper.database;
-
     final data = await db.query("incomes");
-
     print(data);
   }
 
@@ -32,19 +23,14 @@ class IncomeRepository{
   async
   {
     final db=await dbHelper.database;
-
     return await db.delete("incomes",where:"id=?",whereArgs: [i]);
-
   }
   Future<int>updateIncome(IncomeModel model)
   async
   {
     final db=await dbHelper.database;
-
     final i=model.id;
-
     return await db.update("incomes", model.toMap(),where:"id=?",whereArgs: [i]);
-
   }
 
   Future<List<IncomeModel>> getAllofIncomesList(String date)
@@ -64,18 +50,14 @@ class IncomeRepository{
 
     final db=await dbHelper.database;
 
-
     List<Map<String,dynamic>>values=await db.query("incomes",where:"date=? ",whereArgs: [date]);
-
     final list=values.map((e)=>IncomeModel.fromMap(e)).toList();
 
     for(var value in list)
       {
         totalAmount=totalAmount+value.amount;
       }
-
     return totalAmount;
-
   }
 
   Future<List<IncomeModel>>getAllOfIncomeModelByMonthNumber(int monthNumber)
@@ -85,9 +67,6 @@ class IncomeRepository{
     final db=await dbHelper.database;
 
     List<Map<String,dynamic>> incomesfromDb=await db.query("incomes");
-
-    print(incomesfromDb.first);
-
     for(var value in incomesfromDb)
       {
         final theListOfDateValue=value["date"].split(".");
@@ -99,7 +78,6 @@ class IncomeRepository{
             incomesList.add(IncomeModel.fromMap(value));
           }
       }
-
     return incomesList;
   }
 }

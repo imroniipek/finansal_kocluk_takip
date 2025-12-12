@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../core/sabitler.dart';
-import '../../data/model/period_type.dart';
 import '../../date/date_status/date_status.dart';
 import '../../income_expense_page/view/income_expanse_page.dart';
 import '../bloc/home_page_bloc/home_page_bloc.dart';
@@ -119,8 +118,7 @@ class _HomePageState extends State<HomePage> {
                               children: [
                                 expensesList[4],
 
-                                ExpensesDonutChart(expenses: state.expenses, date: context.read<DateBloc>().state.dbdate
-                                ),
+                                ExpensesDonutChart(expenses: state.expenses, date: context.read<DateBloc>().state.dbdate),
                                 expensesList[5],
                               ],
 
@@ -195,9 +193,9 @@ class _HomePageState extends State<HomePage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  ExpensesandIncomeButtons(icon: Icon(Icons.add, size: 40,color:Sabitler.incomeColor), color: Sabitler.incomeColor, isitIncome: true,),
+                  ExpensesandIncomeButtons(icon: Icon(Icons.add, size: 40,color:Sabitler.incomeColor), color: Sabitler.incomeColor, isitIncome: true),
                   const SizedBox(width:100),
-                  ExpensesandIncomeButtons(icon: Icon(Icons.remove, size: 40,color:Sabitler.expensesColor), color: Sabitler.expensesColor, isitIncome: false,),
+                  ExpensesandIncomeButtons(icon: Icon(Icons.remove, size: 40,color:Sabitler.expensesColor), color: Sabitler.expensesColor, isitIncome: false),
                 ],
               ),
             ],
@@ -223,7 +221,7 @@ class _HomePageState extends State<HomePage> {
           IconButton(
             icon: Icon(entry.key, size: 45, color: Sabitler.colorsForExpensesButtons[i],),
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => IncomeExpansePage(isitIncomepage: false, type: PeriodType.daily, buttonName: entry.value,primaryColor:Sabitler.colorsForExpensesButtons[i] ,),),);
+              Navigator.push(context, MaterialPageRoute(builder: (context) => IncomeExpansePage(isitIncomepage: false, buttonName: entry.value,primaryColor:Sabitler.colorsForExpensesButtons[i] ,),),);
             },
           ),
 

@@ -1,8 +1,6 @@
-import 'package:finansal_kocluk_takip/data/model/period_type.dart';
 import 'package:finansal_kocluk_takip/income_expense_page/bloc/income_expense_page_bloc/income_expense_page_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../income_expense_page/bloc/income_expense_page_events/events.dart';
 import '../../income_expense_page/view/income_expanse_page.dart';
 
@@ -18,7 +16,7 @@ class ExpensesandIncomeButtons extends StatelessWidget {
         onTap: ()
         {
           context.read<IncomeExpenseBloc>().add(ChangeType(isitIncome));
-          Navigator.push(context,MaterialPageRoute(builder: (context)=>IncomeExpansePage(isitIncomepage:isitIncome,type:PeriodType.daily)));
+          Navigator.push(context,MaterialPageRoute(builder: (context)=>IncomeExpansePage(isitIncomepage:isitIncome)));
         },
         child: Container(
           height: 100,

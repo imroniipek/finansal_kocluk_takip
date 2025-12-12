@@ -1,4 +1,3 @@
-import 'package:finansal_kocluk_takip/data/model/period_type.dart';
 import 'package:finansal_kocluk_takip/income_expense_page/bloc/income_expense_page_bloc/amount_calculator_bloc.dart';
 import 'package:finansal_kocluk_takip/income_expense_page/bloc/income_expense_page_bloc/income_expense_page_bloc.dart';
 import 'package:finansal_kocluk_takip/income_expense_page/bloc/income_expense_page_events/db_events.dart';
@@ -20,20 +19,14 @@ import '../bloc/income_expense_page_events/events.dart';
 import '../bloc/income_expense_page_states/amount_calculator_status.dart';
 import '../bloc/income_expense_page_states/db_status.dart';
 import '../widgets/categorySelectorButton.dart';
-
 class IncomeExpansePage extends StatefulWidget {
 
   final bool isitIncomepage;
-
   final Color primaryColor;
-
-  final PeriodType type;
-
   final String? buttonName;
-
   final int ? modelId;
 
-  IncomeExpansePage({super.key, required this.isitIncomepage, required this.type, this.buttonName, Color? primaryColor,this.modelId}) : primaryColor = primaryColor ??
+  IncomeExpansePage({super.key, required this.isitIncomepage, this.buttonName, Color? primaryColor,this.modelId}) : primaryColor = primaryColor ??
   (isitIncomepage ? Sabitler.incomeColor : Sabitler.expensesColor);
 
   @override
@@ -190,7 +183,7 @@ class _IncomeExpansePageState extends State<IncomeExpansePage> {
     for(var entry in values.entries)
     {
       containers.add(
-        ContainerOfCategory(icondata: entry.key, value: entry.value, primaryColor: widget.primaryColor, isitIncomepage: widget.isitIncomepage, type: widget.type,modelId:modelId)
+        ContainerOfCategory(icondata: entry.key, value: entry.value, primaryColor: widget.primaryColor, isitIncomepage: widget.isitIncomepage,modelId:modelId)
       );
     }
     return containers;

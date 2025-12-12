@@ -22,7 +22,7 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
       currentBalance: 0.0,
       incomes: [],
       expenses: [],
-      displayDate: null
+      displayDate: null,
     ),
   )
   {
@@ -77,13 +77,10 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
 
     on<GetIncomeList>((event,emit)
     async{
-
       try
       {
         final theDate=dateBloc.state.dbdate;
-        print(" listeyi getirdeki tarih: mevcut tarih $theDate");
         final incomeList=await locator<IncomeRepository>().getAllofIncomesList(theDate);
-        print("Listenin uzunlugu : ${incomeList.length}");
         emit(state.copyWith(incomes: incomeList,displayDate: null));
 
       }
@@ -125,6 +122,7 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
           final formattedFirst = DateFormat("dd.MM.yyyy").format(firstDate);
           final formattedLast = DateFormat("dd.MM.yyyy").format(lastDate);
 
+
           emit(state.copyWith(expenses: expenses, incomes: incomes, displayDate: "$formattedLast - $formattedFirst",),);
         }
 
@@ -153,8 +151,6 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
         }
     );
   }
-
-
   @override
   Future<void> close() {
     datesubriction.cancel();

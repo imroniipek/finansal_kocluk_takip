@@ -1,4 +1,3 @@
-
 import 'package:finansal_kocluk_takip/income_expense_page/bloc/income_expense_page_bloc/amount_calculator_bloc.dart';
 import 'package:finansal_kocluk_takip/income_expense_page/bloc/income_expense_page_bloc/income_expense_page_bloc.dart';
 import 'package:finansal_kocluk_takip/income_expense_page/bloc/income_expense_page_events/events.dart';
@@ -31,19 +30,12 @@ class CalculatorButton extends StatelessWidget {
               margin: EdgeInsets.all(10),
               width: (MediaQuery.of(context).size.width)/5,
               height: 80,
-              decoration: BoxDecoration(
-                  color:Colors.white,
-                  borderRadius: BorderRadius.circular(5),
-                  border: Border.all(color:buttonColor,width: 3),
-
-              ),
+              decoration: BoxDecoration(color:Colors.white, borderRadius: BorderRadius.circular(5), border: Border.all(color:buttonColor,width: 3),),
             child: Center(child: Text(value,style:GoogleFonts.poppins(fontSize:40,color:Colors.black))),
           ),
         );
   }
-
   bool isOperator(String v) => "+-*/=".contains(v);
-
 }
 
 

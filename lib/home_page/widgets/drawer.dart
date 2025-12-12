@@ -2,7 +2,6 @@ import 'package:finansal_kocluk_takip/home_page/bloc/home_page_bloc/home_page_bl
 import 'package:finansal_kocluk_takip/home_page/bloc/home_page_event/home_page_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../core/sabitler.dart';
 
 class MyDrawer extends StatelessWidget {
@@ -98,9 +97,5 @@ class MyDrawer extends StatelessWidget {
       },
     );
   }
-
-
   CalculateForWeeks(BuildContext context)=> context.read<HomePageBloc>().add(CalculateTheValuesFor7Days());
-
-
 }

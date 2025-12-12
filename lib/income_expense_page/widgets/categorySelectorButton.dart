@@ -19,6 +19,7 @@ class CategorySelectorButton extends StatelessWidget {
 
   String ? buttonName;
 
+
   final dynamic modelId;
 
  CategorySelectorButton({super.key,required this.state,required this.primaryColor,required this.isitIncome,this.buttonName,this.modelId});
@@ -35,7 +36,7 @@ class CategorySelectorButton extends StatelessWidget {
         {
           if(buttonName!=null&&modelId==null)
             {
-              Map<String,dynamic> theMap= Sabitler.convertToMap(date:context.read<DateBloc>().state.dbdate,amount:double.parse(state.tempValue!),i:1,category: buttonName!);
+              Map<String,dynamic> theMap= Sabitler.convertToMap(date:context.read<DateBloc>().state.dbdate,amount:double.parse(state.tempValue!),category: buttonName!);
               context.read<DbBloc>().add(SavetoDb(theMap: theMap, isitIncome: isitIncome));
             }
           else

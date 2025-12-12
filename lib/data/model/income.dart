@@ -1,10 +1,4 @@
-
-import 'package:finansal_kocluk_takip/data/model/period_type.dart';
-
 import '../../core/sabitler.dart';
-
-
-
 class IncomeModel{
 
   final int ? id;
@@ -13,13 +7,11 @@ class IncomeModel{
 
   final String category;
 
-  final PeriodType periodType;
-
   final double amount;
 
   final String? note;
 
-  IncomeModel({this.id,required this.date,required this.category,required this.periodType,required this.amount,this.note});
+  IncomeModel({this.id,required this.date,required this.category,required this.amount,this.note});
 
   Map<String,dynamic> toMap()
   {
@@ -30,8 +22,6 @@ class IncomeModel{
           "date":date,
 
           "category":category,
-
-          "period_type":Sabitler.conevertPeriodTypetoInetegerValue(periodType),
 
           "amount":amount,
 
@@ -44,9 +34,6 @@ class IncomeModel{
 
   factory IncomeModel.fromMap(Map<String,dynamic> map)
   {
-     final value= Sabitler.findTheType(map["period_type"]);
-
-
     return IncomeModel(
 
       id:map["id"],
@@ -57,13 +44,8 @@ class IncomeModel{
 
       amount:(map["amount"] as num).toDouble(),
 
-      periodType: value,
-
       note:map["note"]
 
     );
   }
-
-
-
 }

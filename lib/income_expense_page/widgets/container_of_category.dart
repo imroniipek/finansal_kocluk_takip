@@ -1,4 +1,3 @@
-import 'package:finansal_kocluk_takip/data/model/period_type.dart';
 import 'package:finansal_kocluk_takip/income_expense_page/bloc/income_expense_page_bloc/amount_calculator_bloc.dart';
 import 'package:finansal_kocluk_takip/income_expense_page/bloc/income_expense_page_bloc/db_bloc.dart';
 import 'package:flutter/material.dart';
@@ -13,9 +12,8 @@ class ContainerOfCategory extends StatelessWidget {
   final String value;
   final Color primaryColor;
   final bool isitIncomepage;
-  final PeriodType type;
   int ? modelId;
-  ContainerOfCategory({super.key,required this.icondata,required this.value,required this.primaryColor,required this.isitIncomepage,required this.type,this.modelId});
+  ContainerOfCategory({super.key,required this.icondata,required this.value,required this.primaryColor,required this.isitIncomepage,this.modelId});
   @override
   Widget build(BuildContext context) {
     return
@@ -27,17 +25,14 @@ class ContainerOfCategory extends StatelessWidget {
             if(modelId==null)
               {
                 final status=context.read<AmountCalculatorBloc>().state;
-                int i=Sabitler.conevertPeriodTypetoInetegerValue(type);
-                final map=Sabitler.convertToMap(date:context.read<DateBloc>().state.dbdate, amount:double.parse(status.tempValue!), i:i, category:value);
+                final map=Sabitler.convertToMap(date:context.read<DateBloc>().state.dbdate, amount:double.parse(status.tempValue!), category:value);
                 context.read<DbBloc>().add(SavetoDb(isitIncome:isitIncomepage,theMap:map));
                 context.read<AmountCalculatorBloc>().add(ResetTheCalculator());
               }
             else
               {
                 final status=context.read<AmountCalculatorBloc>().state;
-                int i=Sabitler.conevertPeriodTypetoInetegerValue(type);
-
-                final map=Sabitler.convertToMap(date:context.read<DateBloc>().state.dbdate, amount:double.parse(status.tempValue!), i:i, category:value);
+                final map=Sabitler.convertToMap(date:context.read<DateBloc>().state.dbdate, amount:double.parse(status.tempValue!), category:value);
 
                 map["id"]=modelId;
                 context.read<DbBloc>().add(UpdatetoDb(theMapForUpdated: map, isitIncome:isitIncomepage, modelId:modelId!));

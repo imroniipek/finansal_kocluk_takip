@@ -1,5 +1,4 @@
 import 'package:finansal_kocluk_takip/data/model/income.dart';
-import 'package:finansal_kocluk_takip/data/model/period_type.dart';
 import 'package:finansal_kocluk_takip/income_expense_page/bloc/income_expense_page_bloc/amount_calculator_bloc.dart';
 import 'package:finansal_kocluk_takip/income_expense_page/bloc/income_expense_page_events/amount_calculator_event.dart';
 import 'package:finansal_kocluk_takip/income_expense_page/view/income_expanse_page.dart';
@@ -43,7 +42,6 @@ List<Widget> theCardofValues(
 
               Text(entry.key, style: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.w500, color: (firstItem is IncomeModel) ? Sabitler.incomeColor : Sabitler.expensesColor,),),
 
-
               CircleAvatar(
                 radius: 15,
                 backgroundColor: (firstItem is IncomeModel) ? Colors.green.shade600 : Colors.red.shade600,
@@ -86,7 +84,6 @@ List<Widget> explationOfValues(
             MaterialPageRoute(
               builder: (_) => IncomeExpansePage(
                 isitIncomepage: entry is IncomeModel,
-                type: PeriodType.daily,
                 buttonName: "Kategoriyi Değiştir",
                 modelId: entry.id,
               ),

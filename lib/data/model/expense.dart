@@ -1,8 +1,3 @@
-
-import 'package:finansal_kocluk_takip/data/model/period_type.dart';
-
-import '../../core/sabitler.dart';
-
 class ExpenseModel{
 
   final int ? id;
@@ -11,13 +6,11 @@ class ExpenseModel{
 
   final String category;
 
-  final PeriodType periodType;
-
   final double amount;
 
   final String? note;
 
-  ExpenseModel({this.id,required this.date,required this.category,required this.periodType,required this.amount,this.note});
+  ExpenseModel({this.id,required this.date,required this.category,required this.amount,this.note});
 
   Map<String,dynamic> toMap()
   {
@@ -29,21 +22,13 @@ class ExpenseModel{
 
         "category":category,
 
-        "period_type":Sabitler.conevertPeriodTypetoInetegerValue(periodType),
-
         "amount":amount,
 
         "note":note,
       };
   }
-
-
-
-
   factory ExpenseModel.fromMap(Map<String,dynamic> map)
   {
-    final value= Sabitler.findTheType(map["period_type"]);
-
 
     return ExpenseModel(
 
@@ -55,11 +40,8 @@ class ExpenseModel{
 
         amount: (map["amount"] as num).toDouble(),
 
-        periodType: value,
-
         note:map["note"]
 
     );
   }
-
 }

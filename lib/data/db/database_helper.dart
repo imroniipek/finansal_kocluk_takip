@@ -49,9 +49,6 @@ class DatabaseHelper
         category TEXT NOT NULL,
         
         amount NUMERIC NOT NULL,
-        
-        period_type INTEGER NOT NULL,
-        
         note TEXT
       );
     ''');
@@ -66,8 +63,6 @@ class DatabaseHelper
         category TEXT NOT NULL,
         
         amount NUMERIC NOT NULL,
-        
-        period_type INTEGER NOT NULL,
         
         note TEXT
       );

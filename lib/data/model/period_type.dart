@@ -1,1 +1,0 @@
-enum PeriodType { monthly, daily, yearly,weekly }

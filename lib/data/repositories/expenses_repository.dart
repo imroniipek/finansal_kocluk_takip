@@ -9,7 +9,7 @@ class ExpensesRepository{
   final dbHelper=locator<DatabaseHelper>();
 
 
-  Future<int>addExpense(ExpenseModel model)
+ Future<int>addExpense(ExpenseModel model)
   async {
 
     final db=await dbHelper.database;

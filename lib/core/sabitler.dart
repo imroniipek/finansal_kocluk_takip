@@ -1,52 +1,13 @@
-
-import 'package:finansal_kocluk_takip/data/model/period_type.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
 import '../data/model/expense.dart';
 
 class Sabitler{
-
-
   static Color incomeColor =Color(0xFF7686C2);
 
   static Color expensesColor=Color(0xFFE57373);
 
   static Color generalPrimaryColor=Colors.deepPurple;
-
-
-
-  static PeriodType findTheType(int value)
-  {
-    switch(value)
-    {
-      case(1):
-        return PeriodType.daily;
-      case(2):
-        return PeriodType.monthly;
-      case(3):
-        return PeriodType.yearly;
-      default:
-        return PeriodType.daily;
-
-
-    }
-  }
-  static int conevertPeriodTypetoInetegerValue(PeriodType type)
-  {
-    switch(type)
-    {
-      case(PeriodType.daily):
-        return 1;
-      case(PeriodType.monthly):
-        return 2;
-      case(PeriodType.yearly):
-         return 3;
-      default:
-        return -1;
-
-    }
-  }
 
   static Map<String,String> days={
 
@@ -149,8 +110,6 @@ class Sabitler{
     "Sağlık": Color(0xFF7DA1D5),
     "Evcil Hayvan": Color(0xFF81C784),
   };
-
-
   static Map<String,double>calculateAmountPriceByCategory(List<ExpenseModel>expenses)
   {
     Map<String,double> theMap={};
@@ -169,9 +128,5 @@ class Sabitler{
     return theMap;
 
   }
-
-  static Map<String,dynamic> convertToMap({required String date,required double amount,int? i,required String category})=>{"date":date, "amount":amount, "period_type":i, "category":category};
-
-
-
+  static Map<String,dynamic> convertToMap({required String date,required double amount,int? i,required String category})=>{"date":date, "amount":amount, "category":category};
 }
