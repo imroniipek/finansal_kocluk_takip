@@ -82,11 +82,9 @@ class AmountCalculatorBloc extends Bloc<AmountCalculatorEvent,AmountCalculatorSt
 
     on<ClearTheDigit>((event, emit) {
       final value = state.tempValue ?? "";
-
-
-      if (value.length == 1||value=="") {
-        emit(state.copyWith(
-          tempValue: "0", numbers: [], firstValue: 0.0, operator: null,));
+      if (value.length == 1||value=="")
+      {
+        emit(state.copyWith(setFirstValueToNull: true, setFirstOperator: true, numbers: [], tempValue: "0", isButtonSection: true));
         return;
       }
 
