@@ -19,7 +19,7 @@ class _ExpensesDonutChartState extends State<ExpensesDonutChart> {
     if (widget.expenses.isEmpty) {
       return SizedBox(
         height: 250,
-        child: Center(child: Text("Henüz herhangi bir veri yok",style:GoogleFonts.poppins(color:Colors.black,fontSize: 18,fontWeight: FontWeight.w400))
+        child: Center(child: Text("Henüz herhangi bir veri yok",style:GoogleFonts.poppins(color:Colors.white,fontSize: 18,fontWeight: FontWeight.w400))
       ));
     }
 
@@ -51,12 +51,12 @@ class _ExpensesDonutChartState extends State<ExpensesDonutChart> {
 
           Positioned(
             top:100,
-            left:80,
+            left:67,
             child: Column(
               children: [
-              Text("+ ${calculateTotalIncomeAmount().toStringAsFixed(2)}₺",style:GoogleFonts.poppins(color:Colors.green,fontSize: 17,fontWeight: FontWeight.w400)),
+              Text("+ ${calculateTotalIncomeAmount().toStringAsFixed(2)}₺",style:GoogleFonts.poppins(color:Colors.lightGreenAccent,fontSize: 17,fontWeight: FontWeight.w400)),
               const SizedBox(height: 20),
-              Text("- ${calculateTotalExpensesAmount().toStringAsFixed(2)}₺",style:GoogleFonts.poppins(color:Colors.red.shade900,fontSize: 17,fontWeight: FontWeight.w400)),
+              Text("- ${calculateTotalExpensesAmount().toStringAsFixed(2)}₺",style:GoogleFonts.poppins(color:Colors.red.shade400,fontSize: 17,fontWeight: FontWeight.w400)),
             ],),
           ),
         ]

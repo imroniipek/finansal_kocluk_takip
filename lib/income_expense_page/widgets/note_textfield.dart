@@ -3,10 +3,7 @@ import 'package:flutter/material.dart';
 class NoteTextfield extends StatefulWidget {
 
   final void Function(String note) onTap;
-
   final Color textfieldColor;
-
-
   const NoteTextfield({super.key,required this.onTap,required this.textfieldColor});
 
   @override

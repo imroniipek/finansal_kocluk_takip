@@ -47,7 +47,6 @@ class _IncomeExpansePageState extends State<IncomeExpansePage> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-
       appBar:
 
       (widget.modelId==null)?

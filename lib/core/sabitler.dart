@@ -3,11 +3,11 @@ import 'package:intl/intl.dart';
 import '../data/model/expense.dart';
 
 class Sabitler{
-  static Color incomeColor =Color(0xFF7686C2);
+  static Color incomeColor =Colors.blue.shade900;//Color(0xFF7686C2);
 
-  static Color expensesColor=Color(0xFFE57373);
+  static Color expensesColor=Colors.red.shade900;//Color(0xFFE57373);
 
-  static Color generalPrimaryColor=Colors.deepPurple;
+  static Color generalPrimaryColor=Colors.black;
 
   static Map<String,String> days={
 
@@ -61,7 +61,7 @@ class Sabitler{
   }
 
   static List<Color> get colorsForExpensesButtons => [
-    Color(0xFF527483),
+    /*Color(0xFF527483),
     Color(0xFF7686C2),
     Colors.lime.shade400,
     Color(0xFF66D1C4),
@@ -72,7 +72,19 @@ class Sabitler{
     Color(0xFF7DA1D5),
     Color(0xFF81C784),
     Color(0xFFEAA96A),
-    Color(0xFFC4BBBB),
+    Color(0xFFC4BBBB),*/
+    Colors.green.shade900,
+    Colors.deepPurple,
+    Colors.red.shade900,
+    Colors.brown.shade800,
+    Colors.blue.shade900,
+    Colors.amber,
+    Colors.lime,
+    Colors.lightBlueAccent,
+    Colors.pink.shade900,
+    Colors.deepOrange,
+    Colors.lightGreenAccent,
+    Colors.brown.shade800
   ];
   static Map<IconData,String> incomeSelections={
 
@@ -99,16 +111,16 @@ class Sabitler{
   };
 
   static const Map<String, Color> expenseColorsMap = {
-    "Araba":Color(0xFF527483),
-    "Ev":  Color(0xFF7686C2),
-    "Gıda":Color(0xFFCDDC39),
-    "Eğlence":  Color(0xFF66D1C4),
-    "Faturalar":  Color(0xFFE6AE67),
-    "Giyim":  Color(0xFFCF7F94),
-    "Haberleşme":  Color(0xFFA67C6E),
-    "Ulaşım": Color(0xFF9B8CED),
-    "Sağlık": Color(0xFF7DA1D5),
-    "Evcil Hayvan": Color(0xFF81C784),
+    "Araba":Color(0xFF1B5E20),
+    "Ev":Color(0xFF673AB7),
+    "Gıda": Color(0xFFB71C1C),
+    "Eğlence": Color(0xFF3E2723),
+    "Faturalar":Color(0xFF0D47A1),
+    "Giyim":Color(0xFFFBC02D),
+    "Haberleşme":   Color(0xFFCDDC39),
+    "Ulaşım": Color(0xFF40C4FF),
+    "Sağlık":Color(0xFF880E4F),
+    "Evcil Hayvan":Color(0xFFFF5722),
   };
   static Map<String,double>calculateAmountPriceByCategory(List<ExpenseModel>expenses)
   {

@@ -3,24 +3,41 @@ import 'package:finansal_kocluk_takip/data/model/income.dart';
 import 'package:finansal_kocluk_takip/income_expense_page/bloc/income_expense_page_events/amount_calculator_event.dart';
 import 'package:finansal_kocluk_takip/income_expense_page/bloc/income_expense_page_states/amount_calculator_status.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 class AmountCalculatorBloc extends Bloc<AmountCalculatorEvent,AmountCalculatorStatus>
 {
   AmountCalculatorBloc():super(
-      AmountCalculatorStatus(numbers: [], tempValue: "0",isButtonSection: true)
-  )
+      AmountCalculatorStatus(numbers: [], tempValue: "0",isButtonSection: true,firstValue: 0.0))
   {
-
     on<AddDigit>((event, emit) {
-      final newList = List<String>.from(state.numbers)..add(event.digit); //Basılan Tusu buraya gelecem sonra da onu double degerlere donustruecem//
-      String A = converttoString(newList);
+      final digit = event.digit;
+      final current = List<String>.from(state.numbers);
 
-      emit(state.copyWith(numbers: newList, tempValue: A));
+      if (digit == "." && current.contains(".")) {
+        return;
+      }
+
+      if (current.contains(".")) {
+        final dotIndex = current.indexOf(".");
+        final decimalsCount = current.length - dotIndex - 1;
+
+        if (decimalsCount >= 2) {
+          return;
+        }
+      }
+
+      current.add(digit);
+
+      final temp = converttoString(current);
+
+      emit(state.copyWith(
+        numbers: current,
+        tempValue: temp,
+      ));
     });
 
+
     on<AddOperator>((event, emit) {
-      final value = (state.numbers.isEmpty) ? 0.0 : double.parse(
-          state.numbers.join());
+      final value = (state.numbers.isEmpty) ? state.firstValue : double.parse(state.numbers.join());
 
       if (state.firstValue == null) {
         emit(state.copyWith(firstValue: value,
@@ -29,13 +46,12 @@ class AmountCalculatorBloc extends Bloc<AmountCalculatorEvent,AmountCalculatorSt
             tempValue: state.tempValue));
       }
       else {
-        final operator = (state.operator == null) ? event.operator : state
-            .operator;
+        final operator = (state.operator == null) ? event.operator : event.operator;
 
         final newValue = (operator == "*" || operator == "/") ? 1.0 : value;
 
 
-        final result = _apply(state.firstValue!, newValue, operator!,);
+        final result = _apply(state.firstValue!, newValue!, operator,);
 
         emit(state.copyWith(
           firstValue: result, operator: event.operator, numbers: [],));
@@ -48,8 +64,7 @@ class AmountCalculatorBloc extends Bloc<AmountCalculatorEvent,AmountCalculatorSt
       final value = double.parse(state.numbers.join());
 
 
-      final result = (_apply(state.firstValue!, value, state.operator!,) * 100)
-          .floor() / 100;
+      final result = (_apply(state.firstValue!, value, state.operator!,) * 100).floor() / 100;
 
       emit(state.copyWith(firstValue: result,
         tempValue: result.toString(),
@@ -68,9 +83,8 @@ class AmountCalculatorBloc extends Bloc<AmountCalculatorEvent,AmountCalculatorSt
     on<ClearTheDigit>((event, emit) {
       final value = state.tempValue ?? "";
 
-      if (value == "") return;
 
-      if (value.length == 1) {
+      if (value.length == 1||value=="") {
         emit(state.copyWith(
           tempValue: "0", numbers: [], firstValue: 0.0, operator: null,));
         return;
@@ -93,13 +107,9 @@ class AmountCalculatorBloc extends Bloc<AmountCalculatorEvent,AmountCalculatorSt
     on<ResetTheCalculator>((event, emit) {
       emit(state.copyWith(
           setFirstValueToNull: true,
-
           setFirstOperator: true,
-
           numbers: [],
-
           tempValue: "0",
-
           isButtonSection: true
       ));
     }
@@ -158,7 +168,4 @@ class AmountCalculatorBloc extends Bloc<AmountCalculatorEvent,AmountCalculatorSt
     final value=double.parse(tempValue);
     return (value<=0)?false:true;
   }
-
-
-
 }

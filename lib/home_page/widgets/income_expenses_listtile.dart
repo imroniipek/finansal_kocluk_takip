@@ -6,12 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../core/sabitler.dart';
-
 class IncomeExpensesListtile extends StatelessWidget {
   final Map<String, List<dynamic>> model;
 
   const IncomeExpensesListtile({super.key, required this.model});
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -54,10 +52,8 @@ List<Widget> theCardofValues(
       ),
     );
   }
-
   return widgets;
 }
-
 Icon findTheIcon(String value, Map<IconData, String> map, Color color) {
   for (var entry in map.entries) {
     if (entry.value == value) {
@@ -66,7 +62,6 @@ Icon findTheIcon(String value, Map<IconData, String> map, Color color) {
   }
   return Icon(Icons.category, color: color);
 }
-
 List<Widget> explationOfValues(
     List<dynamic> values, BuildContext context) {
   List<Widget> tiles = [];
@@ -94,14 +89,11 @@ List<Widget> explationOfValues(
           leading: CircleAvatar(
             radius: 6,
             backgroundColor: (entry is IncomeModel) ? Colors.green.shade400 : Colors.red.shade400,),
-
           title: Row(
             children: [
               Text("${entry.amount} ₺", style: GoogleFonts.poppins(color: (entry is IncomeModel) ? Sabitler.incomeColor : Sabitler.expensesColor, fontSize: 18,),),
-              if (entry.note != null) ...[
                 const SizedBox(width: 10),
-                Expanded(child: Text(entry.note, overflow: TextOverflow.ellipsis,),),
-              ],
+                Expanded(child: returnTheWidget(entry.note)),
             ],
           ),
           trailing: Text(entry.date, style: GoogleFonts.poppins(color: Colors.grey.shade600, fontSize: 16,),),),
@@ -110,3 +102,4 @@ List<Widget> explationOfValues(
   }
   return tiles;
 }
+Widget returnTheWidget (String? textValue)=>(textValue!=null)? Text(textValue, overflow: TextOverflow.ellipsis,style:GoogleFonts.poppins(color:Colors.black,fontSize:20)):Container();

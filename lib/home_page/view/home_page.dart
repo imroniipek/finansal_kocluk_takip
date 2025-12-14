@@ -35,9 +35,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
+        backgroundColor: Colors.black38,
         drawer: MyDrawer(),
-
         appBar: AppBar(
 
           iconTheme: IconThemeData(color: Colors.white, size: 30,),
@@ -49,12 +48,12 @@ class _HomePageState extends State<HomePage> {
         ),
         body:
         SingleChildScrollView(
-
-          child: Column(
+                    child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
 
             children: [
-              const SizedBox(height: 10),
+
+              Divider(color:Colors.white,thickness: 5,),
 
               Row(
                 children: [
@@ -67,7 +66,7 @@ class _HomePageState extends State<HomePage> {
                         context.read<DateBloc>().add(DateEvent(date:selectedDate));
                       }
                     },
-                    icon: Icon(Icons.calendar_month, size: 30, color: Sabitler.generalPrimaryColor,),
+                    icon: Icon(Icons.calendar_month, size: 30, color: Colors.white,),
                   ),
 
 
@@ -77,9 +76,9 @@ class _HomePageState extends State<HomePage> {
                         buildWhen: (prev, curr) => prev.displayDate != curr.displayDate,
                         builder: (context, homeState) {
                           if (homeState.displayDate != null) {
-                            return Text(homeState.displayDate!, style: GoogleFonts.poppins(fontSize: 20),);
+                            return Text(homeState.displayDate!, style: GoogleFonts.poppins(fontSize: 20,color:Colors.white),);
                           }
-                          return Text(dateState.date, style: GoogleFonts.poppins(fontSize: 20),);
+                          return Text(dateState.date, style: GoogleFonts.poppins(fontSize: 20,color:Colors.white),);
                         },
                       );
                     },
@@ -147,9 +146,8 @@ class _HomePageState extends State<HomePage> {
                         isOpen = !isOpen;
                       });
 
-
                     },
-                    icon: Icon(Icons.menu, size: 45, color: Sabitler.generalPrimaryColor,),
+                    icon: Icon(Icons.menu, size: 45, color: Colors.white,),
                   ),
                   CurrentBalance(),
                   IconButton(
@@ -161,7 +159,7 @@ class _HomePageState extends State<HomePage> {
                         });
 
                       },
-                      icon: Icon(Icons.menu, size: 45, color: Sabitler.generalPrimaryColor,)),
+                      icon: Icon(Icons.menu, size: 45, color: Colors.white,)),
                 ],
               ),
               const SizedBox(height: 5),

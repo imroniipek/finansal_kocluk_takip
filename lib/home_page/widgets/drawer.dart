@@ -10,14 +10,14 @@ class MyDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.black,
       child: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Cüzdanım360", style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.deepPurple.shade700,),),
+              Text("Cüzdanım360", style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.white,),),
               const SizedBox(height: 20),
               Divider(color: Colors.grey, thickness: 2),
               const SizedBox(height: 20),
@@ -45,9 +45,9 @@ class MyDrawer extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 14),
             child: Row(
               children: [
-                Icon(icon, color: Colors.deepPurple.shade400),
+                Icon(icon, color: Colors.black),
                 const SizedBox(width: 12),
-                Text(label, style: TextStyle(fontSize: 18, color: Colors.deepPurple.shade700, fontWeight: FontWeight.w500,),
+                Text(label, style: TextStyle(fontSize: 18, color: Colors.black, fontWeight: FontWeight.w500,),
                 ),
               ],
             ),

@@ -18,8 +18,9 @@ class CurrentBalance extends StatelessWidget {
           width: MediaQuery.of(context).size.width / 1.6,
           height: 45,
           decoration: BoxDecoration(
-            color: Sabitler.generalPrimaryColor,
+            color: Colors.black,
             borderRadius: BorderRadius.circular(5),
+            border:Border.all(color:Colors.white,width: 3)
           ),
           child: Center(
             child: Text("Bakiye ${state.currentBalance.toStringAsFixed(2)} ₺ ", style: GoogleFonts.poppins(fontSize: 22, color: Colors.white),),
