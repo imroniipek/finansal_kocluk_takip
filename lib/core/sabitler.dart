@@ -73,18 +73,18 @@ class Sabitler{
     Color(0xFF81C784),
     Color(0xFFEAA96A),
     Color(0xFFC4BBBB),*/
-    Colors.green.shade900,
-    Colors.deepPurple,
+    Colors.green.shade400,
+    Colors.deepPurple.shade300,
     Colors.red.shade900,
-    Colors.brown.shade800,
-    Colors.blue.shade900,
-    Colors.amber,
-    Colors.lime,
-    Colors.lightBlueAccent,
-    Colors.pink.shade900,
-    Colors.deepOrange,
-    Colors.lightGreenAccent,
-    Colors.brown.shade800
+    Colors.brown.shade300,
+    Colors.blue.shade800,
+    Colors.amber.shade500,
+    Colors.lime.shade400,
+    Colors.lightBlue.shade300,
+    Colors.pink.shade300,
+    Colors.deepOrange.shade300,
+    Colors.lightGreen.shade300,
+    Colors.brown.shade300,
   ];
   static Map<IconData,String> incomeSelections={
 
@@ -111,17 +111,18 @@ class Sabitler{
   };
 
   static const Map<String, Color> expenseColorsMap = {
-    "Araba":Color(0xFF1B5E20),
-    "Ev":Color(0xFF673AB7),
-    "Gıda": Color(0xFFB71C1C),
-    "Eğlence": Color(0xFF3E2723),
-    "Faturalar":Color(0xFF0D47A1),
-    "Giyim":Color(0xFFFBC02D),
-    "Haberleşme":   Color(0xFFCDDC39),
-    "Ulaşım": Color(0xFF40C4FF),
-    "Sağlık":Color(0xFF880E4F),
-    "Evcil Hayvan":Color(0xFFFF5722),
+    "Araba": Color(0xFF66BB6A),        // soft green
+    "Ev": Color(0xFF9575CD),           // soft deep purple
+    "Gıda": Color(0xFFEF5350),         // soft red
+    "Eğlence": Color(0xFFA1887F),      // soft brown
+    "Faturalar": Color(0xFF64B5F6),    // soft blue
+    "Giyim": Color(0xFFFFD54F),        // soft amber
+    "Haberleşme": Color(0xFFDCE775),   // soft lime
+    "Ulaşım": Color(0xFF81D4FA),       // soft light blue
+    "Sağlık": Color(0xFFF06292),       // soft pink
+    "Evcil Hayvan": Color(0xFFFF8A65), // soft deep orange
   };
+
   static Map<String,double>calculateAmountPriceByCategory(List<ExpenseModel>expenses)
   {
     Map<String,double> theMap={};

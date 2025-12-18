@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.black38,
+        backgroundColor: Colors.black26,
         drawer: MyDrawer(),
         appBar: AppBar(
 
@@ -108,7 +108,7 @@ class _HomePageState extends State<HomePage> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: expensesList.sublist(0, 4),
                           ),
-                          const SizedBox(width:10),
+                          const SizedBox(width:30),
 
                           Expanded(
                             child: Column(
