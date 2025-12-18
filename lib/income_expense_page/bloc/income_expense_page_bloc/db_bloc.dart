@@ -33,10 +33,8 @@ class DbBloc extends Bloc<DbEvent,DbStatus>
           final model = ExpenseModel.fromMap(event.theMap);
 
           final id = await locator<ExpensesRepository>().addExpense(model);
-
           if (id > 0) {
             emit(state.copyWith(PageStatus.success));
-
             emit(state.copyWith(PageStatus.idle));
           }
           else {
@@ -44,7 +42,8 @@ class DbBloc extends Bloc<DbEvent,DbStatus>
           }
         }
       }
-      catch (e) {
+      catch (e)
+      {
         emit(state.copyWith(PageStatus.error));
       }
     });

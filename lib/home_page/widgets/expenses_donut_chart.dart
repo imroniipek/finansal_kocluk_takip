@@ -51,11 +51,11 @@ class _ExpensesDonutChartState extends State<ExpensesDonutChart> {
 
           Positioned(
             top:100,
-            left:57,
+            left:54,
             child: Column(
               children: [
               Text("+ ${calculateTotalIncomeAmount().toStringAsFixed(2)}₺",style:GoogleFonts.poppins(color:Colors.lightGreenAccent,fontSize: 18,fontWeight: FontWeight.w400)),
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
               Text("- ${calculateTotalExpensesAmount().toStringAsFixed(2)}₺",style:GoogleFonts.poppins(color:Colors.red.shade400,fontSize: 18,fontWeight: FontWeight.w400)),
             ],),
           ),

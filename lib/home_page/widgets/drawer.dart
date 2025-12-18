@@ -1,85 +1,146 @@
-import 'package:finansal_kocluk_takip/date/date_event/date_event.dart';
-import 'package:finansal_kocluk_takip/home_page/bloc/home_page_bloc/home_page_bloc.dart';
-import 'package:finansal_kocluk_takip/home_page/bloc/home_page_event/home_page_event.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../core/sabitler.dart';
 import '../../date/date_bloc/date_bloc.dart';
+import '../../date/date_event/date_event.dart';
+import '../../home_page/bloc/home_page_bloc/home_page_bloc.dart';
+import '../../home_page/bloc/home_page_event/home_page_event.dart';
+
+enum DrawerFilter { day, week, month, year }
+
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: Colors.black,
+      backgroundColor: const Color(0xFF0F0F14),
       child: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Cüzdanım360", style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.white,),),
-              const SizedBox(height: 20),
-              Divider(color: Colors.grey, thickness: 2),
-              const SizedBox(height: 20),
-              buildDrawerButton("Gün", Icons.calendar_today, ()=>selectedDate(context)),
-              buildDrawerButton("Hafta", Icons.date_range, ()=>calculateForWeeks(context)),
-              buildDrawerButton("Ay", Icons.calendar_month, ()=>openMonthSelector(context)),
-              buildDrawerButton("Yıl", Icons.timeline, () =>calculateForTheYear(context)),
+              _header(),
+              const SizedBox(height: 30),
+
+              _sectionTitle("ZAMAN FİLTRELERİ"),
+              const SizedBox(height: 14),
+
+              _drawerButton(context, label: "Gün", icon: Icons.today, filter: DrawerFilter.day, onTap: () => _selectDate(context),),
+              _drawerButton(context, label: "Hafta", icon: Icons.date_range, filter: DrawerFilter.week, onTap: () => _calculateForWeek(context),),
+              _drawerButton(context, label: "Ay", icon: Icons.calendar_month, filter: DrawerFilter.month, onTap: () => _openMonthSelector(context),),
+              _drawerButton(context, label: "Yıl", icon: Icons.timeline, filter: DrawerFilter.year, onTap: () => _calculateForYear(context),),
             ],
           ),
         ),
       ),
     );
   }
-  Widget buildDrawerButton(String label, IconData icon, VoidCallback onTap) {
+
+  Widget _header() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: const [
+        Text("Cüzdanım360", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white,),),
+        SizedBox(height: 6),
+        Text("Finansal özet & zaman analizi", style: TextStyle(fontSize: 14, color: Colors.grey,),
+        ),
+      ],
+    );
+  }
+
+
+  Widget _sectionTitle(String title)
+  {
+    return Text(title, style: TextStyle(fontSize: 13, color: Colors.grey.shade500, fontWeight: FontWeight.w600,),);
+  }
+
+  Widget _drawerButton(BuildContext context, {
+    required String label,
+    required IconData icon,
+    required DrawerFilter filter,
+    required VoidCallback onTap,
+  }) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 12,top:10),
-      child: Material(
-        color: Colors.deepPurple.shade50,
-        borderRadius: BorderRadius.circular(12),
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: BorderRadius.circular(12),
-          child: Container(
-            height: 50,
-            padding: const EdgeInsets.symmetric(horizontal: 14),
-            child: Row(
-              children: [
-                Icon(icon, color: Colors.black),
-                const SizedBox(width: 12),
-                Text(label, style: TextStyle(fontSize: 18, color: Colors.black, fontWeight: FontWeight.w500,),
+      padding: const EdgeInsets.only(bottom: 12),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(14),
+        onTap: () {
+          HapticFeedback.lightImpact();
+          onTap();
+        },
+        child: Container(
+          height: 54,
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(14),
+            color: Colors.white.withOpacity(0.06), // cam efekti
+          ),
+          child: Row(
+            children: [
+              Icon(icon, color: Colors.white),
+              const SizedBox(width: 14),
+              Text(
+                label,
+                style: const TextStyle(
+                  fontSize: 17,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white,
                 ),
-              ],
-            ),
+              ),
+              const Spacer(),
+              const Icon(Icons.chevron_right, color: Colors.white, size: 30),
+            ],
           ),
         ),
       ),
     );
   }
-  void openMonthSelector(BuildContext context) {
+
+  void _openMonthSelector(BuildContext context) {
     Navigator.pop(context);
 
     showModalBottomSheet(
       context: context,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20)),),
-      builder: (context) {
-        return Container(
-          padding: EdgeInsets.all(16),
-          height: 350,
+      backgroundColor: const Color(0xFF1A1A23),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(22)),
+      ),
+      builder: (_) {
+        return Padding(
+          padding: const EdgeInsets.all(18),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Ay Seç", style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.deepPurple.shade700,),),
-              const SizedBox(height: 20),
-
+              const Text(
+                "Ay Seç",
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+              const SizedBox(height: 18),
               Expanded(
                 child: ListView.builder(
                   itemCount: Sabitler.months.length,
                   itemBuilder: (context, index) {
                     return ListTile(
-                      title: Text(Sabitler.months[index], style: TextStyle(fontSize: 18),),
+                      title: Text(
+                        Sabitler.months[index],
+                        style: const TextStyle(
+                          fontSize: 18,
+                          color: Colors.white,
+                        ),
+                      ),
                       onTap: () {
-                        context.read<HomePageBloc>().add(CalculateTheValuesForTheMonth(monthName: Sabitler.months[index]),);
+                        context.read<HomePageBloc>().add(
+                          CalculateTheValuesForTheMonth(
+                            monthName: Sabitler.months[index],
+                          ),
+                        );
                         Navigator.pop(context);
                       },
                     );
@@ -92,27 +153,28 @@ class MyDrawer extends StatelessWidget {
       },
     );
   }
-  void calculateForWeeks(BuildContext context)
-  {
+
+  void _calculateForWeek(BuildContext context) {
     context.read<HomePageBloc>().add(CalculateTheValuesFor7Days());
     Navigator.pop(context);
   }
-  void calculateForTheYear(BuildContext context)
-  {
+
+  void _calculateForYear(BuildContext context) {
     context.read<HomePageBloc>().add(CalculateTheValuesForTheYear());
     Navigator.pop(context);
   }
 
-  Future<void> selectedDate(BuildContext context)
-  async {
-    final dateBloc = context.read<DateBloc>();
-
-    final selectedDate = await showDatePicker(context: context, firstDate: DateTime(2024), lastDate: DateTime(2035),);
+  Future<void> _selectDate(BuildContext context) async {
+    final selectedDate = await showDatePicker(
+      context: context,
+      firstDate: DateTime(2024),
+      lastDate: DateTime(2035),
+    );
 
     if (selectedDate == null) return;
 
-    dateBloc.add(DateEvent(date: selectedDate));
-
+    context.read<DateBloc>().add(DateEvent(date: selectedDate));
     Navigator.pop(context);
   }
+
 }

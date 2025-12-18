@@ -25,9 +25,11 @@ class IncomeExpansePage extends StatefulWidget {
   final Color primaryColor;
   final String? buttonName;
   final int ? modelId;
+  final String ? textValue;
 
-  IncomeExpansePage({super.key, required this.isitIncomepage, this.buttonName, Color? primaryColor,this.modelId}) : primaryColor = primaryColor ??
+  IncomeExpansePage({super.key, required this.isitIncomepage,this.textValue,this.buttonName, Color? primaryColor,this.modelId}) : primaryColor = primaryColor ??
   (isitIncomepage ? Sabitler.incomeColor : Sabitler.expensesColor);
+
 
   @override
   State<IncomeExpansePage> createState() => _IncomeExpansePageState();
@@ -47,8 +49,6 @@ class _IncomeExpansePageState extends State<IncomeExpansePage> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-
-      backgroundColor: Colors.black,
 
       appBar:
 
@@ -143,6 +143,7 @@ class _IncomeExpansePageState extends State<IncomeExpansePage> {
                 context.read<AmountCalculatorBloc>().add(AddNote(value));
               },
               textfieldColor: widget.primaryColor,
+              initalText: widget.textValue,
             ),
 
             const SizedBox(height: 20),

@@ -81,25 +81,38 @@ List<Widget> explationOfValues(
                 isitIncomepage: entry is IncomeModel,
                 buttonName: "Kategoriyi Değiştir",
                 modelId: entry.id,
+                textValue: (entry.note),
               ),
             ),
           );
         },
-        child: ListTile(
-          leading: CircleAvatar(
-            radius: 6,
-            backgroundColor: (entry is IncomeModel) ? Colors.green.shade400 : Colors.red.shade400,),
-          title: Row(
-            children: [
-              Text("${entry.amount} ₺", style: GoogleFonts.poppins(color: (entry is IncomeModel) ? Sabitler.incomeColor : Sabitler.expensesColor, fontSize: 18,),),
-                const SizedBox(width: 10),
-                Expanded(child: returnTheWidget(entry.note)),
-            ],
-          ),
-          trailing: Text(entry.date, style: GoogleFonts.poppins(color: Colors.grey.shade600, fontSize: 16,),),),
+        child: Row(
+          children: [
+            Container(width: 25),
+            Expanded(
+              child: ListTile(
+                leading: CircleAvatar(
+                  radius: 6,
+                  backgroundColor: (entry is IncomeModel) ? Colors.green.shade400 : Colors.red.shade400,
+                ),
+                title: Row(
+                  children: [
+                    Text("${entry.amount} ₺", style: GoogleFonts.poppins(color: (entry is IncomeModel) ? Sabitler.incomeColor : Sabitler.expensesColor, fontSize: 18,),),
+                    const SizedBox(width: 20),
+                    Flexible(child: returnTheWidget(entry.note)),
+                  ],
+                ),
+                trailing: Text(
+                  entry.date,
+                  style: GoogleFonts.poppins(color: Colors.grey.shade600, fontSize: 16,),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
   return tiles;
 }
-Widget returnTheWidget (String? textValue)=>(textValue!=null)? Text(textValue, overflow: TextOverflow.ellipsis,style:GoogleFonts.poppins(color:Colors.black,fontSize:20)):Container();
+Widget returnTheWidget (String? textValue)=>(textValue!=null)? Text(textValue, overflow: TextOverflow.ellipsis,style:GoogleFonts.poppins(color:Colors.black,fontSize:15)):Container();

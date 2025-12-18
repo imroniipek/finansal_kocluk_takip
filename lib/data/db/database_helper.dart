@@ -41,13 +41,9 @@ class DatabaseHelper
     await db.execute('''
     
       CREATE TABLE incomes(
-      
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        
         date TEXT NOT NULL,
-        
         category TEXT NOT NULL,
-        
         amount NUMERIC NOT NULL,
         note TEXT
       );
@@ -55,15 +51,10 @@ class DatabaseHelper
 
     await db.execute('''
       CREATE TABLE expenses(
-      
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        
         date TEXT NOT NULL,
-        
         category TEXT NOT NULL,
-        
         amount NUMERIC NOT NULL,
-        
         note TEXT
       );
     ''');

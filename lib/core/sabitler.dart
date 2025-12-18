@@ -61,18 +61,6 @@ class Sabitler{
   }
 
   static List<Color> get colorsForExpensesButtons => [
-    /*Color(0xFF527483),
-    Color(0xFF7686C2),
-    Colors.lime.shade400,
-    Color(0xFF66D1C4),
-    Color(0xFFE6AE67),
-    Color(0xFFCF7F94),
-    Color(0xFFA67C6E),
-    Color(0xFF9B8CED),
-    Color(0xFF7DA1D5),
-    Color(0xFF81C784),
-    Color(0xFFEAA96A),
-    Color(0xFFC4BBBB),*/
     Colors.green.shade400,
     Colors.deepPurple.shade300,
     Colors.red.shade900,
@@ -141,5 +129,5 @@ class Sabitler{
     return theMap;
 
   }
-  static Map<String,dynamic> convertToMap({required String date,required double amount,int? i,required String category})=>{"date":date, "amount":amount, "category":category};
+  static Map<String,dynamic> convertToMap({required String date,required double amount,int? i,required String category,required String ? note})=>{"date":date, "amount":amount, "category":category,"note":note};
 }

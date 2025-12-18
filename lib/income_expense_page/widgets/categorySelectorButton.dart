@@ -36,7 +36,8 @@ class CategorySelectorButton extends StatelessWidget {
         {
           if(buttonName!=null&&modelId==null)
             {
-              Map<String,dynamic> theMap= Sabitler.convertToMap(date:context.read<DateBloc>().state.dbdate,amount:double.parse(state.tempValue!),category: buttonName!);
+              print("ikinci not degeri ${state.note}");
+              Map<String,dynamic> theMap= Sabitler.convertToMap(date:context.read<DateBloc>().state.dbdate,amount:double.parse(state.tempValue!),category: buttonName!,note:state.note);
               context.read<DbBloc>().add(SavetoDb(theMap: theMap, isitIncome: isitIncome));
             }
           else

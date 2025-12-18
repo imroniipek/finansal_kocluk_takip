@@ -4,25 +4,28 @@ import 'package:finansal_kocluk_takip/income_expense_page/bloc/income_expense_pa
 import 'package:finansal_kocluk_takip/income_expense_page/bloc/income_expense_page_bloc/db_bloc.dart';
 import 'package:finansal_kocluk_takip/locator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'date/date_bloc/date_bloc.dart';
 import 'income_expense_page/bloc/income_expense_page_bloc/income_expense_page_bloc.dart';
-void main() {
+void main() async{
+
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
 
   setupLocator();
 
   runApp(
     MultiBlocProvider(providers:
     [
-      BlocProvider(
-          create: (_)=>DateBloc()),
+      BlocProvider(create: (_)=>DateBloc()),
 
       BlocProvider(create: (_) => IncomeExpenseBloc(),),
 
-      BlocProvider(
-        create: (context) => HomePageBloc(
-        context.read<DateBloc>(),
-      ),),
+      BlocProvider(create: (context) => HomePageBloc(context.read<DateBloc>(),),),
       
       BlocProvider(create: (_)=>DbBloc()),
       

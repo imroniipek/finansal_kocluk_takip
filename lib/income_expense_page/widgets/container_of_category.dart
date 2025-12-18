@@ -25,14 +25,15 @@ class ContainerOfCategory extends StatelessWidget {
             if(modelId==null)
               {
                 final status=context.read<AmountCalculatorBloc>().state;
-                final map=Sabitler.convertToMap(date:context.read<DateBloc>().state.dbdate, amount:double.parse(status.tempValue!), category:value);
+                final map=Sabitler.convertToMap(date:context.read<DateBloc>().state.dbdate, amount:double.parse(status.tempValue!), category:value,note:status.note);
                 context.read<DbBloc>().add(SavetoDb(isitIncome:isitIncomepage,theMap:map));
                 context.read<AmountCalculatorBloc>().add(ResetTheCalculator());
               }
             else
               {
                 final status=context.read<AmountCalculatorBloc>().state;
-                final map=Sabitler.convertToMap(date:context.read<DateBloc>().state.dbdate, amount:double.parse(status.tempValue!), category:value);
+                print("not degeri: ${status.note}");
+                final map=Sabitler.convertToMap(date:context.read<DateBloc>().state.dbdate, amount:double.parse(status.tempValue!), category:value,note:status.note);
 
                 map["id"]=modelId;
                 context.read<DbBloc>().add(UpdatetoDb(theMapForUpdated: map, isitIncome:isitIncomepage, modelId:modelId!));

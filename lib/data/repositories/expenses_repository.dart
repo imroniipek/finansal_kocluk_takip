@@ -14,6 +14,8 @@ class ExpensesRepository{
 
     final db=await dbHelper.database;
 
+    await printExpensesTable();
+
 
     return await db.insert("expenses",model.toMap());
   }
@@ -54,8 +56,7 @@ class ExpensesRepository{
   async {
     final db=await dbHelper.database;
 
-    final thequeryResult=db.query("expenses");
-
+    final thequeryResult=await db.query("expenses");
     print(thequeryResult);
 
   }

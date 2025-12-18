@@ -6,8 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class AmountCalculatorBloc extends Bloc<AmountCalculatorEvent,AmountCalculatorStatus>
 {
   AmountCalculatorBloc():super(
-      AmountCalculatorStatus(numbers: [], tempValue: "0",isButtonSection: true,firstValue: 0.0))
-  {
+      AmountCalculatorStatus(numbers: [], tempValue: "0",isButtonSection: true,firstValue: 0.0)) {
     on<AddDigit>((event, emit) {
       final digit = event.digit;
       final current = List<String>.from(state.numbers);
@@ -37,7 +36,8 @@ class AmountCalculatorBloc extends Bloc<AmountCalculatorEvent,AmountCalculatorSt
 
 
     on<AddOperator>((event, emit) {
-      final value = (state.numbers.isEmpty) ? state.firstValue : double.parse(state.numbers.join());
+      final value = (state.numbers.isEmpty) ? state.firstValue : double.parse(
+          state.numbers.join());
 
       if (state.firstValue == null) {
         emit(state.copyWith(firstValue: value,
@@ -46,7 +46,8 @@ class AmountCalculatorBloc extends Bloc<AmountCalculatorEvent,AmountCalculatorSt
             tempValue: state.tempValue));
       }
       else {
-        final operator = (state.operator == null) ? event.operator : event.operator;
+        final operator = (state.operator == null) ? event.operator : event
+            .operator;
 
         final newValue = (operator == "*" || operator == "/") ? 1.0 : value;
 
@@ -64,7 +65,8 @@ class AmountCalculatorBloc extends Bloc<AmountCalculatorEvent,AmountCalculatorSt
       final value = double.parse(state.numbers.join());
 
 
-      final result = (_apply(state.firstValue!, value, state.operator!,) * 100).floor() / 100;
+      final result = (_apply(state.firstValue!, value, state.operator!,) * 100)
+          .floor() / 100;
 
       emit(state.copyWith(firstValue: result,
         tempValue: result.toString(),
@@ -82,9 +84,12 @@ class AmountCalculatorBloc extends Bloc<AmountCalculatorEvent,AmountCalculatorSt
 
     on<ClearTheDigit>((event, emit) {
       final value = state.tempValue ?? "";
-      if (value.length == 1||value=="")
-      {
-        emit(state.copyWith(setFirstValueToNull: true, setFirstOperator: true, numbers: [], tempValue: "0", isButtonSection: true));
+      if (value.length == 1 || value == "") {
+        emit(state.copyWith(setFirstValueToNull: true,
+            setFirstOperator: true,
+            numbers: [],
+            tempValue: "0",
+            isButtonSection: true));
         return;
       }
 
@@ -113,13 +118,12 @@ class AmountCalculatorBloc extends Bloc<AmountCalculatorEvent,AmountCalculatorSt
     }
 
     );
-    on<ClickTheButton>((event, emit)
-    {
-      (controlOfTempValue(state.tempValue!)==true)?
-      emit(state.copyWith(isButtonSection:false)):  emit(state.copyWith(isButtonSection:true));
+    on<ClickTheButton>((event, emit) {
+      (controlOfTempValue(state.tempValue!) == true) ?
+      emit(state.copyWith(isButtonSection: false)) : emit(
+          state.copyWith(isButtonSection: true));
     });
-
-    on<UpdateTheModel>((event,emit)
+   on<UpdateTheModel>((event,emit)
     {
       if(event.model is ExpenseModel||event.model is IncomeModel)
         {
