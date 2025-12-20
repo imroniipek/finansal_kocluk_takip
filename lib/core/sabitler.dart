@@ -101,9 +101,9 @@ class Sabitler{
   static const Map<String, Color> expenseColorsMap = {
     "Araba": Color(0xFF66BB6A),        // soft green
     "Ev": Color(0xFF9575CD),           // soft deep purple
-    "Gıda": Color(0xFFEF5350),         // soft red
+    "Gıda": Color(0xFF7F0000),         // soft red
     "Eğlence": Color(0xFFA1887F),      // soft brown
-    "Faturalar": Color(0xFF64B5F6),    // soft blue
+    "Faturalar": Color(0xFF1565C0), // soft blue
     "Giyim": Color(0xFFFFD54F),        // soft amber
     "Haberleşme": Color(0xFFDCE775),   // soft lime
     "Ulaşım": Color(0xFF81D4FA),       // soft light blue

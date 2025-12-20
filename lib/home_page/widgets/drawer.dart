@@ -76,21 +76,15 @@ class MyDrawer extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(14),
-            color: Colors.white.withOpacity(0.06), // cam efekti
+            color: Colors.white.withOpacity(0.06),
           ),
           child: Row(
+          mainAxisAlignment:MainAxisAlignment.spaceBetween ,
             children: [
               Icon(icon, color: Colors.white),
-              const SizedBox(width: 14),
-              Text(
-                label,
-                style: const TextStyle(
-                  fontSize: 17,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.white,
-                ),
-              ),
-              const Spacer(),
+              const SizedBox(width: 15),
+              Text(label, style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w500, color: Colors.white,),),
+              const SizedBox(width: 15),
               const Icon(Icons.chevron_right, color: Colors.white, size: 30),
             ],
           ),

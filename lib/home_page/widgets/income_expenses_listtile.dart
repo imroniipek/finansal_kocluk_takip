@@ -88,7 +88,7 @@ List<Widget> explationOfValues(
         },
         child: Row(
           children: [
-            Container(width: 25),
+            const SizedBox(width: 35),
             Expanded(
               child: ListTile(
                 leading: CircleAvatar(

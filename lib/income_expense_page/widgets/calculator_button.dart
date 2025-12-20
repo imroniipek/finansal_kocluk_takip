@@ -20,7 +20,6 @@ class CalculatorButton extends StatelessWidget {
     return
 
         InkWell(
-
             onTap: () {
             if (value == "=") {context.read<AmountCalculatorBloc>().add(CalculateResult());}
             else if (isOperator(value)) {context.read<AmountCalculatorBloc>().add(AddOperator(value));}
@@ -28,7 +27,7 @@ class CalculatorButton extends StatelessWidget {
            },
     child: Container(
               margin: EdgeInsets.all(10),
-              width: (MediaQuery.of(context).size.width)/5,
+              width: (MediaQuery.of(context).size.width)/5.2,
               height: 80,
               decoration: BoxDecoration(color:Colors.white, borderRadius: BorderRadius.circular(5), border: Border.all(color:buttonColor,width: 3),),
             child: Center(child: Text(value,style:GoogleFonts.poppins(fontSize:40,color:Colors.black))),

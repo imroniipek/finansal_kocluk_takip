@@ -33,7 +33,7 @@ class _ExpensesDonutChartState extends State<ExpensesDonutChart> {
             child: PieChart(
               PieChartData(
                 sectionsSpace: 0,
-                centerSpaceRadius: 75,
+                centerSpaceRadius: 63,
                 startDegreeOffset: -90,
                 sections: map.entries.map((entry) {
                   final percent = (entry.value / total) * 100;
@@ -51,12 +51,12 @@ class _ExpensesDonutChartState extends State<ExpensesDonutChart> {
 
           Positioned(
             top:100,
-            left:54,
+            left:50,
             child: Column(
               children: [
-              Text("+ ${calculateTotalIncomeAmount().toStringAsFixed(2)}₺",style:GoogleFonts.poppins(color:Colors.lightGreenAccent,fontSize: 18,fontWeight: FontWeight.w400)),
+              Text("+ ${calculateTotalIncomeAmount().toStringAsFixed(2)}₺",style:GoogleFonts.poppins(color:Colors.lightGreenAccent,fontSize: 15,fontWeight: FontWeight.w500)),
               const SizedBox(height: 10),
-              Text("- ${calculateTotalExpensesAmount().toStringAsFixed(2)}₺",style:GoogleFonts.poppins(color:Colors.red.shade400,fontSize: 18,fontWeight: FontWeight.w400)),
+              Text("- ${calculateTotalExpensesAmount().toStringAsFixed(2)}₺",style:GoogleFonts.poppins(color:Colors.red.shade400,fontSize: 15,fontWeight: FontWeight.w500)),
             ],),
           ),
         ]
