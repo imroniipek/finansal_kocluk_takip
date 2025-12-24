@@ -1,8 +1,10 @@
+import 'package:finansal_kocluk_takip/analysis/view/analysis_view.dart';
 import 'package:finansal_kocluk_takip/home_page/bloc/home_page_bloc/home_page_bloc.dart';
 import 'package:finansal_kocluk_takip/home_page/view/home_page.dart';
 import 'package:finansal_kocluk_takip/income_expense_page/bloc/income_expense_page_bloc/amount_calculator_bloc.dart';
 import 'package:finansal_kocluk_takip/income_expense_page/bloc/income_expense_page_bloc/db_bloc.dart';
 import 'package:finansal_kocluk_takip/locator.dart';
+import 'package:finansal_kocluk_takip/staticts/view/staticts_view.dart' hide HomePage;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,7 +42,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
      debugShowCheckedModeBanner: false,
-      home:HomePage()
+      home:StatictsView()
     );
   }
 }

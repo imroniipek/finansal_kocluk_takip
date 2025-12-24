@@ -16,6 +16,5 @@ class HomePageState
         expenses:expenses??this.expenses,
         displayDate: displayDate
     );
-
   }
 }

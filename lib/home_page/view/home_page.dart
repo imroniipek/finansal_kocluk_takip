@@ -10,7 +10,7 @@ import '../../home_page/bloc/home_page_bloc/home_page_bloc.dart';
 import '../../home_page/bloc/home_page_status/home_page_status.dart';
 import '../../home_page/widgets/current_balance.dart';
 import '../../home_page/widgets/drawer.dart';
-import '../../home_page/widgets/expenses_donut_chart.dart';
+import '../../staticts/widget/expenses_donut_chart.dart';
 import '../../home_page/widgets/income_expenses_listtile.dart';
 import '../../income_expense_page/view/income_expanse_page.dart';
 import '../widgets/expenses_and_income_buttons.dart';

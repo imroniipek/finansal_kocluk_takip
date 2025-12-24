@@ -49,6 +49,16 @@ class Sabitler{
     11: "Kasım",
     12: "Aralık",
   };
+  static const List<Color> modernColors = [
+    Color(0xFF5C6BC0),
+    Color(0xFF26A69A),
+    Color(0xFFFF7043),
+    Color(0xFF66BB6A),
+    Color(0xFFAB47BC),
+    Color(0xFF29B6F6),
+    Color(0xFFFFCA28),
+    Color(0xFF78909C),
+  ];
 
   static String converttoDate(DateTime time)
   {
@@ -61,18 +71,17 @@ class Sabitler{
   }
 
   static List<Color> get colorsForExpensesButtons => [
-    Colors.green.shade400,
-    Colors.deepPurple.shade300,
-    Colors.red.shade900,
-    Colors.brown.shade300,
-    Colors.blue.shade800,
-    Colors.amber.shade500,
-    Colors.lime.shade400,
-    Colors.lightBlue.shade300,
-    Colors.pink.shade300,
-    Colors.deepOrange.shade300,
-    Colors.lightGreen.shade300,
-    Colors.brown.shade300,
+    Color(0xFF5C6BC0),
+    Color(0xFF26A69A),
+    Color(0xFFFF7043),
+    Color(0xFF66BB6A),
+    Color(0xFFAB47BC),
+    Color(0xFF29B6F6),
+    Color(0xFFFFCA28),
+    Color(0xFF78909C),
+    Color(0xFFEC407A),
+    Color(0xFF8D6E63)
+
   ];
   static Map<IconData,String> incomeSelections={
 
@@ -99,18 +108,17 @@ class Sabitler{
   };
 
   static const Map<String, Color> expenseColorsMap = {
-    "Araba": Color(0xFF66BB6A),        // soft green
-    "Ev": Color(0xFF9575CD),           // soft deep purple
-    "Gıda": Color(0xFF7F0000),         // soft red
-    "Eğlence": Color(0xFFA1887F),      // soft brown
-    "Faturalar": Color(0xFF1565C0), // soft blue
-    "Giyim": Color(0xFFFFD54F),        // soft amber
-    "Haberleşme": Color(0xFFDCE775),   // soft lime
-    "Ulaşım": Color(0xFF81D4FA),       // soft light blue
-    "Sağlık": Color(0xFFF06292),       // soft pink
-    "Evcil Hayvan": Color(0xFFFF8A65), // soft deep orange
+    "Araba": Color(0xFF5C6BC0),
+    "Ev": Color(0xFF26A69A),
+    "Gıda": Color(0xFFFF7043),
+    "Eğlence": Color(0xFF66BB6A),
+    "Giyim": Color(0xFF29B6F6),
+    "Faturalar": Color(0xFFAB47BC),
+    "Haberleşme": Color(0xFFFFCA28),
+    "Ulaşım": Color(0xFF78909C),
+    "Sağlık": Color(0xFFEC407A),
+    "Evcil Hayvan": Color(0xFF8D6E63),
   };
-
   static Map<String,double>calculateAmountPriceByCategory(List<ExpenseModel>expenses)
   {
     Map<String,double> theMap={};
