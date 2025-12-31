@@ -94,7 +94,7 @@ class IncomeRepository{
 
       print("Takvimin ikinci elemanı ${theListOfDateValue[2]}");
 
-      if(theListOfDateValue[1]==year)
+      if(year==theListOfDateValue[2])
       {
         incomesList.add(IncomeModel.fromMap(value));
       }

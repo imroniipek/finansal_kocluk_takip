@@ -39,7 +39,7 @@ class AnalysisView extends StatelessWidget {
                        _dateHeader(context),
                       const SizedBox(height: 15,),
                     BlocBuilder<HomePageBloc, HomePageState>(
-                      buildWhen: (p, c) => p.expenses != c.expenses,
+                      buildWhen: (p, c) => p.expenses != c.expenses||p.incomes!=c.incomes,
                       builder: (context, state) {
                         return TotalAmountCard(
                             incomes: state.incomes, expenses: state.expenses);

@@ -11,26 +11,29 @@ class DateSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-
       mainAxisAlignment: MainAxisAlignment.center,
-
       children: [
-
         IconButton(
-            onPressed: () async {
-              final date =await showDatePicker(context: context, firstDate: DateTime(2024), lastDate: DateTime(2030),initialDate: DateTime.now());
-
-              context.read<DateBloc>().add(DateEvent(date:date!));
-            },icon: Icon(Icons.calendar_month,size:27,color:Colors.black)
+          icon: const Icon(Icons.calendar_month, color: Colors.white),
+          onPressed: () async {
+            final date = await showDatePicker(
+              context: context,
+              firstDate: DateTime(2024),
+              lastDate: DateTime(2030),
+              initialDate: DateTime.now(),
+            );
+            if (date != null) {
+              context.read<DateBloc>().add(DateEvent(date: date));
+            }
+          },
         ),
-
-        BlocBuilder<DateBloc,DateState>(
+        BlocBuilder<DateBloc, DateState>(
           builder: (context, state) {
-            return Text(state.date,style:GoogleFonts.poppins(fontSize:23,color:Colors.black));
+            return Text(state.date, style: GoogleFonts.poppins(fontSize: 16, color: Colors.white,),
+            );
           },
         ),
       ],
-
     );
   }
 }

@@ -85,11 +85,7 @@ class _HomePageState extends State<StatictsView> {
                 builder: (context, homeState) {
                   return Text(
                     homeState.displayDate ?? dateState.date,
-                    style: GoogleFonts.poppins(
-                      fontSize: 18,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: GoogleFonts.poppins(fontSize: 18, color: Colors.white, fontWeight: FontWeight.w500,),
                   );
                 },
               );
