@@ -105,37 +105,6 @@ success
 error
 
 </div>
-<br/> <br/>
-🏗️ Mimari Yaklaşım
-
-Uygulama, Clean Architecture prensipleri göz önünde bulundurularak geliştirilmiştir:
-
-lib/
-│
-├── core/
-│   ├── constants
-│   ├── helpers
-│   └── theme
-│
-├── features/
-│   ├── income_expense
-│   │   ├── bloc
-│   │   ├── data
-│   │   ├── model
-│   │   └── view
-│
-└── main.dart
-
-
-Bu yapı sayesinde:
-
-Kod okunabilirliği artar
-
-Test yazımı kolaylaşır
-
-Yeni özellik eklemek çok daha az maliyetlidir
-
-<br/>
 🛠️ Kullanılan Teknolojiler
 <br/>
 Teknoloji	Açıklama
