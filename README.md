@@ -1,98 +1,43 @@
-<div align="center"> <img src="https://img.icons8.com/fluency/96/wallet.png" />
-Cüzdanım360
+📱 Cüzdanım360
 Kişisel Finans Yönetim Uygulaması
-<p> Flutter ile geliştirilmiş, modern arayüzlü, animasyon destekli ve BLoC mimarisi üzerine inşa edilmiş profesyonel bir kişisel finans takip uygulaması. </p> <br/> <img src="https://img.shields.io/badge/Flutter-3.x-blue?logo=flutter" /> <img src="https://img.shields.io/badge/State%20Management-BLoC-purple" /> <img src="https://img.shields.io/badge/Database-SQLite-green" /> <img src="https://img.shields.io/badge/Architecture-Clean-orange" /> </div>
-<br/> <br/>
-📌 Proje Özeti
-
-Cüzdanım360, kullanıcıların gelir ve giderlerini daha bilinçli,
-daha düzenli ve daha görsel bir şekilde yönetebilmeleri amacıyla geliştirilmiş bir Flutter mobil uygulamasıdır.
-
-Uygulama;
-✔️ BLoC tabanlı state management
-✔️ SQLite ile kalıcı veri saklama
-✔️ Animasyonlu ve responsive UI
-✔️ Modüler & ölçeklenebilir mimari
-
-yaklaşımlarıyla, sadece çalışan değil sürdürülebilir ve geliştirilebilir bir yapı sunar.
-
-<br/>
-🚀 Temel Özellikler
+<br/> <p align="center"> <b>Cüzdanım360</b>, kullanıcıların gelir ve giderlerini modern bir arayüz ile takip edebilmesini sağlayan, <b>Flutter</b> ile geliştirilmiş profesyonel bir kişisel finans uygulamasıdır. </p> <p align="center"> BLoC mimarisi, SQLite tabanlı kalıcı veri saklama ve animasyonlu kullanıcı arayüzü ile ölçeklenebilir ve sürdürülebilir bir mobil uygulama yapısı sunar. </p> <br/> <hr/> <br/>
+✨ Öne Çıkan Özellikler
 <br/>
 💰 Gelir & Gider Yönetimi
-<div style="margin-left: 15px">
 
-Özel tasarlanmış hesap makinesi tabanlı tutar girişi
+Özel tasarlanmış hesap makinesi arayüzü
 
 Kategori bazlı işlem ekleme
-<sub>(Gıda, Maaş, Sağlık, Ulaşım, Araç vb.)</sub>
+(Gıda, Maaş, Sağlık, Ulaşım, Araç vb.)
 
-İşleme özel not ekleyebilme
+İşlemlere not ekleme
 
 Günlük, aylık ve yıllık periyotlara göre kayıt oluşturma
 
-Tüm işlemlerin anlık olarak bakiye hesaplamasına yansıması
-
-</div>
 <br/>
-🗄️ SQLite ile Kalıcı Veri Saklama
-<div style="margin-left: 15px">
+🗄️ Kalıcı Veri Saklama (SQLite)
 
-Tüm gelir ve giderler local SQLite database üzerinde saklanır
+Gelir ve giderlerin local database’de saklanması
 
-Otomatik artan (autoincrement) ID yapısı
+Autoincrement ID yapısı
 
-Tam kapsamlı CRUD operasyonları:
+CRUD operasyonları
 
-Create
+Toplam bakiye ve kategori bazlı hesaplamalar
 
-Read
-
-Update
-
-Delete
-
-Veritabanı üzerinden:
-
-Toplam gelir
-
-Toplam gider
-
-Anlık bakiye hesaplaması
-
-</div>
 <br/>
-🎨 Animasyonlu & Modern Kullanıcı Arayüzü
-<div style="margin-left: 15px">
+🎨 Modern & Animasyonlu UI
 
-AnimatedContainer kullanılarak oluşturulmuş akıcı geçişler
+AnimatedContainer ile akıcı geçişler
 
-ExpansionTile ile detaylı ama sade liste yapısı
+ExpansionTile ile açılır liste kartları
 
-Kategoriye özel ikon & renk sistemleri
+Kategori ikonları ve renkli göstergeler
+🧠 BLoC Mimarisi
 
-Circle avatar destekli kart tasarımları
+Tüm state yönetimi flutter_bloc ile yapılmıştır
 
-Dark mode uyumlu modern UI
-
-Farklı ekran boyutları için responsive tasarım
-
-</div>
-<br/>
-🧠 BLoC Mimarisi (State Management)
-<div style="margin-left: 15px">
-
-Uygulamanın tüm state yönetimi BLoC Pattern ile sağlanmıştır
-
-Net şekilde ayrılmış:
-
-Event
-
-State
-
-Bloc
-
-UI tarafı tamamen business logic’ten izole edilmiştir
+Event – State ayrımı
 
 Sayfa durumları:
 
@@ -104,37 +49,8 @@ success
 
 error
 
-</div>
-🛠️ Kullanılan Teknolojiler
-<br/>
-Teknoloji	Açıklama
-Flutter	Mobil uygulama geliştirme
-Dart	Programlama dili
-flutter_bloc	State management
-SQLite / sqflite	Local database
-Google Fonts	Tipografi
-AnimatedContainer	UI animasyonları
-ExpansionTile	Dinamik liste yapıları
-<br/>
-📱 Ekran Görüntüleri
-<div align="center">
+<br/> <hr/> <br/>
 
-📸 Uygulamaya ait ekran görüntüleri buraya eklenecektir.
-
-<br/> <img src="assets/screenshots/home.png" width="220"/> &nbsp;&nbsp;&nbsp; <img src="assets/screenshots/add.png" width="220"/> &nbsp;&nbsp;&nbsp; <img src="assets/screenshots/detail.png" width="220"/> </div>
-<br/> <br/>
-🎯 Proje Amacı
-
-Bu proje;
-
-Flutter UI/UX yetkinliği
-
-BLoC mimarisine hakimiyet
-
-Clean Architecture farkındalığı
-
-Gerçek dünya uygulaması geliştirme becerisi
-
-göstermek amacıyla geliştirilmiştir.
+Responsive ve dark mode uyumlu tasarım
 
 <br/>
