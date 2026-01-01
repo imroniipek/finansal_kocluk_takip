@@ -1,7 +1,6 @@
 📱 Cüzdanım360
 Kişisel Finans Yönetim Uygulaması
 <br/> <p align="center"> <b>Cüzdanım360</b>, kullanıcıların gelir ve giderlerini modern bir arayüz ile takip edebilmesini sağlayan, <b>Flutter</b> ile geliştirilmiş profesyonel bir kişisel finans uygulamasıdır. </p> <p align="center"> BLoC mimarisi, SQLite tabanlı kalıcı veri saklama ve animasyonlu kullanıcı arayüzü ile ölçeklenebilir ve sürdürülebilir bir mobil uygulama yapısı sunar. </p> <br/> <hr/> <br/>
-✨ Öne Çıkan Özellikler
 <br/>
 💰 Gelir & Gider Yönetimi
 
@@ -50,6 +49,17 @@ success
 error
 
 <br/> <hr/> <br/>
+🛠️ Kullanılan Teknolojiler
+<br/> <div align="center">
+Teknoloji	Açıklama
+Flutter	UI geliştirme
+Dart	Programlama dili
+BLoC	State management
+SQLite	Local database
+Sqflite	SQLite Flutter paketi
+Google Fonts	Tipografi
+Clean Architecture	Modüler yapı
+</div> <br/> <hr/> <br/>
 
 Responsive ve dark mode uyumlu tasarım
 
