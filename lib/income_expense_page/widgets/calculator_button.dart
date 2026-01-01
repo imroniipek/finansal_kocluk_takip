@@ -1,31 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../bloc/income_expense_page_bloc/amount_calculator_bloc.dart';
-import '../bloc/income_expense_page_events/amount_calculator_event.dart';
+import '../bloc/amount_calculator/amount_calculator_bloc.dart';
+import '../bloc/amount_calculator/amount_calculator_event.dart';
 
 class CalculatorButton extends StatelessWidget {
   final String value;
   final Color buttonColor;
 
-  const CalculatorButton({
-    super.key,
-    required this.value,
-    required this.buttonColor,
-  });
+  const CalculatorButton({super.key, required this.value, required this.buttonColor,});
 
   @override
   Widget build(BuildContext context) {
-    final bool isOperator = "+-*/=".contains(value);
-
     return InkWell(
       borderRadius: BorderRadius.circular(18),
       onTap: () {
-        if (value == "=") {
-          context.read<AmountCalculatorBloc>().add(CalculateResult());
-        } else if (isOperator) {
-          context.read<AmountCalculatorBloc>().add(AddOperator(value));
-        } else {
+
+        if (value == "C")
+        {
+          context.read<AmountCalculatorBloc>().add(ResetTheCalculator());
+        }
+        else
+        {
           context.read<AmountCalculatorBloc>().add(AddDigit(value));
         }
       },

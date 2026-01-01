@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import '../data/model/expense.dart';
 
 class Sabitler{
-  static Color incomeColor =Colors.blue.shade900;//Color(0xFF7686C2);
+  static Color incomeColor =Colors.green.shade900;
 
   static Color expensesColor=Colors.red.shade900;//Color(0xFFE57373);
 

@@ -4,21 +4,20 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../core/sabitler.dart';
 import '../../home_page/bloc/home_page_bloc/home_page_bloc.dart';
 import '../../home_page/bloc/home_page_event/home_page_event.dart';
-import '../bloc/income_expense_page_bloc/amount_calculator_bloc.dart';
-import '../bloc/income_expense_page_bloc/db_bloc.dart';
-import '../bloc/income_expense_page_bloc/income_expense_page_bloc.dart';
-import '../bloc/income_expense_page_events/amount_calculator_event.dart';
-import '../bloc/income_expense_page_events/db_events.dart';
-import '../bloc/income_expense_page_events/events.dart';
-import '../bloc/income_expense_page_states/amount_calculator_status.dart';
-import '../bloc/income_expense_page_states/db_status.dart';
+import '../bloc/amount_calculator/amount_calculator_bloc.dart';
+import '../bloc/db/db_bloc.dart';
+import '../bloc/income_expense_page/income_expense_page_bloc.dart';
+import '../bloc/amount_calculator/amount_calculator_event.dart';
+import '../bloc/db/db_events.dart';
+import '../bloc/income_expense_page/events.dart';
+import '../bloc/amount_calculator/amount_calculator_status.dart';
+import '../bloc/db/db_status.dart';
 import '../widgets/amount_display.dart';
 import '../widgets/calculator_pad.dart';
 import '../widgets/categorySelectorButton.dart';
 import '../widgets/container_of_category.dart';
 import '../widgets/date_selector.dart';
 import '../widgets/note_textfield.dart';
-
 class IncomeExpansePage extends StatefulWidget {
   final bool isitIncomepage;
   final Color primaryColor;
@@ -26,14 +25,7 @@ class IncomeExpansePage extends StatefulWidget {
   final int? modelId;
   final String? textValue;
 
-  IncomeExpansePage({
-    super.key,
-    required this.isitIncomepage,
-    this.textValue,
-    this.buttonName,
-    Color? primaryColor,
-    this.modelId,
-  }) : primaryColor =
+  IncomeExpansePage({super.key, required this.isitIncomepage, this.textValue, this.buttonName, Color? primaryColor, this.modelId,}) : primaryColor =
       primaryColor ??
           (isitIncomepage ? Sabitler.incomeColor : Sabitler.expensesColor);
 
@@ -71,16 +63,11 @@ class _IncomeExpansePageState extends State<IncomeExpansePage> {
     isEdit ? "Düzenle" : widget.isitIncomepage ? "Yeni Gelir" : "Yeni Gider";
 
     return AppBar(
-      title: Text(
-        title,
-        style: GoogleFonts.poppins(
-          fontSize: 20,
-          fontWeight: FontWeight.w600,
-        ),
-      ),
+      backgroundColor: Colors.black87,
+      title: Text(title, style: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.w600,color:Colors.white),),
       centerTitle: true,
       leading: IconButton(
-        icon: const Icon(Icons.arrow_back_ios_new),
+        icon: const Icon(Icons.arrow_back_ios_new,color:Colors.white,size:30),
         onPressed: () {
           context.read<AmountCalculatorBloc>().add(ResetTheCalculator());
           Navigator.pop(context);
@@ -89,7 +76,7 @@ class _IncomeExpansePageState extends State<IncomeExpansePage> {
       actions: [
         if (isEdit)
           IconButton(
-            icon: const Icon(Icons.delete_outline),
+            icon: const Icon(Icons.delete_outline,color:Colors.white),
             onPressed: () => context.read<DbBloc>().add(
               DeleteTheModelFromDb(
                 isitIncome: widget.isitIncomepage,
@@ -106,6 +93,7 @@ class _IncomeExpansePageState extends State<IncomeExpansePage> {
       physics: const BouncingScrollPhysics(),
       child: Column(
         children: [
+          const Divider(color:Colors.white,thickness: 1,),
           const SizedBox(height: 20),
           const DateSelector(),
           const SizedBox(height: 20),
@@ -137,18 +125,13 @@ class _IncomeExpansePageState extends State<IncomeExpansePage> {
     return BlocBuilder<AmountCalculatorBloc, AmountCalculatorStatus>(
       buildWhen: (p, c) => p.isButtonSection != c.isButtonSection,
       builder: (context, state) {
-        return state.isButtonSection
-            ? CalculatorPad(primaryColor: widget.primaryColor)
-            : _buildCategoryGrid();
+        return state.isButtonSection ? CalculatorPad(primaryColor: widget.primaryColor) : _buildCategoryGrid();
       },
     );
   }
 
   Widget _buildCategoryGrid() {
-    final selections = widget.isitIncomepage
-        ? Sabitler.incomeSelections
-        : Sabitler.expensesSelections;
-
+    final selections = widget.isitIncomepage ? Sabitler.incomeSelections : Sabitler.expensesSelections;
     return GridView.builder(
       shrinkWrap: true,
       padding: const EdgeInsets.symmetric(horizontal: 16),

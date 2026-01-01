@@ -6,7 +6,6 @@ import '../../date/date_bloc/date_bloc.dart';
 import '../../date/date_event/date_event.dart';
 import '../../home_page/bloc/home_page_bloc/home_page_bloc.dart';
 import '../../home_page/bloc/home_page_event/home_page_event.dart';
-
 enum DrawerFilter { day, week, month, year }
 
 class MyDrawer extends StatelessWidget {

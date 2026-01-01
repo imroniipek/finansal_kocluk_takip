@@ -44,7 +44,7 @@ class CalculatorPad extends StatelessWidget {
               children: [
                 CalculatorButton(value: ".", buttonColor: primaryColor),
                 CalculatorButton(value: "0", buttonColor: primaryColor),
-                CalculatorButton(value: "0", buttonColor: primaryColor),
+                CalculatorButton(value: "C", buttonColor: primaryColor),
           ]),
         ],
       ),

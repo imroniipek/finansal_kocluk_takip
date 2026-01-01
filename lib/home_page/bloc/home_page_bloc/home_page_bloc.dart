@@ -10,7 +10,6 @@ import '../../../date/date_bloc/date_bloc.dart';
 import '../../../locator.dart';
 import '../home_page_event/home_page_event.dart';
 import '../home_page_status/home_page_status.dart';
-
 class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
 
   final DateBloc dateBloc;

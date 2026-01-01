@@ -1,12 +1,11 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'dart:ui'; // BackdropFilter için gerekli
-
 import '../../core/sabitler.dart';
 import '../../data/model/income.dart';
-import '../../income_expense_page/bloc/income_expense_page_bloc/amount_calculator_bloc.dart';
-import '../../income_expense_page/bloc/income_expense_page_events/amount_calculator_event.dart';
+import '../../income_expense_page/bloc/amount_calculator/amount_calculator_bloc.dart';
+import '../../income_expense_page/bloc/amount_calculator/amount_calculator_event.dart';
 import '../../income_expense_page/view/income_expanse_page.dart';
 
 class ExpansesAndIncomeListTile extends StatelessWidget {

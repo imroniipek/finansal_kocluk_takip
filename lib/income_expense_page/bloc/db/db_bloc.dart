@@ -1,5 +1,5 @@
-import 'package:finansal_kocluk_takip/income_expense_page/bloc/income_expense_page_events/db_events.dart';
-import 'package:finansal_kocluk_takip/income_expense_page/bloc/income_expense_page_states/db_status.dart';
+import 'package:finansal_kocluk_takip/income_expense_page/bloc/db/db_events.dart';
+import 'package:finansal_kocluk_takip/income_expense_page/bloc/db/db_status.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../data/model/expense.dart';
 import '../../../data/model/income.dart';
@@ -10,6 +10,7 @@ import '../../../locator.dart';
 class DbBloc extends Bloc<DbEvent,DbStatus>
 {
   DbBloc():super(DbStatus(status: PageStatus.idle)) {
+
     on<SavetoDb>((event, emit) async {
       emit(state.copyWith(PageStatus.loading));
 

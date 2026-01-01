@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import '../../core/sabitler.dart';
 import '../../date/date_bloc/date_bloc.dart';
-import '../bloc/income_expense_page_bloc/amount_calculator_bloc.dart';
-import '../bloc/income_expense_page_bloc/db_bloc.dart';
-import '../bloc/income_expense_page_events/amount_calculator_event.dart';
-import '../bloc/income_expense_page_events/db_events.dart';
-import '../bloc/income_expense_page_states/amount_calculator_status.dart';
+import '../bloc/amount_calculator/amount_calculator_bloc.dart';
+import '../bloc/db/db_bloc.dart';
+import '../bloc/amount_calculator/amount_calculator_event.dart';
+import '../bloc/db/db_events.dart';
+import '../bloc/amount_calculator/amount_calculator_status.dart';
 
 class CategorySelectorButton extends StatelessWidget {
   final AmountCalculatorStatus state;
@@ -63,12 +62,7 @@ class CategorySelectorButton extends StatelessWidget {
             ),
           ],
         ),
-        child: Center(
-          child: Text(
-            buttonName == null ? "Kategori Seç" : modelId != null ? "Kategoriyi Değiştir" : "$buttonName Ekle",
-            style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.w600, color: Colors.white,),
-          ),
-        ),
+        child: Center(child: Text(buttonName == null ? "Kategori Seç" : modelId != null ? "Kategoriyi Değiştir" : "$buttonName Ekle", style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.w600, color: Colors.white,),),),
       ),
     );
   }

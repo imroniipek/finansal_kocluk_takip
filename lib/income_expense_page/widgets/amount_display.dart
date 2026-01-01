@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import '../bloc/income_expense_page_bloc/amount_calculator_bloc.dart';
-import '../bloc/income_expense_page_events/amount_calculator_event.dart';
-import '../bloc/income_expense_page_states/amount_calculator_status.dart';
+import '../bloc/amount_calculator/amount_calculator_bloc.dart';
+import '../bloc/amount_calculator/amount_calculator_event.dart';
+import '../bloc/amount_calculator/amount_calculator_status.dart';
 
 class AmountDisplay extends StatelessWidget {
   final Color primaryColor;
@@ -35,14 +34,7 @@ class AmountDisplay extends StatelessWidget {
           return Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                state.tempValue!,
-                style: GoogleFonts.poppins(
-                  fontSize: 36,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white,
-                ),
-              ),
+              Text(state.tempValue!, style: GoogleFonts.poppins(fontSize: 36, fontWeight: FontWeight.w600, color: Colors.white,),),
               IconButton(
                 icon: const Icon(Icons.backspace_outlined, color: Colors.white),
                 onPressed: () => context.read<AmountCalculatorBloc>().add(ClearTheDigit()),
