@@ -1,4 +1,4 @@
-<div align="center">
+<div>
 💳 Cüzdanım360
 Kişisel Finans Yönetim Uygulaması
 
