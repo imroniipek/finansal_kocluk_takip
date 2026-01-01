@@ -1,43 +1,67 @@
-#  Cüzdanım360 – Kişisel Finans Yönetim Uygulaması
+Cüzdanım360 – Kişisel Finans Yönetim Uygulaması
 
-Cüzdanım360, kişisel gelir & gider takibini kolaylaştırmak için geliştirilmiş modern bir **Flutter** uygulamasıdır.  
-Uygulama; **BLoC mimarisi**, **SQLite veritabanı**, **animasyonlu UI bileşenleri** ve **modüler yapısı** ile profesyonel bir finans yönetim çözümü sunar.
+Cüzdanım360, kullanıcıların kişisel gelir ve giderlerini etkin biçimde yönetebilmeleri için geliştirilmiş modern bir Flutter mobil uygulamasıdır.
+Uygulama; BLoC tabanlı state management, SQLite ile kalıcı veri saklama, animasyonlu kullanıcı arayüzü ve modüler mimari yaklaşımıyla profesyonel bir finans takip çözümü sunar.
 
----
+Özellikler
+Gelir & Gider Yönetimi
 
-##  Özellikler
+Özel tasarlanmış hesap makinesi arayüzü
 
-###  Gelir & Gider Ekleme
-- Modern hesap makinesi tasarımı  
-- Kategori seçimi (Gıda, Maaş, Sağlık, Araç vs.)  
-- Not ekleme alanı  
-- Günlük / Aylık / Yıllık periyot seçimi  
+Kategori bazlı işlem ekleme (Gıda, Maaş, Sağlık, Ulaşım vb.)
 
-###  SQLite ile Kalıcı Veri Saklama
-- Gelirlerin/giderlerin local database’de tutulması  
-- Autoincrement ID  
-- CRUD operasyonları  
-- Veritabanı üzerinden toplam bakiye hesaplama  
+İşlem notu ekleyebilme
 
-###  Animasyonlu Kullanıcı Arayüzü
-- `AnimatedContainer` ile açılır “Gelir Listesi” animasyonu  
-- `ExpansionTile` ile modern gelir kartları  
-- Circle avatar ve ikon destekli kategori tasarımı  
-- Responsive UI  
+Günlük, aylık ve yıllık periyotlara göre kayıt oluşturma
 
-###  BLoC Mimarisi
-- Tüm state yönetimi **BLoC** ile yapılandırılmıştır  
-- Event–State yapısı  
-- Sayfa durumları: `idle`, `loading`, `success`, `error`  
+SQLite ile Kalıcı Veri Saklama
 
----
+Gelir ve giderlerin local database üzerinde saklanması
 
-##  Kullanılan Teknolojiler
+Otomatik artan (autoincrement) ID yapısı
 
-- Flutter   
-- Dart  
-- BLoC (`flutter_bloc`)  
-- SQLite (`sqflite`)  
-- `AnimatedContainer` & `ExpansionTile`  
-- Google Fonts  
-- Clean Architecture yaklaşımı  
+Tüm CRUD (Create, Read, Update, Delete) işlemleri
+
+Veritabanı üzerinden anlık toplam bakiye hesaplama
+
+Animasyonlu Kullanıcı Arayüzü
+
+AnimatedContainer kullanılarak oluşturulmuş açılır/kapanır liste animasyonları
+
+ExpansionTile ile detaylı ve modern kart tasarımları
+
+İkon ve avatar destekli kategori gösterimleri
+
+Farklı ekran boyutlarına uyumlu (responsive) UI yapısı
+
+BLoC Mimarisi
+
+Tüm state yönetimi BLoC Pattern ile uygulanmıştır
+
+Net ayrılmış Event–State yapısı
+
+Sayfa durumları:
+
+idle
+
+loading
+
+success
+
+error
+
+Kullanılan Teknolojiler
+
+Flutter
+
+Dart
+
+BLoC (flutter_bloc)
+
+SQLite (sqflite)
+
+Animated UI bileşenleri (AnimatedContainer, ExpansionTile)
+
+Google Fonts
+
+Clean Architecture prensipleri
