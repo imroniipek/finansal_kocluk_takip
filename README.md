@@ -168,10 +168,4 @@ Gerçek dünya uygulaması geliştirme becerisi
 
 göstermek amacıyla geliştirilmiştir.
 
-<br/> <div align="center">
-✨ Cüzdanım360
-
-Kişisel finans yönetimini sade, güçlü ve estetik hale getirmek için.
-
-</div>
-
+<br/>
