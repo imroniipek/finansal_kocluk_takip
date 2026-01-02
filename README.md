@@ -68,7 +68,7 @@ Uygulama; **BLoC tabanlı state management**, **SQLite ile kalıcı veri saklama
 
 | İstatistikler |
 |--------------|
-| ![](assets/screenshots/stats.png) |
+| ![](assets/screenshots/Ekran görüntüsü 2026-01-02 024557.png) |
 
 ---
 
@@ -82,15 +82,3 @@ Bu proje aşağıdaki hedefler doğrultusunda geliştirilmiştir:
 - Temiz, sürdürülebilir ve okunabilir kod yapısı  
 
 ---
-
-## 👤 Geliştirici
-
-**Roni İpek**  
-Flutter Developer
-
----
-
-## ⭐ Not
-
-Bu proje aktif olarak geliştirilmektedir.  
-Geri bildirimler ve katkılar memnuniyetle karşılanır.
