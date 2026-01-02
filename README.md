@@ -68,26 +68,29 @@ Bu projenin temel amacı:
 
 ## 🏗️ Mimari Yapı
 
-Proje **Clean Architecture** yaklaşımına uygun olarak modüler şekilde yapılandırılmıştır:
+Proje, **Clean Architecture** prensipleri doğrultusunda modüler ve ölçeklenebilir bir yapı ile tasarlanmıştır.  
+Katmanlar arası bağımlılıklar minimum seviyede tutulmuş, sorumluluklar net bir şekilde ayrılmıştır.
+
+```text
 lib/
 ├── core/
-│ ├── navigator.dart
-│ ├── sabitler.dart
+│   ├── navigator.dart
+│   └── sabitler.dart
 │
 ├── home_page/
-│ ├── bloc/
-│ ├── view/
-│ └── widgets/
+│   ├── bloc/
+│   ├── view/
+│   └── widgets/
 │
 ├── income_expense_page/
-│ ├── bloc/
-│ │ ├── amount_calculator/
-│ │ ├── db/
-│ │ └── income_expense_page/
-│ ├── view/
-│ └── widgets/
+│   ├── bloc/
+│   │   ├── amount_calculator/
+│   │   ├── db/
+│   │   └── income_expense_page/
+│   ├── view/
+│   └── widgets/
 │
 ├── analysis/
 ├── staticts/
 └── main.dart
-
+'''
