@@ -59,9 +59,6 @@ Uygulama; **BLoC tabanlı state management**, **SQLite ile kalıcı veri saklama
 ---
 
 ## 📱 Uygulama Ekran Görüntüleri
-
-> `assets/screenshots/` klasörü altına ekran görüntülerini ekleyebilirsiniz.
-
 | Ana Sayfa | Gelir Ekle | Gider Ekle |
 |----------|-----------|------------|
 | ![](assets/screenshots/home.png) | ![](assets/screenshots/add_income.png) | ![](assets/screenshots/add_expense.png) |
