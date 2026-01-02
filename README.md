@@ -1,66 +1,73 @@
-📱 Cüzdanım360
-Kişisel Finans Yönetim Uygulaması
-<br/> <p align="center"> <b>Cüzdanım360</b>, kullanıcıların gelir ve giderlerini modern bir arayüz ile takip edebilmesini sağlayan, <b>Flutter</b> ile geliştirilmiş profesyonel bir kişisel finans uygulamasıdır. </p> <p align="center"> BLoC mimarisi, SQLite tabanlı kalıcı veri saklama ve animasyonlu kullanıcı arayüzü ile ölçeklenebilir ve sürdürülebilir bir mobil uygulama yapısı sunar. </p> <br/> <hr/> <br/>
-<br/>
-💰 Gelir & Gider Yönetimi
+# 📱 Cüzdanım360
+## Kişisel Finans Yönetimi için Modern Flutter Uygulaması
 
-Özel tasarlanmış hesap makinesi arayüzü
+**Cüzdanım360**, bireylerin günlük finansal hareketlerini sistematik ve anlaşılır bir şekilde takip edebilmeleri amacıyla geliştirilmiş, **Flutter tabanlı** bir kişisel finans yönetim uygulamasıdır.
 
-Kategori bazlı işlem ekleme
-(Gıda, Maaş, Sağlık, Ulaşım, Araç vb.)
+Uygulama; **BLoC mimarisi ile state management**, **SQLite destekli kalıcı veri saklama**, **animasyonlu ve responsive kullanıcı arayüzü** ve **Clean Architecture yaklaşımı** ile profesyonel ölçekte bir mobil uygulama yapısını hedeflemektedir.
 
-İşlemlere not ekleme
+---
 
-Günlük, aylık ve yıllık periyotlara göre kayıt oluşturma
+## 🎯 Projenin Amacı
 
-<br/>
-🗄️ Kalıcı Veri Saklama (SQLite)
+Bu projenin temel amacı:
 
-Gelir ve giderlerin local database’de saklanması
+- Kullanıcıların gelir ve giderlerini **kategori bazlı** ve **periyodik** olarak takip edebilmesini sağlamak  
+- Flutter ekosisteminde **ölçeklenebilir mimari** ve **temiz kod prensipleri** uygulamak  
+- Gerçek hayatta kullanılabilecek bir finans uygulaması senaryosu oluşturmak  
+- BLoC pattern ile sürdürülebilir ve test edilebilir bir yapı kurmak  
 
-Autoincrement ID yapısı
+---
 
-CRUD operasyonları
+## ✨ Temel Özellikler
 
-Toplam bakiye ve kategori bazlı hesaplamalar
+### 💰 Gelir & Gider Yönetimi
+- Özel tasarlanmış, kullanıcı dostu **hesap makinesi arayüzü**
+- Gelir ve giderler için ayrı akışlar
+- Kategori bazlı işlem ekleme:
+  - Gıda
+  - Maaş
+  - Sağlık
+  - Ulaşım
+  - Araç
+  - Diğer
+- İşlem açıklaması / not ekleyebilme
+- Günlük, aylık ve yıllık periyot seçimi
 
-<br/>
-🎨 Modern & Animasyonlu UI
+---
 
-AnimatedContainer ile akıcı geçişler
+### 🗄️ SQLite ile Kalıcı Veri Saklama
+- `sqflite` paketi ile local database yönetimi
+- Autoincrement ID yapısı
+- CRUD operasyonları (Create, Read, Update, Delete)
+- Toplam bakiye hesaplama
+- Kategori ve tarih bazlı veri filtreleme
+- Offline çalışabilme desteği
 
-ExpansionTile ile açılır liste kartları
+---
 
-Kategori ikonları ve renkli göstergeler
-🧠 BLoC Mimarisi
+### 🎨 Modern ve Animasyonlu Kullanıcı Arayüzü
+- `AnimatedContainer` ile yumuşak geçiş animasyonları
+- `ExpansionTile` ile açılır gelir/gider kartları
+- Kategori bazlı ikon ve renk kullanımı
+- Responsive tasarım (farklı ekran boyutları için uyumlu)
+- Material Design prensiplerine uygun UI/UX
 
-Tüm state yönetimi flutter_bloc ile yapılmıştır
+---
 
-Event – State ayrımı
+### 🧠 BLoC Tabanlı State Management
+- `flutter_bloc` kullanılarak yapılandırılmış mimari
+- Event – State ayrımı
+- Sayfa durumlarının merkezi olarak yönetilmesi:
+  - `idle`
+  - `loading`
+  - `success`
+  - `error`
+- UI ile business logic’in net ayrımı
 
-Sayfa durumları:
+---
 
-idle
+## 🏗️ Mimari Yapı
 
-loading
+Proje **Clean Architecture** yaklaşımına uygun olarak modüler şekilde yapılandırılmıştır:
 
-success
 
-error
-
-<br/> <hr/> <br/>
-🛠️ Kullanılan Teknolojiler
-<br/> <div align="center">
-Teknoloji	Açıklama
-Flutter	UI geliştirme
-Dart	Programlama dili
-BLoC	State management
-SQLite	Local database
-Sqflite	SQLite Flutter paketi
-Google Fonts	Tipografi
-Clean Architecture	Modüler yapı
-</div> <br/> <hr/> <br/>
-
-Responsive ve dark mode uyumlu tasarım
-
-<br/>
