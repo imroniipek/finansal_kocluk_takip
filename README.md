@@ -93,4 +93,39 @@ lib/
 ├── analysis/
 ├── staticts/
 └── main.dart
-'''
+```
+Bu yapı sayesinde:
+- Kod okunabilirliği artar  
+- Yeni özellik eklemek kolaylaşır  
+- Test edilebilirlik sağlanır  
+
+---
+
+## 🛠️ Kullanılan Teknolojiler
+
+| Teknoloji | Açıklama |
+|---------|---------|
+| Flutter | Cross-platform mobil uygulama geliştirme |
+| Dart | Programlama dili |
+| flutter_bloc | State management |
+| SQLite | Local veri saklama |
+| sqflite | SQLite Flutter entegrasyonu |
+| Google Fonts | Tipografi |
+| Clean Architecture | Mimari yaklaşım |
+
+---
+
+## 📱 Uygulama Ekran Görüntüleri
+
+> Ekran görüntüleri `assets/screenshots/` dizini altında bulunmaktadır.
+
+| Ana Sayfa | Gelir Ekle | Gider Ekle |
+|----------|-----------|------------|
+| ![](assets/screenshots/home.png) | ![](assets/screenshots/add_income.png) | ![](assets/screenshots/add_expense.png) |
+
+| İstatistikler |
+|--------------|
+| ![](assets/screenshots/stats.png) |
+
+---
+
