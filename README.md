@@ -121,7 +121,7 @@ Bu yapı sayesinde:
 
 | Ana Sayfa | Gelir Ekle | Gider Ekle |
 |----------|-----------|------------|
-| ![](assets/screenshots/home.png) | ![](assets/screenshots/add_income.png) | ![](assets/screenshots/add_expense.png) |
+| ![](assets/screenshots/img.png) | ![](assets/screenshots/add_income.png) | ![](assets/screenshots/add_expense.png) |
 
 | İstatistikler |
 |--------------|
