@@ -119,7 +119,7 @@ Bu yapı sayesinde:
 
 > Ekran görüntüleri `assets/screenshots/` dizini altında bulunmaktadır.
 
-| Ana Sayfa | Gelir Ekle | Gider Ekle |
+| Bütçe Analiz Sayfası | İstatistikler Sayfası | Gider Ekle |
 |----------|-----------|------------|
 | ![](assets/screenschots/img.png) | ![](assets/screenschots/img_1.png) | ![](assets/screenschots/img_2.png) |
 
