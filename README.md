@@ -121,7 +121,7 @@ Bu yapı sayesinde:
 
 | Bütçe Analiz Sayfası | İstatistikler Sayfası | Gider Ekle |
 |----------|-----------|------------|
-| ![](assets/screenschots/img.png) | ![](assets/screenschots/img_1.png) | ![](assets/screenschots/img_2.png) |
+| ![](assets/screenschots/img.png) | ![](assets/screenschots/img_5.png) | ![](assets/screenschots/img_2.png) |
 
 | İstatistikler |
 |--------------|
