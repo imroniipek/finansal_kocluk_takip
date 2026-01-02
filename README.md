@@ -69,4 +69,25 @@ Bu projenin temel amacı:
 ## 🏗️ Mimari Yapı
 
 Proje **Clean Architecture** yaklaşımına uygun olarak modüler şekilde yapılandırılmıştır:
+lib/
+├── core/
+│ ├── navigator.dart
+│ ├── sabitler.dart
+│
+├── home_page/
+│ ├── bloc/
+│ ├── view/
+│ └── widgets/
+│
+├── income_expense_page/
+│ ├── bloc/
+│ │ ├── amount_calculator/
+│ │ ├── db/
+│ │ └── income_expense_page/
+│ ├── view/
+│ └── widgets/
+│
+├── analysis/
+├── staticts/
+└── main.dart
 
