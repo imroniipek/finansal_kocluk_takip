@@ -125,7 +125,7 @@ Bu yapı sayesinde:
 
 | İstatistikler |
 |--------------|
-| ![](assets/screenshots/stats.png) |
+| ![](assets/screenshots/Ekran görüntüsü 2026-01-02 024557.png) |
 
 ---
 
